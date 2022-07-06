@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cacheType: 1
-  lastUpdatedAtString: 2022-07-06T19:52:54.267+02:00
-  initializedAtString: 2022-07-06T19:52:54.267+02:00
+  lastUpdatedAtString: 2022-07-06T20:07:09.033+02:00
+  initializedAtString: 2022-07-06T20:07:09.033+02:00
   currentGitRemote:
     name: origin
     url: https://github.com/Vuks69/zaczarowany-olowek-3d
@@ -24,13 +24,13 @@ MonoBehaviour:
     token: 
   currentGitBranch:
     name: master
-    tracking: 
+    tracking: origin/master
   currentConfigBranch:
     name: master
     remote:
-      name: 
-      url: 
-    trackingBranch: 
+      name: origin
+      url: https://github.com/Vuks69/zaczarowany-olowek-3d
+    trackingBranch: master
   currentConfigRemote:
     name: origin
     url: https://github.com/Vuks69/zaczarowany-olowek-3d
