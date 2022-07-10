@@ -1,11 +1,18 @@
 * text=auto
 
+# Collapse Unity-generated files on GitHub
+*.asset linguist-generated
+*.mat linguist-generated
+*.meta linguist-generated
+*.prefab linguist-generated
+*.unity linguist-generated
+
 # Unity files
-*.meta -text merge=unityyamlmerge diff
-*.unity -text merge=unityyamlmerge diff
-*.asset -text merge=unityyamlmerge diff
-*.prefab -text merge=unityyamlmerge diff
-*.mat -text merge=unityyamlmerge diff
+#*.meta -text merge=unityyamlmerge diff
+#*.unity -text merge=unityyamlmerge diff
+#*.asset -text merge=unityyamlmerge diff
+#*.prefab -text merge=unityyamlmerge diff
+#*.mat -text merge=unityyamlmerge diff
 *.anim -text merge=unityyamlmerge diff
 *.controller -text merge=unityyamlmerge diff
 *.overrideController -text merge=unityyamlmerge diff
