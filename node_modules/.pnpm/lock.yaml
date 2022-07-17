@@ -1,0 +1,13 @@
+lockfileVersion: 5.4
+
+specifiers:
+  madr: ^2.1.2
+
+dependencies:
+  madr: 2.1.2
+
+packages:
+
+  /madr/2.1.2:
+    resolution: {integrity: sha512-n+dkvy8NMMIHEMp2qaOQfxiy1Zqs5UfygEw1hqmBYqQdMgnVZSrS2BWN9NThzoHKWuFnhyWwmy0ls6k5XZ03Gg==}
+    dev: false
