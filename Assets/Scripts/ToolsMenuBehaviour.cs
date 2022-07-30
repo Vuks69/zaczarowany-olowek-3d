@@ -5,15 +5,15 @@ using UnityEngine;
 public class ToolsMenuBehaviour : MonoBehaviour
 {
     public GameObject icon;
-
-    public const int ICON_COUNT = 9;
-
     public List<GameObject> icons = new List<GameObject>();
+    public const int ICON_COUNT = 5;
+    public const float ICON_LOCAL_SCALE_X = 0.1f;
+    public const int ICON_OFFSET_X = 1;
+    public const float ICON_MARGIN_RATIO = 0.2f;
 
     public struct RowColumnCount
     {
         public int rowCount;
-
         public int columnCount;
     }
 
@@ -25,26 +25,40 @@ public class ToolsMenuBehaviour : MonoBehaviour
     void instantiateIcons()
     {
         var rowColumnCount = new RowColumnCount();
-        determineRowAndColumnCount (ref rowColumnCount);
+        determineRowAndColumnCount(ref rowColumnCount);
 
-		var x = transform.position.x + 0.1f;
-		var initialY = transform.position.y / 2;
-		var initialZ = transform.position.z / 2;
+        float iconWithMarginHeight = (1f / rowColumnCount.rowCount);
+        float iconWithMarginWidth = (1f / rowColumnCount.columnCount);
 
-        for (var i = 0; i < rowColumnCount.rowCount; i++)
+        float iconHeight = iconWithMarginHeight * (1f - ICON_MARGIN_RATIO);
+        float iconWidth = iconWithMarginWidth * (1f - ICON_MARGIN_RATIO);
+
+        float initialY = 0.5f - iconWithMarginHeight / 2;
+        float initialZ = -0.5f + iconWithMarginWidth / 2;
+
+        for (int i = 0; i < rowColumnCount.rowCount; i++)
         {
-            for (var j = 0; j < rowColumnCount.columnCount; j++)
+            for (int j = 0; j < rowColumnCount.columnCount; j++)
             {
-                var instantiatedIcon =
-                    Instantiate(icon,
-                    new Vector3(x,
-                        initialY,
-                        initialZ),
-                    Quaternion.identity);
+                var instantiatedIcon = Instantiate(
+                        icon,
+                        new Vector3(0, 0, 0),
+                        Quaternion.identity
+                    );
+                instantiatedIcon.name = "Icon " + (icons.Count + 1).ToString();
                 instantiatedIcon.transform.parent = gameObject.transform;
-                instantiatedIcon.transform.localScale =
-                    new Vector3(0.1f, 0.35f, 0.35f);
-                icons.Add (instantiatedIcon);
+                instantiatedIcon.transform.localScale = new Vector3(ICON_LOCAL_SCALE_X, iconHeight, iconWidth);
+                instantiatedIcon.transform.localEulerAngles = new Vector3(0, 0, 0);
+                instantiatedIcon.transform.localPosition = new Vector3(
+                    ICON_OFFSET_X,
+                    initialY - i * iconWithMarginHeight,
+                    initialZ + j * iconWithMarginWidth
+                );
+                icons.Add(instantiatedIcon);
+                if (icons.Count == ICON_COUNT)
+                {
+                    return;
+                }
             }
         }
     }
@@ -53,18 +67,12 @@ public class ToolsMenuBehaviour : MonoBehaviour
     {
         while (true)
         {
-            if (
-                rowColumnCount.rowCount * rowColumnCount.columnCount >=
-                ICON_COUNT
-            )
+            if (rowColumnCount.rowCount * rowColumnCount.columnCount >= ICON_COUNT)
             {
                 break;
             }
             rowColumnCount.rowCount++;
-            if (
-                rowColumnCount.rowCount * rowColumnCount.columnCount >=
-                ICON_COUNT
-            )
+            if (rowColumnCount.rowCount * rowColumnCount.columnCount >= ICON_COUNT)
             {
                 break;
             }
