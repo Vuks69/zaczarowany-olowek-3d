@@ -6,7 +6,7 @@ public class ToolsMenuBehaviour : MonoBehaviour
 {
     public GameObject icon;
     public List<GameObject> icons = new List<GameObject>();
-    public const int ICON_COUNT = 5;
+    public const int ICON_COUNT = 9;
     public const float ICON_LOCAL_SCALE_X = 0.1f;
     public const int ICON_OFFSET_X = 1;
     public const float ICON_MARGIN_RATIO = 0.2f;
@@ -54,6 +54,8 @@ public class ToolsMenuBehaviour : MonoBehaviour
                     initialY - i * iconWithMarginHeight,
                     initialZ + j * iconWithMarginWidth
                 );
+                instantiatedIcon.AddComponent<MenuIconBehaviour>();
+
                 icons.Add(instantiatedIcon);
                 if (icons.Count == ICON_COUNT)
                 {
