@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour {
 	public static GameManager Instance;
 
 	public Color CurrentColor { get; set; }
-	public GameObject currentParametersMenu;
+	public GameObject CurrentParametersMenu;
 	// public GameObject RightFlystick
 	// public GameObject LeftFlystick
 	// public GameObject CurrentSelection
@@ -24,4 +24,12 @@ public class GameManager : MonoBehaviour {
 	void Update () {
 		
 	}
+
+	public void SetCurrentParametersMenu(GameObject parametersMenu)
+    {
+		Instantiate(parametersMenu, CurrentParametersMenu.transform.position, CurrentParametersMenu.transform.rotation);
+		Destroy(CurrentParametersMenu);
+		CurrentParametersMenu = parametersMenu;
+		// update parameters menu
+    }
 }
