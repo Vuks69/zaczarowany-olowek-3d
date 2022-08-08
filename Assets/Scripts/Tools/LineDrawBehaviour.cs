@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class LineDrawBehaviour : MonoBehaviour, IDrawingTool
@@ -22,7 +21,7 @@ public class LineDrawBehaviour : MonoBehaviour, IDrawingTool
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (drawing)
         {
@@ -42,7 +41,7 @@ public class LineDrawBehaviour : MonoBehaviour, IDrawingTool
         if (!drawing)
         {
             // each line has to be its own object, as it can only have one renderer
-            GameObject line = new GameObject();
+            line = new GameObject();
             // not sure if a name is needed, but since we will be creating a bunch of those and later editing them...
             line.name = "line_" + System.Guid.NewGuid().ToString();
             line.AddComponent(typeof(LineRenderer));
