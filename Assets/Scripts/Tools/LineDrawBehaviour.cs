@@ -28,6 +28,8 @@ public class LineDrawBehaviour : MonoBehaviour, IDrawingTool
         {
             if (Vector3.Distance(lastPosition, tool.transform.position) > 1.0f)
             {
+                // once the flystick has moved away enough from last position, add new position
+                // this is done to prevent adding 60 positions per second while drawing
                 positions.Add(tool.transform.position);
                 lastPosition = tool.transform.position;
                 lineRenderer.SetPositions(positions.ToArray());
@@ -39,9 +41,12 @@ public class LineDrawBehaviour : MonoBehaviour, IDrawingTool
     {
         if (!drawing)
         {
+            // each line has to be its own object, as it can only have one renderer
             GameObject line = new GameObject();
+            // not sure if a name is needed, but since we will be creating a bunch of those and later editing them...
             line.name = "line_" + System.Guid.NewGuid().ToString();
             line.AddComponent(typeof(LineRenderer));
+            // add the starting position
             positions.Add(tool.transform.position);
             lastPosition = tool.transform.position;
             drawing = true;
