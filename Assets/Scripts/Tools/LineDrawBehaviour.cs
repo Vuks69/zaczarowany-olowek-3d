@@ -15,7 +15,7 @@ public class LineDrawBehaviour : MonoBehaviour, IDrawingTool
         tool = GameObject.Find("MultiToolRight");
         
         // testing
-        StartDrawing();
+        // StartDrawing();
     }
 
     // Update is called once per frame
