@@ -3553,6 +3553,7 @@ GameObject:
   - component: {fileID: 1284608534}
   - component: {fileID: 1284608533}
   - component: {fileID: 1284608537}
+  - component: {fileID: 1284608538}
   m_Layer: 0
   m_Name: Goggles
   m_TagString: Untagged
@@ -3621,8 +3622,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1284608532}
   m_LocalRotation: {x: -0.009621512, y: 0.7121977, z: -0.002612594, w: 0.7019082}
-  m_LocalPosition: {x: -1.84, y: 2.2, z: -1.65}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalPosition: {x: -1.84, y: 2.2, z: -1.3455}
+  m_LocalScale: {x: 0.2926901, y: 0.29269016, z: 0.5853803}
   m_Children:
   - {fileID: 1339222627}
   - {fileID: 743462745}
@@ -3643,6 +3644,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sensX: 400
   sensY: 400
+  orientation: {fileID: 151452796}
+--- !u!114 &1284608538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1284608532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3121f18ad0c2eb94a934aa0a928cc2b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 5
   orientation: {fileID: 151452796}
 --- !u!1 &1339222626
 GameObject:
