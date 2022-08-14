@@ -42,14 +42,15 @@ public class LineDrawBehaviour : MonoBehaviour, IDrawingTool
             line = new GameObject();
             line.name = "line_" + System.Guid.NewGuid().ToString(); // not sure if a name is needed, but since we will be creating a bunch of those and later editing them...
             lineRenderer = line.AddComponent<LineRenderer>();
-            lineRenderer.material = new Material(Shader.Find("Particles/Additive"));
-            lineRenderer.startColor = new Color(0.0f, 0.0f, 1.0f, 1.0f);
-            lineRenderer.endColor = new Color(0.0f, 1.0f, 0.0f, 1.0f);
-            lineRenderer.startWidth = 0.1f;
-            lineRenderer.endWidth = 0.05f;
             lineRenderer.numCapVertices = 1;
             lineRenderer.numCornerVertices = 5;
             lineRenderer.positionCount = 0;
+
+            lineRenderer.material = new Material(Shader.Find("Particles/Additive"));    // todo add shader selection
+            lineRenderer.startColor = new Color(0.0f, 0.0f, 1.0f, 1.0f);                // todo add color selection
+            lineRenderer.endColor = new Color(0.0f, 1.0f, 0.0f, 1.0f);                  // todo add color selection
+            lineRenderer.startWidth = 0.1f;                                             // todo add width selection
+            lineRenderer.endWidth = 0.05f;                                              // todo add width selection
             
             drawing = true;
         }
