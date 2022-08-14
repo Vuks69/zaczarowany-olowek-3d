@@ -51,6 +51,8 @@ public class LineDrawBehaviour : MonoBehaviour, IDrawingTool
             lineRenderer.endColor = new Color(0.0f, 1.0f, 0.0f, 1.0f);                  // todo add color selection
             lineRenderer.startWidth = 0.1f;                                             // todo add width selection
             lineRenderer.endWidth = 0.05f;                                              // todo add width selection
+
+            Undo.RegisterCreatedObjectUndo(line, "Created new line");
             
             drawing = true;
         }
