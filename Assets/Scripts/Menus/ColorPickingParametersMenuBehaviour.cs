@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ColorPickingParametersMenuBehaviour : MonoBehaviour {
+public class ColorPickingParametersMenuBehaviour : IAction {
 
 	public Dictionary<GameObject, Color> predefinedColors = new Dictionary<GameObject, Color>();
 	public GameObject predefinedRedIcon;
@@ -21,9 +21,19 @@ public class ColorPickingParametersMenuBehaviour : MonoBehaviour {
 		predefinedColors.Add(predefinedWhiteIcon, Color.white);
 		predefinedColors.Add(predefinedBlackIcon, Color.black);
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    public override void HandleTriggerDown()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void HandleTriggerUp()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    // Update is called once per frame
+    public override void Update () {
 		
 	}
 

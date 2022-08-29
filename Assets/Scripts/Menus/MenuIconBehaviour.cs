@@ -14,7 +14,7 @@ public class MenuIconBehaviour : MonoBehaviour
 
     protected long zmienna = 0;
 
-    public GameObject ToolParametersMenu;
+    public IAction Action;
 
     // Use this for initialization
     void Start()
@@ -24,7 +24,7 @@ public class MenuIconBehaviour : MonoBehaviour
 
     public void Select()
     {
-        GameManager.Instance.SetCurrentParametersMenu(ToolParametersMenu);
+        GameManager.Instance.CurrentAction = Action;
     }
 
     // Update is called once per frame

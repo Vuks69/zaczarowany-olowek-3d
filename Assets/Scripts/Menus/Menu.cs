@@ -3,19 +3,8 @@ using UnityEngine;
 
 namespace Assets.Scripts.Menus
 {
-    public class Menu : MonoBehaviour
+    public abstract class Menu
     {
 
-        // Use this for initialization
-        void Start()
-        {
-
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
     }
 }

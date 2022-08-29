@@ -1,26 +1,28 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using Assets.Scripts;
 
-public class LineDrawBehaviour : MonoBehaviour, IDrawingTool
+public class LineDrawBehaviour : IAction
 {
     bool drawing = false;
-    GameObject tool;
+    GameObject tool = FlystickManager.Instance.MultiTool;
     GameObject line;
     LineRenderer lineRenderer;
     Vector3 lastPosition;
 
-    // Use this for initialization
-    void Start()
+    override public void HandleTriggerDown()
     {
-        tool = GameObject.Find("MultiToolRight");
-        
-        // testing
-        // StartDrawing();
+        StartDrawing();
+    }
+
+    public override void HandleTriggerUp()
+    {
+        StopDrawing();
     }
 
     // Update is called once per frame
-    private void Update()
+    public override void Update()
     {
         if (drawing)
         {
