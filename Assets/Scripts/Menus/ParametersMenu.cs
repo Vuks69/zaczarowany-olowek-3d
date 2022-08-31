@@ -6,7 +6,6 @@ namespace Assets.Scripts.Menus
 
     public class ParametersMenu : Menu
     {
-        GameObject Menu;
     }
 
 }
