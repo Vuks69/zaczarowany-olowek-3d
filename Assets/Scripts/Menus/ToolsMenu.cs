@@ -6,7 +6,6 @@ namespace Assets.Scripts.Menus
 {
     public class ToolsMenu : Menu
     {
-        public GameObject icon;
         public List<GameObject> icons = new List<GameObject>();
         public const int ICON_COUNT = 9;
         public const float ICON_LOCAL_SCALE_X = 0.1f;

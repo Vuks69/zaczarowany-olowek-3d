@@ -791,7 +791,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 240656849}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af03cf33d1fa64c41b19cfd419120528, type: 3}
+  m_Script: {fileID: 11500000, guid: e5b138925b68db84fa408d190e675be3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &241450833
@@ -2442,9 +2442,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 743462741}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00a51cd63c075404db424979c7b1dd91, type: 3}
+  m_Script: {fileID: 11500000, guid: 24e6ab7ec1f1efe4eb5da45365462189, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sensX: 0
+  sensY: 0
+  orientation: {fileID: 151452796}
 --- !u!1 &769930138
 GameObject:
   m_ObjectHideFlags: 0
@@ -4099,11 +4102,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1284608532}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f24a6157f608e441b4581ab0778fe31, type: 3}
+  m_Script: {fileID: 11500000, guid: 24e6ab7ec1f1efe4eb5da45365462189, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensX: 400
-  sensY: 400
+  sensX: 0
+  sensY: 0
   orientation: {fileID: 151452796}
 --- !u!114 &1284608538
 MonoBehaviour:
@@ -4113,10 +4116,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1284608532}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3121f18ad0c2eb94a934aa0a928cc2b3, type: 3}
+  m_Script: {fileID: 11500000, guid: 9e83a272342ad244394c745efaa0462d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  moveSpeed: 0
   orientation: {fileID: 151452796}
 --- !u!1 &1339222626
 GameObject:
@@ -4518,7 +4521,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1460584782}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0.33711827, y: -0.08493352, z: -0.055995345}
+  m_LocalPosition: {x: -3.628, y: 0.862, z: 4.261}
   m_LocalScale: {x: 0.10000006, y: 1, z: 1}
   m_Children:
   - {fileID: 1933371211}
@@ -5631,7 +5634,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1903818863}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5cfde30d9c233354c8cb045ac0ffd37b, type: 3}
+  m_Script: {fileID: 11500000, guid: 9486ab46bdbb86a488ce89bcdfffc69a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Flystick: {fileID: 743462741}
@@ -5683,12 +5686,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad93bc84452220b44ab3dde4ff5f9f35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  predefinedRedIcon: {fileID: 64978415}
-  predefinedGreenIcon: {fileID: 1083224762}
-  predefinedBlueIcon: {fileID: 0}
-  predefinedWhiteIcon: {fileID: 2062252583}
-  predefinedBlackIcon: {fileID: 351889535}
-  colorPalette: {fileID: 1842323212}
 --- !u!65 &1915278355
 BoxCollider:
   m_ObjectHideFlags: 0

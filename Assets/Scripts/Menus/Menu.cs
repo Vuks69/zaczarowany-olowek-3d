@@ -5,6 +5,6 @@ namespace Assets.Scripts.Menus
 {
     public abstract class Menu
     {
-
+        public GameObject MenuObject { get; set; }
     }
 }
