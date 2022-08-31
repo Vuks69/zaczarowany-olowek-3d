@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using UnityEngine;
+using Assets.Scripts.Actions;
 
-namespace Assets.Scripts
+namespace Assets.Scripts.Managers
 {
     public class FlystickManager : MonoBehaviour
     {
@@ -35,7 +36,7 @@ namespace Assets.Scripts
         //test
         void Start()
         {
-            GameManager.Instance.CurrentAction = new LineDrawBehaviour();
+            GameManager.Instance.CurrentAction = new LineDrawing();
             GameManager.Instance.CurrentAction.HandleTriggerDown();
         }
     }

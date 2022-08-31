@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using UnityEngine;
-using Assets.Scripts.Menus;
 
-namespace Assets.Scripts
+namespace Assets.Scripts.Menus
 {
+
     public class ParametersMenu : Menu
     {
         GameObject Menu;
     }
+
 }
