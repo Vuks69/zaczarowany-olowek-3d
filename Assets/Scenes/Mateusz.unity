@@ -2358,6 +2358,7 @@ GameObject:
   - component: {fileID: 743462744}
   - component: {fileID: 743462743}
   - component: {fileID: 743462742}
+  - component: {fileID: 743462746}
   m_Layer: 0
   m_Name: Flystick
   m_TagString: Untagged
@@ -2433,6 +2434,17 @@ Transform:
   m_Father: {fileID: 1284608536}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &743462746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 743462741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1922a3c2e7152d9478ebf2816dcc04a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &769930138
 GameObject:
   m_ObjectHideFlags: 0
@@ -4806,6 +4818,7 @@ Transform:
   m_Children:
   - {fileID: 240656850}
   - {fileID: 1903818864}
+  - {fileID: 2056557862}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5775,6 +5788,48 @@ Transform:
   m_PrefabParentObject: {fileID: 4528330163568020, guid: 2007bd4a77bf23f4e855d477f45f03eb,
     type: 2}
   m_PrefabInternal: {fileID: 1933371210}
+--- !u!1 &2056557861
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 2056557862}
+  - component: {fileID: 2056557863}
+  m_Layer: 0
+  m_Name: Menu Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2056557862
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2056557861}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1533800955}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2056557863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2056557861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80e7f832ed7127e46a16e977ac11e774, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tMenu: {fileID: 1460584782}
+  pMenu: {fileID: 1915278352}
 --- !u!1 &2062252583
 GameObject:
   m_ObjectHideFlags: 0

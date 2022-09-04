@@ -7,10 +7,9 @@ namespace Assets.Scripts.Managers
 {
     public class MenuManager : MonoBehaviour
     {
-        readonly private static MenuManager instance;
-        public MenuManager Instance { get; set; }
+        public static MenuManager Instance;
 
-        private ToolsMenu toolsMenu;
+        private ToolsMenu toolsMenu = new ToolsMenu();
         public ToolsMenu ToolsMenu
         {
             get { return toolsMenu; }
@@ -20,7 +19,7 @@ namespace Assets.Scripts.Managers
                 toolsMenu = value;
             }
         }
-        private ParametersMenu parametersMenu;
+        private ParametersMenu parametersMenu = new ParametersMenu();
         public ParametersMenu ParametersMenu
         {
             get { return parametersMenu; }
@@ -31,6 +30,9 @@ namespace Assets.Scripts.Managers
             }
         }
 
+        public GameObject tMenu;
+        public GameObject pMenu;
+
         void Awake()
         {
             Instance = this;
@@ -40,6 +42,10 @@ namespace Assets.Scripts.Managers
         {
             // InitializeParametersMenu(new ColorPickingParametersMenu());
             // InitializeToolsMenu(new ToolsMenu());
+            toolsMenu.MenuObject = tMenu;
+            ToolsMenu.Init();
+            parametersMenu.MenuObject = pMenu;
+            ParametersMenu.Init();
         }
 
         private void InitializeParametersMenu(ParametersMenu menu)
