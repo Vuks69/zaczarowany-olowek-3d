@@ -11,6 +11,7 @@ namespace Assets.Scripts.Actions
         RaycastHit hit;
         GameObject pointer;
         LineRenderer pointerLineRenderer;
+        MenuIcon highlightedIcon;
 
         public Selecting()
         {
@@ -27,7 +28,11 @@ namespace Assets.Scripts.Actions
 
         public override void HandleTriggerDown()
         {
-            throw new System.NotImplementedException();
+            if (highlightedIcon != null)
+            {
+                GameManager.Instance.CurrentAction = highlightedIcon.Action;
+                highlightedIcon.SetColor(MenuIcon.SELECTED_COLOR);
+            }
         }
 
         public override void Update()
@@ -35,21 +40,38 @@ namespace Assets.Scripts.Actions
             var flystickTransform = FlystickManager.Instance.Flystick.transform;
             var multiToolTransform = FlystickManager.Instance.MultiTool.transform;
             ray = new Ray(multiToolTransform.position, flystickTransform.forward);
-            Debug.Log("elo from update");
             if (Physics.Raycast(ray, out hit, 1000))
             {
                 pointerLineRenderer.enabled = true;
                 pointerLineRenderer.SetPosition(0, multiToolTransform.position);
                 pointerLineRenderer.SetPosition(1, hit.point);
 
-                if (hit.transform.gameObject is MenuIcon)
+                if (highlightedIcon != null)
                 {
-                    
+                    if (hit.transform.gameObject == highlightedIcon.icon)
+                    {
+                        return;
+                    }
+                    highlightedIcon.SetColor(MenuIcon.DEFAULT_COLOR);
+                    highlightedIcon = null;
+                }
+
+                foreach (MenuIcon icon in MenuManager.Instance.ToolsMenu.icons)
+                {
+                    if (icon.icon == hit.transform.gameObject)
+                    {
+                        highlightedIcon = icon;
+                        icon.SetColor(MenuIcon.HIGHLIGHTED_COLOR);
+                    }
                 }
             }
             else
             {
                 pointerLineRenderer.enabled = false;
+                if (highlightedIcon != null)
+                {
+                    highlightedIcon.SetColor(MenuIcon.DEFAULT_COLOR);
+                }
             }
         }
     }

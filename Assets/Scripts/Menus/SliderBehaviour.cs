@@ -4,12 +4,13 @@ using UnityEngine;
 
 namespace Assets.Scripts.Menus
 {
-    public class SliderBehaviour : MenuIcon
+    public class SliderBehaviour
     {
 
         public GameObject sphere;
         public GameObject capsule;
         public float value;
+        public GameObject icon;
 
         // Use this for initialization
         void Start()
@@ -18,9 +19,9 @@ namespace Assets.Scripts.Menus
         }
 
         // Update is called once per frame
-        public override void Update()
+        public void Update()
         {
-            ChangeColor();
+            //ChangeColor();
             sphere.transform.localPosition = new Vector3(
                 sphere.transform.localPosition.x,
                 sphere.transform.localPosition.y + 0.01f,
@@ -33,20 +34,20 @@ namespace Assets.Scripts.Menus
             value = (sphere.transform.localPosition.y + 1) / 2;
         }
 
-        public override void ChangeColor()
-        {
-            zmienna++;
-            if (zmienna == 100)
-            {
-                zmienna = 0;
-                ToggleColor();
-            }
-            if (updateColor)
-            {
-                updateColor = false;
-                sphere.GetComponent<Renderer>().material.SetColor("_Color", currentColor);
-                capsule.GetComponent<Renderer>().material.SetColor("_Color", currentColor);
-            }
-        }
+        //public void ChangeColor()
+        //{
+        //    zmienna++;
+        //    if (zmienna == 100)
+        //    {
+        //        zmienna = 0;
+        //        ToggleColor();
+        //    }
+        //    if (updateColor)
+        //    {
+        //        updateColor = false;
+        //        sphere.GetComponent<Renderer>().material.SetColor("_Color", currentColor);
+        //        capsule.GetComponent<Renderer>().material.SetColor("_Color", currentColor);
+        //    }
+        //}
     }
 }
