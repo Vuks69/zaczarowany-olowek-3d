@@ -1,5 +1,8 @@
 name: markdownlint-cli2-action
-on: [push]
+on:
+  push:
+    paths:
+      - 'docs/**'
 jobs:
   markdown-lint:
     runs-on: ubuntu-latest
