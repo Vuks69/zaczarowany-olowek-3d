@@ -21,7 +21,7 @@ namespace Assets.Scripts.MonoscopicMode
 		{
 			Cursor.lockState = CursorLockMode.Locked;
 			Cursor.visible = false;
-			transform.rotation = Quaternion.Euler(0, 90f, 0);
+			//transform.rotation = Quaternion.Euler(0, 270f, 0);
 		}
 
 		// Update is called once per frame
@@ -38,7 +38,7 @@ namespace Assets.Scripts.MonoscopicMode
 
 			//rotate cam and orientation
 			transform.rotation = Quaternion.Euler(0, yRotation, xRotation);
-			orientation.rotation = Quaternion.Euler(0, yRotation, 0);
+			orientation.rotation = Quaternion.Euler(0, yRotation, xRotation);
 		}
 	}
 }
