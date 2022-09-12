@@ -21,6 +21,7 @@ namespace Assets.Scripts.MonoscopicMode
 		// Use this for initialization
 		void Start()
 		{
+			//controller.detectCollisions = false;
 		}
 
 		// Update is called once per frame
@@ -42,7 +43,7 @@ namespace Assets.Scripts.MonoscopicMode
 
 		void MovePlayer()
 		{
-			moveDirection = transform.right * verticalInput * -1 + transform.forward * horizontalInput;
+			moveDirection = transform.forward * verticalInput + transform.right * horizontalInput;
 			controller.Move(moveDirection * moveSpeed * Time.deltaTime);
 		}
 	}
