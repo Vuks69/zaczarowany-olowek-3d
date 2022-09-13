@@ -10,7 +10,8 @@ namespace Assets.Scripts.MonoscopicMode
 		[Header("Movement")]
 		public float moveSpeed;
 
-		public Transform orientation;
+		//public Transform orientation;
+		public CharacterController controller;
 
 		float horizontalInput;
 		float verticalInput;
@@ -20,6 +21,7 @@ namespace Assets.Scripts.MonoscopicMode
 		// Use this for initialization
 		void Start()
 		{
+			//controller.detectCollisions = false;
 		}
 
 		// Update is called once per frame
@@ -41,8 +43,8 @@ namespace Assets.Scripts.MonoscopicMode
 
 		void MovePlayer()
 		{
-			moveDirection = orientation.forward * verticalInput * -1 + orientation.right * horizontalInput * -1;
-			transform.Translate(moveDirection * moveSpeed * Time.deltaTime);
+			moveDirection = transform.forward * verticalInput + transform.right * horizontalInput;
+			controller.Move(moveDirection * moveSpeed * Time.deltaTime);
 		}
 	}
 }

@@ -25,6 +25,17 @@ namespace Assets.Scripts.Managers
 
         void Update()
         {
+            string input = "";
+            //for monoscopic mode
+			if(Input.GetButtonDown("Trigger")) {
+				input = "trigger_down";
+			}
+
+			if(Input.GetButtonUp("Trigger")) {
+				input = "trigger_up";
+			}
+
+            HandleInput(input);
             GameManager.Instance.CurrentAction.Update();
         }
 
@@ -36,7 +47,8 @@ namespace Assets.Scripts.Managers
         //test
         void Start()
         {
-            GameManager.Instance.CurrentAction = new Selecting();
+            //GameManager.Instance.CurrentAction = new Selecting();
+            GameManager.Instance.CurrentAction = new LineDrawing();
             //GameManager.Instance.CurrentAction.HandleTriggerDown();
         }
     }
