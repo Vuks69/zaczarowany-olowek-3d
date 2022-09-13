@@ -3965,7 +3965,7 @@ GameObject:
   - component: {fileID: 1284608539}
   m_Layer: 0
   m_Name: Goggles
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4097,7 +4097,7 @@ GameObject:
   - component: {fileID: 1339222628}
   m_Layer: 0
   m_Name: MainCamera
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -5,7 +5,7 @@ using UnityEngine;
 public class FlystickMovement : MonoBehaviour {
 
 	public float sens;
-	public Transform camTransform;
+	Transform camTransform;
 
 	float mouseX;
 	float mouseY;
@@ -34,7 +34,7 @@ public class FlystickMovement : MonoBehaviour {
 	void MoveFlystick(){
 		//Vector3 camPosition = new Vector3 (camTransform.position.x, camTransform.position.y, camTransform.position.z);
 		//Vector3 directionForward = (transform.position - camPosition).normalized;
-
+		camTransform = GameObject.FindWithTag("Player").transform;
 		Vector3 forwardMovement = camTransform.forward * mouseZ;
 		Vector3 horizontalMovement = camTransform.right * mouseX;
 		Vector3 verticalMovement = camTransform.up * mouseY;
@@ -43,7 +43,7 @@ public class FlystickMovement : MonoBehaviour {
 		Vector3 horizontalMovement = transform.right * mouseX;
 		Vector3 verticalMovement = transform.up * mouseY;*/
 		Vector3 movement = Vector3.ClampMagnitude (forwardMovement + horizontalMovement + verticalMovement, 1);
-		transform.Translate (movement);
+		transform.Translate (movement, Space.World);
 	}
 
 
