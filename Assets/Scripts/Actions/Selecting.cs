@@ -1,7 +1,7 @@
-﻿using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 using Assets.Scripts.Managers;
 using Assets.Scripts.Menus;
+using System.Collections.Generic;
 
 namespace Assets.Scripts.Actions
 {
@@ -11,11 +11,14 @@ namespace Assets.Scripts.Actions
         RaycastHit hit;
         GameObject pointer;
         LineRenderer pointerLineRenderer;
-        MenuIcon highlightedIcon;
+        private MenuIcon highlightedIcon;
+        private bool isHighlightedIcon = false;
+        private MenuIcon selectedIcon;
+        private bool isSelectedIcon = false;
 
         public Selecting()
         {
-            pointer = new GameObject();
+            pointer = new GameObject("Selecting Pointer");
             pointerLineRenderer = pointer.AddComponent<LineRenderer>();
             pointerLineRenderer.startWidth = 0.1f;
             pointerLineRenderer.endWidth = 0.1f;
@@ -23,15 +26,21 @@ namespace Assets.Scripts.Actions
 
         public override void HandleTriggerUp()
         {
-
+            // Nothing happens
         }
 
         public override void HandleTriggerDown()
         {
-            if (highlightedIcon != null)
+            if (isHighlightedIcon)
             {
-                GameManager.Instance.CurrentAction = highlightedIcon.Action;
-                highlightedIcon.SetColor(MenuIcon.SELECTED_COLOR);
+                if (isSelectedIcon)
+                {
+                    selectedIcon.SetDefaultColor();
+                }
+                selectedIcon = highlightedIcon;
+                selectedIcon.Select();
+                isHighlightedIcon = false;
+                isSelectedIcon = true;
             }
         }
 
@@ -46,33 +55,53 @@ namespace Assets.Scripts.Actions
                 pointerLineRenderer.SetPosition(0, multiToolTransform.position);
                 pointerLineRenderer.SetPosition(1, hit.point);
 
-                if (highlightedIcon != null)
+                if (isHighlightedIcon)
                 {
-                    if (hit.transform.gameObject == highlightedIcon.icon)
+                    if (hit.collider.transform.gameObject == highlightedIcon.icon)
                     {
                         return;
                     }
-                    highlightedIcon.SetColor(MenuIcon.DEFAULT_COLOR);
-                    highlightedIcon = null;
+                    changeHighlightedIconsColor();
                 }
 
-                foreach (MenuIcon icon in MenuManager.Instance.ToolsMenu.icons)
+                var allMenusIcons = new List<MenuIcon>();
+                allMenusIcons.AddRange(MenuManager.Instance.ToolsMenu.icons);
+                allMenusIcons.AddRange(MenuManager.Instance.ParametersMenu.icons);
+
+                foreach (MenuIcon icon in allMenusIcons)
                 {
-                    if (icon.icon == hit.transform.gameObject)
+                    if (icon.icon == hit.collider.transform.gameObject && !isSelectedTheSameObject(icon))
                     {
                         highlightedIcon = icon;
-                        icon.SetColor(MenuIcon.HIGHLIGHTED_COLOR);
+                        isHighlightedIcon = true;
+                        highlightedIcon.Highlight();
                     }
                 }
             }
             else
             {
                 pointerLineRenderer.enabled = false;
-                if (highlightedIcon != null)
+                if (isHighlightedIcon)
                 {
-                    highlightedIcon.SetColor(MenuIcon.DEFAULT_COLOR);
+                    changeHighlightedIconsColor();
                 }
             }
+        }
+
+        private void changeHighlightedIconsColor()
+        {
+            isHighlightedIcon = false;
+            if (highlightedIcon == selectedIcon)
+            {
+                highlightedIcon.SetSelectedColor();
+                return;
+            }
+            highlightedIcon.SetDefaultColor();
+        }
+
+        private bool isSelectedTheSameObject(MenuIcon icon)
+        {
+            return isSelectedIcon && icon.icon == selectedIcon.icon;
         }
     }
 }

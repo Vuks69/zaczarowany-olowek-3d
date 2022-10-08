@@ -10,6 +10,7 @@ namespace Assets.Scripts.Managers
 
         public GameObject Flystick;
         public GameObject MultiTool;
+
         // przykladowe
         void HandleInput(string input)
         {
@@ -47,9 +48,7 @@ namespace Assets.Scripts.Managers
         //test
         void Start()
         {
-            //GameManager.Instance.CurrentAction = new Selecting();
-            GameManager.Instance.CurrentAction = new LineDrawing();
-            //GameManager.Instance.CurrentAction.HandleTriggerDown();
+            //GameManager.Instance.CurrentAction = new LineDrawing();
         }
     }
 }

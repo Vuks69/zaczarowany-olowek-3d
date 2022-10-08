@@ -17,6 +17,7 @@ namespace Assets.Scripts.Managers
 		void Awake()
 		{
 			Instance = this;
+			GameManager.Instance.CurrentAction = new Selecting();
 		}
 	}
 }
