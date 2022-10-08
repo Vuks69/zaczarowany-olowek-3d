@@ -9,7 +9,7 @@ namespace Assets.Scripts.Managers
     {
         public static MenuManager Instance;
 
-        private ToolsMenu toolsMenu = new ToolsMenu();
+        private ToolsMenu toolsMenu;
         public ToolsMenu ToolsMenu
         {
             get { return toolsMenu; }
@@ -30,34 +30,33 @@ namespace Assets.Scripts.Managers
             }
         }
 
-        public GameObject tMenu;
-        public GameObject pMenu;
+        public ParametersMenusData ParametersMenusData { get; set; }
 
         void Awake()
         {
             Instance = this;
+            ParametersMenusData = new ParametersMenusData();
         }
 
         void Start()
         {
             // InitializeParametersMenu(new ColorPickingParametersMenu());
             // InitializeToolsMenu(new ToolsMenu());
-            toolsMenu.MenuObject = tMenu;
-            ToolsMenu.Init();
-            parametersMenu.MenuObject = pMenu;
-            ParametersMenu.Init();
+            // parametersMenu.MenuObject = pMenu;
+            ParametersMenu = ParametersMenusData.ColorPicking;
+            ToolsMenu = new ToolsMenu();
         }
 
         private void InitializeParametersMenu(ParametersMenu menu)
         {
-            Instantiate(menu.MenuObject, parametersMenu.MenuObject.transform.position, parametersMenu.MenuObject.transform.rotation);
-            Destroy(parametersMenu.MenuObject);
+            //Instantiate(menu.MenuObject, parametersMenu.MenuObject.transform.position, parametersMenu.MenuObject.transform.rotation);
+            //Destroy(parametersMenu.MenuObject);
         }
 
         private void InitializeToolsMenu(ToolsMenu menu)
         {
-            Instantiate(menu.MenuObject, ToolsMenu.MenuObject.transform.position, ToolsMenu.MenuObject.transform.rotation);
-            Destroy(ToolsMenu.MenuObject);
+            // Instantiate(menu.MenuObject, ToolsMenu.MenuObject.transform.position, ToolsMenu.MenuObject.transform.rotation);
+            // Destroy(ToolsMenu.MenuObject);
         }
     }
 }

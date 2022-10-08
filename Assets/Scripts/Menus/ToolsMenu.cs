@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Assets.Scripts.Managers;
 
 namespace Assets.Scripts.Menus
 {
@@ -17,9 +18,11 @@ namespace Assets.Scripts.Menus
             public int columnCount;
         }
 
-        void Start()
+        private readonly MenuIcon colorPickingIcon = new MenuIcon(GameObject.Find("Color Picking"), GameManager.Instance.CurrentAction);
+
+        public ToolsMenu()
         {
-            //instantiateIcons();
+            icons.Add(colorPickingIcon);
         }
 
         //void instantiateIcons()
