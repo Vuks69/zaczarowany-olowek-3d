@@ -1,16 +1,14 @@
 ﻿using UnityEngine;
 using Assets.Scripts.Managers;
-using Assets.Scripts.Menus;
 using System.Collections.Generic;
+using Assets.Scripts.Menus.Icons;
 
 namespace Assets.Scripts.Actions
 {
     public class Selecting : Action
     {
-        Ray ray;
-        RaycastHit hit;
-        GameObject pointer;
-        LineRenderer pointerLineRenderer;
+        private readonly GameObject pointer;
+        private readonly LineRenderer pointerLineRenderer;
         private MenuIcon highlightedIcon;
         private bool isHighlightedIcon = false;
         private MenuIcon selectedIcon;
@@ -44,11 +42,17 @@ namespace Assets.Scripts.Actions
             }
         }
 
+        public override void Finish()
+        {
+            Object.Destroy(pointer);
+        }
+
         public override void Update()
         {
             var flystickTransform = FlystickManager.Instance.Flystick.transform;
             var multiToolTransform = FlystickManager.Instance.MultiTool.transform;
-            ray = new Ray(multiToolTransform.position, flystickTransform.forward);
+            var ray = new Ray(multiToolTransform.position, flystickTransform.forward);
+            RaycastHit hit;
             if (Physics.Raycast(ray, out hit, 1000))
             {
                 pointerLineRenderer.enabled = true;

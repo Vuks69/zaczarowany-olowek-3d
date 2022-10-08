@@ -6,7 +6,6 @@ using Assets.Scripts.Menus;
 
 namespace Assets.Scripts.Actions
 {
-
     public abstract class Action
     {
         public static Action Instance;
@@ -26,5 +25,6 @@ namespace Assets.Scripts.Actions
         public abstract void HandleTriggerDown();
         public abstract void HandleTriggerUp();
         public abstract void Update();
+        public abstract void Finish();
     }
 }

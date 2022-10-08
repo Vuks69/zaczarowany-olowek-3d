@@ -22,19 +22,30 @@ namespace Assets.Scripts.Managers
             {
                 GameManager.Instance.CurrentAction.HandleTriggerUp();
             }
+            else if (input == "button3")
+            {
+                GameManager.Instance.changeCurrentAction(new Selecting());
+            }
         }
 
         void Update()
         {
             string input = "";
             //for monoscopic mode
-			if(Input.GetButtonDown("Trigger")) {
-				input = "trigger_down";
-			}
+            if (Input.GetButtonDown("Trigger"))
+            {
+                input = "trigger_down";
+            }
 
-			if(Input.GetButtonUp("Trigger")) {
-				input = "trigger_up";
-			}
+            if (Input.GetButtonUp("Trigger"))
+            {
+                input = "trigger_up";
+            }
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                input = "button3";
+            }
 
             HandleInput(input);
             GameManager.Instance.CurrentAction.Update();
