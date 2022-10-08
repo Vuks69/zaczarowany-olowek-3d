@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Assets.Scripts.Actions;
 
 namespace Assets.Scripts.Managers
@@ -9,7 +7,7 @@ namespace Assets.Scripts.Managers
 	{
 		public static GameManager Instance;
 
-		public Color CurrentColor { get; set; }
+		public Color CurrentColor { get; set; } = Color.magenta;
 		public Action CurrentAction { get; set; }
 		// public GameObject LeftFlystick
 		// public GameObject CurrentSelection
@@ -17,7 +15,13 @@ namespace Assets.Scripts.Managers
 		void Awake()
 		{
 			Instance = this;
-			GameManager.Instance.CurrentAction = new Selecting();
+			CurrentAction = new Selecting();
 		}
+
+		public void changeCurrentAction(Action action)
+        {
+			CurrentAction.Finish();
+			CurrentAction = action;
+        }
 	}
 }

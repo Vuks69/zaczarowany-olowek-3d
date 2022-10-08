@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEditor;
 using Assets.Scripts.Managers;
 
@@ -20,6 +19,11 @@ namespace Assets.Scripts.Actions
         public override void HandleTriggerUp()
         {
             StopDrawing();
+        }
+
+        public override void Finish()
+        {
+            // Nothing happens
         }
 
         // Update is called once per frame
@@ -48,7 +52,7 @@ namespace Assets.Scripts.Actions
                 lineRenderer.positionCount = 0;
 
                 lineRenderer.material = new Material(Shader.Find("Particles/Additive"));    // todo add shader selection
-                lineRenderer.startColor = new Color(0.0f, 0.0f, 1.0f, 1.0f);                // todo add color selection
+                lineRenderer.startColor = GameManager.Instance.CurrentColor;                // todo add color selection
                 lineRenderer.endColor = new Color(0.0f, 1.0f, 0.0f, 1.0f);                  // todo add color selection
                 lineRenderer.startWidth = 0.1f;                                             // todo add width selection
                 lineRenderer.endWidth = 0.05f;                                              // todo add width selection

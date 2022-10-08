@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Assets.Scripts.Managers;
 
 namespace Assets.Scripts.Actions
@@ -13,6 +11,11 @@ namespace Assets.Scripts.Actions
             // when trigger is pressed AND flystick points at ColorPalette OR PredefinedColorIcon
             // then set CurrentColor
             GameManager.Instance.CurrentColor = Color.red;
+        }
+
+        public override void Finish()
+        {
+            throw new System.NotImplementedException();
         }
 
         public override void HandleTriggerDown()
