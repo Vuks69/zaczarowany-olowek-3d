@@ -296,7 +296,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4599528120804266, guid: f81e8852c35999e4ba5fa3a1c4bd113b, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -1.2579336
+      value: 0.575
       objectReference: {fileID: 0}
     - target: {fileID: 4599528120804266, guid: f81e8852c35999e4ba5fa3a1c4bd113b, type: 2}
       propertyPath: m_LocalPosition.z
@@ -1465,7 +1465,6 @@ GameObject:
   - component: {fileID: 1915278357}
   - component: {fileID: 1915278356}
   - component: {fileID: 1915278355}
-  - component: {fileID: 1915278354}
   m_Layer: 5
   m_Name: Color Picking Parameters Menu
   m_TagString: Untagged
@@ -1481,7 +1480,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1915278352}
   m_LocalRotation: {x: 0, y: 0.70710677, z: 0, w: 0.70710677}
-  m_LocalPosition: {x: -0.27, y: 1.67, z: 1.508}
+  m_LocalPosition: {x: 1.429, y: 0.53, z: 2.69}
   m_LocalScale: {x: 0.1, y: 1, z: 1}
   m_Children:
   - {fileID: 1842323213}
@@ -1493,17 +1492,6 @@ Transform:
   m_Father: {fileID: 858827286}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!114 &1915278354
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1915278352}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad93bc84452220b44ab3dde4ff5f9f35, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &1915278355
 BoxCollider:
   m_ObjectHideFlags: 0
