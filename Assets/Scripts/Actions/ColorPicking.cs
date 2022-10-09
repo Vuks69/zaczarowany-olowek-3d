@@ -13,6 +13,11 @@ namespace Assets.Scripts.Actions
             GameManager.Instance.CurrentColor = Color.red;
         }
 
+        public override void Init()
+        {
+            throw new System.NotImplementedException();
+        }
+
         public override void Finish()
         {
             throw new System.NotImplementedException();

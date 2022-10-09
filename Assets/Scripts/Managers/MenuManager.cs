@@ -35,7 +35,6 @@ namespace Assets.Scripts.Managers
         void Awake()
         {
             Instance = this;
-            ParametersMenusData = new ParametersMenusData();
         }
 
         void Start()
@@ -43,8 +42,12 @@ namespace Assets.Scripts.Managers
             // InitializeParametersMenu(new ColorPickingParametersMenu());
             // InitializeToolsMenu(new ToolsMenu());
             // parametersMenu.MenuObject = pMenu;
+            ParametersMenusData = new ParametersMenusData();
+            GameManager.Instance.ActionsData.AssignParametrsMenus();
             ParametersMenu = ParametersMenusData.ColorPicking;
             ToolsMenu = new ToolsMenu();
+            ToolsMenu.SelectedIcon = ToolsMenu.selectingIcon;
+            ToolsMenu.SelectedIcon.SetSelectedColor();
         }
 
         private void InitializeParametersMenu(ParametersMenu menu)

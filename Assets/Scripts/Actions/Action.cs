@@ -9,7 +9,7 @@ namespace Assets.Scripts.Actions
     public abstract class Action
     {
         public static Action Instance;
-        private ParametersMenu parametersMenu;
+        public ParametersMenu ParametersMenu { get; set; }
 
         public void HandleLeftButton()
         {
@@ -22,6 +22,7 @@ namespace Assets.Scripts.Actions
             Undo.PerformRedo();
         }
 
+        public abstract void Init();
         public abstract void HandleTriggerDown();
         public abstract void HandleTriggerUp();
         public abstract void Update();

@@ -1,6 +1,5 @@
-﻿using System.Collections;
-using UnityEngine;
-using Assets.Scripts.Actions;
+﻿using UnityEngine;
+using Assets.Scripts.Menus;
 
 namespace Assets.Scripts.Managers
 {
@@ -24,7 +23,10 @@ namespace Assets.Scripts.Managers
             }
             else if (input == "button3")
             {
-                GameManager.Instance.changeCurrentAction(new Selecting());
+                ToolsMenu toolsMenu = MenuManager.Instance.ToolsMenu;
+                toolsMenu.selectingIcon.Select();
+                toolsMenu.SelectedIcon.Deselect();
+                toolsMenu.SelectedIcon = toolsMenu.selectingIcon;
             }
         }
 

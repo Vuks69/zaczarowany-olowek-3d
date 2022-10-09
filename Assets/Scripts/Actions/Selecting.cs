@@ -7,14 +7,12 @@ namespace Assets.Scripts.Actions
 {
     public class Selecting : Action
     {
-        private readonly GameObject pointer;
-        private readonly LineRenderer pointerLineRenderer;
+        private GameObject pointer;
+        private LineRenderer pointerLineRenderer;
         private MenuIcon highlightedIcon;
         private bool isHighlightedIcon = false;
-        private MenuIcon selectedIcon;
-        private bool isSelectedIcon = false;
 
-        public Selecting()
+        public override void Init()
         {
             pointer = new GameObject("Selecting Pointer");
             pointerLineRenderer = pointer.AddComponent<LineRenderer>();
@@ -31,14 +29,16 @@ namespace Assets.Scripts.Actions
         {
             if (isHighlightedIcon)
             {
-                if (isSelectedIcon)
+                var selectedIcon = MenuManager.Instance.ToolsMenu.SelectedIcon;
+                if (MenuManager.Instance.ToolsMenu.IsSelectedIcon)
                 {
-                    selectedIcon.SetDefaultColor();
+                    selectedIcon.Deselect();
                 }
                 selectedIcon = highlightedIcon;
                 selectedIcon.Select();
+                MenuManager.Instance.ToolsMenu.SelectedIcon = selectedIcon;
                 isHighlightedIcon = false;
-                isSelectedIcon = true;
+                MenuManager.Instance.ToolsMenu.IsSelectedIcon = true;
             }
         }
 
@@ -61,7 +61,7 @@ namespace Assets.Scripts.Actions
 
                 if (isHighlightedIcon)
                 {
-                    if (hit.collider.transform.gameObject == highlightedIcon.icon)
+                    if (hit.collider.transform.gameObject == highlightedIcon.gameObject)
                     {
                         return;
                     }
@@ -74,7 +74,7 @@ namespace Assets.Scripts.Actions
 
                 foreach (MenuIcon icon in allMenusIcons)
                 {
-                    if (icon.icon == hit.collider.transform.gameObject && !isSelectedTheSameObject(icon))
+                    if (icon.gameObject == hit.collider.transform.gameObject && !isSelectedTheSameObject(icon))
                     {
                         highlightedIcon = icon;
                         isHighlightedIcon = true;
@@ -95,7 +95,7 @@ namespace Assets.Scripts.Actions
         private void changeHighlightedIconsColor()
         {
             isHighlightedIcon = false;
-            if (highlightedIcon == selectedIcon)
+            if (highlightedIcon == MenuManager.Instance.ToolsMenu.SelectedIcon)
             {
                 highlightedIcon.SetSelectedColor();
                 return;
@@ -105,7 +105,7 @@ namespace Assets.Scripts.Actions
 
         private bool isSelectedTheSameObject(MenuIcon icon)
         {
-            return isSelectedIcon && icon.icon == selectedIcon.icon;
+            return MenuManager.Instance.ToolsMenu.IsSelectedIcon && icon.gameObject == MenuManager.Instance.ToolsMenu.SelectedIcon.gameObject;
         }
     }
 }

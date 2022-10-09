@@ -12,11 +12,11 @@ namespace Assets.Scripts.Menus.Icons
         public Color HighlightedColor { get; set; } = Color.blue;
         protected Color currentColor;
         public Action action;
-        public GameObject icon;
+        public GameObject gameObject;
 
         public MenuIcon(GameObject icon, Action action)
         {
-            this.icon = icon;
+            this.gameObject = icon;
             this.action = action;
 
             currentColor = DefaultColor;
@@ -28,9 +28,14 @@ namespace Assets.Scripts.Menus.Icons
             SetColor(SelectedColor);
         }
 
+        public void Deselect()
+        {
+            SetColor(DefaultColor);
+        }
+
         public void UpdateColor()
         {
-            var renderer = icon.GetComponent<Renderer>();
+            var renderer = gameObject.GetComponent<Renderer>();
             renderer.material.SetColor("_Color", currentColor);
         }
 

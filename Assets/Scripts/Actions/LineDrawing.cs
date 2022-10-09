@@ -11,6 +11,11 @@ namespace Assets.Scripts.Actions
         LineRenderer lineRenderer;
         Vector3 lastPosition;
 
+        public override void Init()
+        {
+            // Nothing happens
+        }
+
         override public void HandleTriggerDown()
         {
             StartDrawing();
@@ -53,7 +58,7 @@ namespace Assets.Scripts.Actions
 
                 lineRenderer.material = new Material(Shader.Find("Particles/Additive"));    // todo add shader selection
                 lineRenderer.startColor = GameManager.Instance.CurrentColor;                // todo add color selection
-                lineRenderer.endColor = new Color(0.0f, 1.0f, 0.0f, 1.0f);                  // todo add color selection
+                lineRenderer.endColor = GameManager.Instance.CurrentColor;                  // todo add color selection
                 lineRenderer.startWidth = 0.1f;                                             // todo add width selection
                 lineRenderer.endWidth = 0.05f;                                              // todo add width selection
 
