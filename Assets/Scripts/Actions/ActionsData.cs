@@ -9,8 +9,8 @@ namespace Assets.Scripts.Actions
 
         public void AssignParametrsMenus()
         {
-            Selecting.ParametersMenu = MenuManager.Instance.ParametersMenusData.ColorPicking;
-            LineDrawing.ParametersMenu = MenuManager.Instance.ParametersMenusData.ColorPicking;
+            Selecting.ParametersMenu = MenuManager.Instance.ParametersMenusData.ColorPickingParametersMenu;
+            LineDrawing.ParametersMenu = MenuManager.Instance.ParametersMenusData.LineDrawingParametersMenu;
         }
     }
 }

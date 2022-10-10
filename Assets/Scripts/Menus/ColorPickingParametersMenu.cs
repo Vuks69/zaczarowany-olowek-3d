@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using Assets.Scripts.Managers;
-using Assets.Scripts.Actions;
 using Assets.Scripts.Menus.Icons;
 using System.Collections.Generic;
 

@@ -44,7 +44,7 @@ namespace Assets.Scripts.Managers
             // parametersMenu.MenuObject = pMenu;
             ParametersMenusData = new ParametersMenusData();
             GameManager.Instance.ActionsData.AssignParametrsMenus();
-            ParametersMenu = ParametersMenusData.ColorPicking;
+            ParametersMenu = ParametersMenusData.ColorPickingParametersMenu;
             ToolsMenu = new ToolsMenu();
             ToolsMenu.SelectedIcon = ToolsMenu.selectingIcon;
             ToolsMenu.SelectedIcon.SetSelectedColor();
