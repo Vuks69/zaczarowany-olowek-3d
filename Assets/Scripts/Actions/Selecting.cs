@@ -11,6 +11,7 @@ namespace Assets.Scripts.Actions
         private LineRenderer pointerLineRenderer;
         private MenuIcon highlightedIcon;
         private bool isHighlightedIcon = false;
+        public Vector2 PCoord { get; set; }
 
         public override void Init()
         {
@@ -55,6 +56,7 @@ namespace Assets.Scripts.Actions
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, 1000))
             {
+                PCoord = hit.textureCoord;
                 pointerLineRenderer.enabled = true;
                 pointerLineRenderer.SetPosition(0, multiToolTransform.position);
                 pointerLineRenderer.SetPosition(1, hit.point);
@@ -100,7 +102,7 @@ namespace Assets.Scripts.Actions
                 highlightedIcon.SetSelectedColor();
                 return;
             }
-            highlightedIcon.SetDefaultColor();
+            highlightedIcon.Dehighlight();
         }
 
         private bool isSelectedTheSameObject(MenuIcon icon)
