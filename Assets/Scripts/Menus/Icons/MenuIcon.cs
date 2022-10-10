@@ -45,9 +45,14 @@ namespace Assets.Scripts.Menus.Icons
             UpdateColor();
         }
 
-        public void Highlight()
+        public virtual void Highlight()
         {
             SetColor(HighlightedColor);
+        }
+
+        public virtual void Dehighlight()
+        {
+            SetDefaultColor();
         }
 
         public void SetDefaultColor()
