@@ -30,6 +30,7 @@ namespace Assets.Scripts.Managers
 			CurrentAction.Finish();
 			CurrentAction = action;
 			CurrentAction.Init();
+			MenuManager.Instance.ParametersMenu = action.ParametersMenu;
         }
 	}
 }
