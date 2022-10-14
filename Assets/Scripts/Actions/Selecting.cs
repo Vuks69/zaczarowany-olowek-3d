@@ -20,7 +20,6 @@ namespace Assets.Scripts.Actions
             pointerLineRenderer = pointer.AddComponent<LineRenderer>();
             pointerLineRenderer.startWidth = 0.1f;
             pointerLineRenderer.endWidth = 0.1f;
-            ParametersMenu = MenuManager.Instance.ParametersMenu;
         }
 
         public override void HandleTriggerUp()

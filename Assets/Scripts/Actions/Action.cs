@@ -9,7 +9,6 @@ namespace Assets.Scripts.Actions
     public abstract class Action
     {
         public static Action Instance;
-        public ParametersMenu ParametersMenu { get; set; }
 
         public void HandleLeftButton()
         {

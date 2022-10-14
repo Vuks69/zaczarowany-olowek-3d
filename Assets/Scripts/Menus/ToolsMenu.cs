@@ -7,9 +7,9 @@ namespace Assets.Scripts.Menus
 {
     public class ToolsMenu : Menu
     {
-        public MenuIcon colorPickingIcon = new MenuIcon(GameObject.Find("Color Picking"), GameManager.Instance.ActionsData.Selecting);
-        public MenuIcon selectingIcon = new MenuIcon(GameObject.Find("Selecting"), GameManager.Instance.ActionsData.Selecting);
-        public MenuIcon lineDrawingIcon = new MenuIcon(GameObject.Find("Line Drawing"), GameManager.Instance.ActionsData.LineDrawing);
+        public MenuIcon colorPickingIcon { get; set; } = new ToolsMenuIcon(GameObject.Find("Color Picking"), GameManager.Instance.ActionsData.Selecting, MenuManager.Instance.ParametersMenusData.ColorPickingParametersMenu);
+        public MenuIcon selectingIcon { get; set; } = new SelectingIcon(GameObject.Find("Selecting"), GameManager.Instance.ActionsData.Selecting);
+        public MenuIcon lineDrawingIcon { get; set; } = new ToolsMenuIcon(GameObject.Find("Line Drawing"), GameManager.Instance.ActionsData.LineDrawing, MenuManager.Instance.ParametersMenusData.LineDrawingParametersMenu);
 
         public ToolsMenu()
         {
