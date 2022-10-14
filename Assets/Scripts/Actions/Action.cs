@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEditor;
-using Assets.Scripts.Menus;
+﻿using UnityEditor;
 
 namespace Assets.Scripts.Actions
 {
