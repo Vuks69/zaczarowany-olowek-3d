@@ -6,10 +6,10 @@ namespace Assets.Scripts.Actions
 {
     public class LineDrawing : Action
     {
-        bool drawing = false;
-        readonly GameObject tool = FlystickManager.Instance.MultiTool;
-        LineRenderer lineRenderer;
-        Vector3 lastPosition;
+        private bool drawing = false;
+        private readonly GameObject tool = FlystickManager.Instance.MultiTool;
+        private LineRenderer lineRenderer;
+        private Vector3 lastPosition;
         public float StrokeWidth { get; set; } = 0.1f;
 
         public override void Init()
@@ -17,7 +17,7 @@ namespace Assets.Scripts.Actions
             // Nothing happens
         }
 
-        override public void HandleTriggerDown()
+        public override void HandleTriggerDown()
         {
             StartDrawing();
         }
@@ -32,7 +32,6 @@ namespace Assets.Scripts.Actions
             // Nothing happens
         }
 
-        // Update is called once per frame
         public override void Update()
         {
             if (drawing && Vector3.Distance(lastPosition, tool.transform.position) > 0.02f)
@@ -45,13 +44,13 @@ namespace Assets.Scripts.Actions
             }
         }
 
-        public void StartDrawing()
+        private void StartDrawing()
         {
             if (!drawing)
             {
                 // each line has to be its own object, as it can only have one renderer
                 var line = new GameObject();
-                line.name = "line_" + System.Guid.NewGuid().ToString(); // not sure if a name is needed, but since we will be creating a bunch of those and later editing them...
+                line.name = "line_" + System.Guid.NewGuid().ToString();
                 lineRenderer = line.AddComponent<LineRenderer>();
                 lineRenderer.numCapVertices = 1;
                 lineRenderer.numCornerVertices = 5;
@@ -69,7 +68,7 @@ namespace Assets.Scripts.Actions
             }
         }
 
-        public void StopDrawing()
+        private void StopDrawing()
         {
             drawing = false;
         }

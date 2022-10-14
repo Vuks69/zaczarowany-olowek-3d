@@ -6,7 +6,6 @@ namespace Assets.Scripts.Managers
     public class FlystickManager : MonoBehaviour
     {
         public static FlystickManager Instance;
-
         public GameObject Flystick;
         public GameObject MultiTool;
 
@@ -56,12 +55,6 @@ namespace Assets.Scripts.Managers
         void Awake()
         {
             Instance = this;
-        }
-
-        //test
-        void Start()
-        {
-            //GameManager.Instance.CurrentAction = new LineDrawing();
         }
     }
 }

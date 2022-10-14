@@ -1,30 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Scripts.MonoscopicMode
 {
 	public class CameraMovement : MonoBehaviour
 	{
-
 		public float sensX;
 		public float sensY;
-
 		public Transform orientation;
+		private float xRotation;
+		private float yRotation;
 
-		float xRotation;
-		float yRotation;
-
-
-		// Use this for initialization
 		void Start()
 		{
 			Cursor.lockState = CursorLockMode.Locked;
 			Cursor.visible = false;
-			//transform.rotation = Quaternion.Euler(0, 270f, 0);
 		}
 
-		// Update is called once per frame
 		void Update()
 		{
 			if (Input.GetButton ("Move Flystick") == false) {
@@ -33,15 +24,12 @@ namespace Assets.Scripts.MonoscopicMode
 				float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;
 
 				yRotation += mouseX;
-
 				xRotation -= mouseY;
 				xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
-				//rotate cam and orientation
+				//rotate
 				transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
-				//orientation.rotation = Quaternion.Euler(0, yRotation, xRotation);
 			}
-
 		}
 	}
 }

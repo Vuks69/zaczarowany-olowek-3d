@@ -1,6 +1,4 @@
-﻿using Assets.Scripts.Managers;
-
-namespace Assets.Scripts.Actions
+﻿namespace Assets.Scripts.Actions
 {
     public class ActionsData
     {

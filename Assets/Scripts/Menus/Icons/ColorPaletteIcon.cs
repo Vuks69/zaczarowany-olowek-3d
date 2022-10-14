@@ -17,6 +17,7 @@ namespace Assets.Scripts.Menus.Icons
         {
             // Nothing happens
         }
+
         public override void Dehighlight() 
         {
             // Nothing happens

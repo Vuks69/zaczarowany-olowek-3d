@@ -6,13 +6,10 @@ namespace Assets.Scripts.Managers
 	public class GameManager : MonoBehaviour
 	{
 		public static GameManager Instance;
-
 		public Color CurrentColor { get; set; } = Color.magenta;
 		public Action CurrentAction { get; set; }
 		public ActionsData ActionsData { get; set; }
 		public float CurrentLineThickness { get; set; } = 0.0f;
-		// public GameObject LeftFlystick
-		// public GameObject CurrentSelection
 
 		void Awake()
 		{

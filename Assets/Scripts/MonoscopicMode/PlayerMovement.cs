@@ -1,30 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Scripts.MonoscopicMode
 {
 	public class PlayerMovement : MonoBehaviour
 	{
-
-		[Header("Movement")]
 		public float moveSpeed;
-
-		//public Transform orientation;
 		public CharacterController controller;
+		private float horizontalInput;
+		private float verticalInput;
 
-		float horizontalInput;
-		float verticalInput;
-
-		Vector3 moveDirection;
-
-		// Use this for initialization
-		void Start()
-		{
-			//controller.detectCollisions = false;
-		}
-
-		// Update is called once per frame
 		void Update()
 		{
 			MyInput();
@@ -43,7 +27,7 @@ namespace Assets.Scripts.MonoscopicMode
 
 		void MovePlayer()
 		{
-			moveDirection = transform.forward * verticalInput + transform.right * horizontalInput;
+			var moveDirection = transform.forward * verticalInput + transform.right * horizontalInput;
 			controller.Move(moveDirection * moveSpeed * Time.deltaTime);
 		}
 	}
