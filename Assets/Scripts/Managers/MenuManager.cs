@@ -9,26 +9,8 @@ namespace Assets.Scripts.Managers
     {
         public static MenuManager Instance;
 
-        private ToolsMenu toolsMenu;
-        public ToolsMenu ToolsMenu
-        {
-            get { return toolsMenu; }
-            set
-            {
-                InitializeToolsMenu(value);
-                toolsMenu = value;
-            }
-        }
-        private ParametersMenu parametersMenu = new ParametersMenu();
-        public ParametersMenu ParametersMenu
-        {
-            get { return parametersMenu; }
-            set
-            {
-                InitializeParametersMenu(value);
-                parametersMenu = value;
-            }
-        }
+        public ToolsMenu ToolsMenu { get; set; }
+        public ParametersMenu ParametersMenu { get; set; }
 
         public ParametersMenusData ParametersMenusData { get; set; }
 
@@ -39,27 +21,11 @@ namespace Assets.Scripts.Managers
 
         void Start()
         {
-            // InitializeParametersMenu(new ColorPickingParametersMenu());
-            // InitializeToolsMenu(new ToolsMenu());
-            // parametersMenu.MenuObject = pMenu;
             ParametersMenusData = new ParametersMenusData();
-            GameManager.Instance.ActionsData.AssignParametersMenus();
             ParametersMenu = ParametersMenusData.ColorPickingParametersMenu;
             ToolsMenu = new ToolsMenu();
             ToolsMenu.SelectedIcon = ToolsMenu.selectingIcon;
             ToolsMenu.SelectedIcon.SetSelectedColor();
-        }
-
-        private void InitializeParametersMenu(ParametersMenu menu)
-        {
-            //Instantiate(menu.MenuObject, parametersMenu.MenuObject.transform.position, parametersMenu.MenuObject.transform.rotation);
-            //Destroy(parametersMenu.MenuObject);
-        }
-
-        private void InitializeToolsMenu(ToolsMenu menu)
-        {
-            // Instantiate(menu.MenuObject, ToolsMenu.MenuObject.transform.position, ToolsMenu.MenuObject.transform.rotation);
-            // Destroy(ToolsMenu.MenuObject);
         }
     }
 }

@@ -24,6 +24,11 @@ namespace Assets.Scripts.Menus.Icons
             return this.gameObject == gameObject || sphere == gameObject || capsule == gameObject;
         }
 
+        public override void Select()
+        {
+            // Nothing happens
+        }
+
         public override void UpdateColor()
         {
             var renderer = sphere.GetComponent<Renderer>();
@@ -34,12 +39,14 @@ namespace Assets.Scripts.Menus.Icons
         {
             var newPosition = new Vector3(sphere.transform.position.x - (PreviousFlystickForward.x - FlystickManager.Instance.MultiTool.transform.forward.x), sphere.transform.position.y, initialSphereCoord.z);
             var newPositionLocal = capsule.transform.InverseTransformPoint(newPosition);
-            if (newPositionLocal.y >= -1 && newPositionLocal.y <= 1)
+            if (newPositionLocal.y >= -1.0f && newPositionLocal.y <= 1.0f)
             {
                 var flystickForward = FlystickManager.Instance.MultiTool.transform.forward;
                 sphere.transform.position = new Vector3(sphere.transform.position.x - sensitivity * (PreviousFlystickForward.x - flystickForward.x), sphere.transform.position.y, sphere.transform.position.z);
                 PreviousFlystickForward = flystickForward;
-                GameManager.Instance.CurrentLineThickness = (newPositionLocal.y + 2) / 2;
+                // TODO
+                GameManager.Instance.CurrentLineThickness = (newPositionLocal.y + 2.0f) / 2.0f;
+                GameManager.Instance.ActionsData.LineDrawing.StrokeWidth = (newPositionLocal.y + 2.0f) / 2.0f;
             }
         }
     }

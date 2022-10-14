@@ -16,7 +16,7 @@ namespace Assets.Scripts.Menus.Icons
 
         public MenuIcon(GameObject icon, Action action)
         {
-            this.gameObject = icon;
+            gameObject = icon;
             this.action = action;
 
             currentColor = DefaultColor;
@@ -26,6 +26,7 @@ namespace Assets.Scripts.Menus.Icons
         {
             GameManager.Instance.changeCurrentAction(action);
             SetColor(SelectedColor);
+            MenuManager.Instance.ParametersMenu.MenuObject.SetActive(false);
         }
 
         public void Deselect()
