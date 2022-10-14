@@ -33,7 +33,7 @@ namespace Assets.Scripts.Menus.Icons
             SetColor(DefaultColor);
         }
 
-        public void UpdateColor()
+        public virtual void UpdateColor()
         {
             var renderer = gameObject.GetComponent<Renderer>();
             renderer.material.SetColor("_Color", currentColor);
@@ -63,6 +63,11 @@ namespace Assets.Scripts.Menus.Icons
         public void SetSelectedColor()
         {
             SetColor(SelectedColor);
+        }
+
+        public virtual bool IsGameObjectInIcon(GameObject gameObject)
+        {
+            return this.gameObject == gameObject;
         }
     }
 }

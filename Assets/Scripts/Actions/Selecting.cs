@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Assets.Scripts.Managers;
-using System.Collections.Generic;
 using Assets.Scripts.Menus.Icons;
+using System.Linq;
 
 namespace Assets.Scripts.Actions
 {
@@ -12,6 +12,7 @@ namespace Assets.Scripts.Actions
         private MenuIcon highlightedIcon;
         private bool isHighlightedIcon = false;
         public Vector2 PCoord { get; set; }
+        private bool moveSlider = false;
 
         public override void Init()
         {
@@ -19,11 +20,16 @@ namespace Assets.Scripts.Actions
             pointerLineRenderer = pointer.AddComponent<LineRenderer>();
             pointerLineRenderer.startWidth = 0.1f;
             pointerLineRenderer.endWidth = 0.1f;
+            ParametersMenu = MenuManager.Instance.ParametersMenu;
         }
 
         public override void HandleTriggerUp()
         {
-            // Nothing happens
+            if (moveSlider)
+            {
+                moveSlider = false;
+                pointer.SetActive(true);
+            }
         }
 
         public override void HandleTriggerDown()
@@ -40,6 +46,12 @@ namespace Assets.Scripts.Actions
                 MenuManager.Instance.ToolsMenu.SelectedIcon = selectedIcon;
                 isHighlightedIcon = false;
                 MenuManager.Instance.ToolsMenu.IsSelectedIcon = true;
+                if (highlightedIcon.GetType() == typeof(Slider))
+                {
+                    moveSlider = true;
+                    ((Slider)highlightedIcon).PreviousFlystickForward = FlystickManager.Instance.Flystick.transform.forward;
+                    pointer.SetActive(false);
+                }
             }
         }
 
@@ -50,6 +62,14 @@ namespace Assets.Scripts.Actions
 
         public override void Update()
         {
+            if (moveSlider)
+            {
+                if (highlightedIcon.GetType() == typeof(Slider))
+                {
+                    ((Slider)highlightedIcon).Move();
+                }
+                return;
+            }
             var flystickTransform = FlystickManager.Instance.Flystick.transform;
             var multiToolTransform = FlystickManager.Instance.MultiTool.transform;
             var ray = new Ray(multiToolTransform.position, flystickTransform.forward);
@@ -70,18 +90,12 @@ namespace Assets.Scripts.Actions
                     changeHighlightedIconsColor();
                 }
 
-                var allMenusIcons = new List<MenuIcon>();
-                allMenusIcons.AddRange(MenuManager.Instance.ToolsMenu.icons);
-                allMenusIcons.AddRange(MenuManager.Instance.ParametersMenu.icons);
-
-                foreach (MenuIcon icon in allMenusIcons)
+                var allMenusIcons = MenuManager.Instance.ToolsMenu.icons.Concat(MenuManager.Instance.ParametersMenu.icons);
+                foreach (var icon in allMenusIcons.Where(y => isIconHit(y, hit)))
                 {
-                    if (icon.gameObject == hit.collider.transform.gameObject && !isSelectedTheSameObject(icon))
-                    {
-                        highlightedIcon = icon;
-                        isHighlightedIcon = true;
-                        highlightedIcon.Highlight();
-                    }
+                    highlightedIcon = icon;
+                    isHighlightedIcon = true;
+                    highlightedIcon.Highlight();
                 }
             }
             else
@@ -108,6 +122,11 @@ namespace Assets.Scripts.Actions
         private bool isSelectedTheSameObject(MenuIcon icon)
         {
             return MenuManager.Instance.ToolsMenu.IsSelectedIcon && icon.gameObject == MenuManager.Instance.ToolsMenu.SelectedIcon.gameObject;
+        }
+
+        private bool isIconHit(MenuIcon icon, RaycastHit hit)
+        {
+            return icon.IsGameObjectInIcon(hit.collider.transform.gameObject) && !isSelectedTheSameObject(icon);
         }
     }
 }

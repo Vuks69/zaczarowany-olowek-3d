@@ -10,6 +10,7 @@ namespace Assets.Scripts.Actions
         readonly GameObject tool = FlystickManager.Instance.MultiTool;
         LineRenderer lineRenderer;
         Vector3 lastPosition;
+        public float StrokeWidth { get; set; } = 0.1f;
 
         public override void Init()
         {
@@ -59,8 +60,8 @@ namespace Assets.Scripts.Actions
                 lineRenderer.material = new Material(Shader.Find("Particles/Additive"));    // todo add shader selection
                 lineRenderer.startColor = GameManager.Instance.CurrentColor;                // todo add color selection
                 lineRenderer.endColor = GameManager.Instance.CurrentColor;                  // todo add color selection
-                lineRenderer.startWidth = 0.1f;                                             // todo add width selection
-                lineRenderer.endWidth = 0.05f;                                              // todo add width selection
+                lineRenderer.startWidth = StrokeWidth;                                             // todo add width selection
+                lineRenderer.endWidth = StrokeWidth;                                              // todo add width selection
 
                 Undo.RegisterCreatedObjectUndo(line, "Created new line");
 
