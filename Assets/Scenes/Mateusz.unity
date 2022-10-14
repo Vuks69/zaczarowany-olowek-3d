@@ -645,6 +645,10 @@ Prefab:
       propertyPath: m_Name
       value: Line Thickness Slider
       objectReference: {fileID: 0}
+    - target: {fileID: 4983438930434426, guid: e17977c4bff3e344c944727f9dbf3d5c, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e17977c4bff3e344c944727f9dbf3d5c, type: 2}
   m_IsPrefabParent: 0

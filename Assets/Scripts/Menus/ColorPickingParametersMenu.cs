@@ -14,7 +14,7 @@ namespace Assets.Scripts.Menus
         private readonly ColorPickingMenuIcon predefinedBlackIcon   = new ColorPickingMenuIcon(GameObject.Find("Black"), GameManager.Instance.ActionsData.Selecting, Color.black) { DefaultColor = Color.black };
         private readonly ColorPaletteIcon colorPalette = new ColorPaletteIcon(GameObject.Find("Color Palette Icon"), GameManager.Instance.ActionsData.Selecting);
 
-        public ColorPickingParametersMenu()
+        public ColorPickingParametersMenu(GameObject gameObject) : base(gameObject)
         {
             icons = new List<MenuIcon> { predefinedRedIcon, predefinedGreenIcon, predefinedBlueIcon, predefinedWhiteIcon, predefinedBlackIcon, colorPalette };
         }
