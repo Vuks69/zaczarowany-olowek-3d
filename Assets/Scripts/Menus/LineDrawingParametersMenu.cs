@@ -7,7 +7,7 @@ namespace Assets.Scripts.Menus
 {
     public class LineDrawingParametersMenu : ParametersMenu
     {
-        private readonly Slider lineThicknessSlider = new Slider(GameObject.Find("Line Thickness Slider"), GameManager.Instance.ActionsData.LineDrawing);
+        private readonly Slider lineThicknessSlider = new Slider(GameObject.Find("Line Thickness Slider"), GameManager.Instance.ActionsData.Selecting);
 
         public LineDrawingParametersMenu()
         {

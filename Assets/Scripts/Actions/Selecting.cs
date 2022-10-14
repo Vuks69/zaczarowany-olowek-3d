@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using Assets.Scripts.Managers;
-using System.Collections.Generic;
 using Assets.Scripts.Menus.Icons;
 using System.Linq;
 
@@ -13,6 +12,7 @@ namespace Assets.Scripts.Actions
         private MenuIcon highlightedIcon;
         private bool isHighlightedIcon = false;
         public Vector2 PCoord { get; set; }
+        private bool moveSlider = false;
 
         public override void Init()
         {
@@ -25,17 +25,17 @@ namespace Assets.Scripts.Actions
 
         public override void HandleTriggerUp()
         {
-            // Nothing happens
+            if (moveSlider)
+            {
+                moveSlider = false;
+                pointer.SetActive(true);
+            }
         }
 
         public override void HandleTriggerDown()
         {
             if (isHighlightedIcon)
             {
-                if (highlightedIcon.GetType() == typeof(Slider))
-                {
-
-                }
                 var selectedIcon = MenuManager.Instance.ToolsMenu.SelectedIcon;
                 if (MenuManager.Instance.ToolsMenu.IsSelectedIcon)
                 {
@@ -46,6 +46,12 @@ namespace Assets.Scripts.Actions
                 MenuManager.Instance.ToolsMenu.SelectedIcon = selectedIcon;
                 isHighlightedIcon = false;
                 MenuManager.Instance.ToolsMenu.IsSelectedIcon = true;
+                if (highlightedIcon.GetType() == typeof(Slider))
+                {
+                    moveSlider = true;
+                    ((Slider)highlightedIcon).PreviousFlystickForward = FlystickManager.Instance.Flystick.transform.forward;
+                    pointer.SetActive(false);
+                }
             }
         }
 
@@ -56,6 +62,14 @@ namespace Assets.Scripts.Actions
 
         public override void Update()
         {
+            if (moveSlider)
+            {
+                if (highlightedIcon.GetType() == typeof(Slider))
+                {
+                    ((Slider)highlightedIcon).Move();
+                }
+                return;
+            }
             var flystickTransform = FlystickManager.Instance.Flystick.transform;
             var multiToolTransform = FlystickManager.Instance.MultiTool.transform;
             var ray = new Ray(multiToolTransform.position, flystickTransform.forward);
