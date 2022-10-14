@@ -18,7 +18,7 @@ namespace Assets.Scripts.MonoscopicMode
 
 		void Update()
 		{
-			if (Input.GetButton ("Move Flystick") == false) {
+			if (!Input.GetButton("Move Flystick")) {
 				//get mouse input
 				float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
 				float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;

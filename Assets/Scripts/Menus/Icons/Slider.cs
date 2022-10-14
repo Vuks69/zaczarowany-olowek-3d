@@ -45,8 +45,8 @@ namespace Assets.Scripts.Menus.Icons
                 sphere.transform.position = new Vector3(sphere.transform.position.x - sensitivity * (PreviousFlystickForward.x - flystickForward.x), sphere.transform.position.y, sphere.transform.position.z);
                 PreviousFlystickForward = flystickForward;
                 // TODO
-                GameManager.Instance.CurrentLineThickness = (newPositionLocal.y + 2.0f) / 2.0f;
-                GameManager.Instance.ActionsData.LineDrawing.StrokeWidth = (newPositionLocal.y + 2.0f) / 2.0f;
+                GameManager.Instance.CurrentLineThickness = ((newPositionLocal.y + 1.0f) / 2.0f) + GameManager.Instance.MinStrokeWidth;
+                GameManager.Instance.ActionsData.LineDrawing.StrokeWidth = ((newPositionLocal.y + 1.0f) / 2.0f) + GameManager.Instance.MinStrokeWidth;
             }
         }
     }

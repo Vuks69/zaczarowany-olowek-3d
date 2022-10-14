@@ -10,6 +10,7 @@ namespace Assets.Scripts.Managers
 		public Action CurrentAction { get; set; }
 		public ActionsData ActionsData { get; set; }
 		public float CurrentLineThickness { get; set; } = 0.0f;
+		public float MinStrokeWidth { get; set; } = 0.05f;
 
 		void Awake()
 		{
