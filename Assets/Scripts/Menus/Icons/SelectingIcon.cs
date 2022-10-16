@@ -4,9 +4,9 @@ using Assets.Scripts.Managers;
 
 namespace Assets.Scripts.Menus.Icons
 {
-    public class SelectingIcon : ToolsMenuIcon
+    public class IconWithoutParametersMenu : ToolsMenuIcon
     {
-        public SelectingIcon(GameObject icon, Action action) : base(icon, action, null) { }
+        public IconWithoutParametersMenu(GameObject icon, Action action) : base(icon, action, null) { }
 
         public override void Select()
         {

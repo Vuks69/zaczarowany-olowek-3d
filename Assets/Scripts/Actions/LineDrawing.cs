@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using Assets.Scripts.Managers;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Assets.Scripts.Actions
 {
@@ -9,8 +11,10 @@ namespace Assets.Scripts.Actions
         private bool drawing = false;
         private readonly GameObject tool = FlystickManager.Instance.MultiTool;
         private LineRenderer lineRenderer;
+        private GameObject line;
         private Vector3 lastPosition;
         public float StrokeWidth { get; set; } = 0.1f;
+        private List<Vector3> points = new List<Vector3>();
 
         public override void Init()
         {
@@ -24,7 +28,12 @@ namespace Assets.Scripts.Actions
 
         public override void HandleTriggerUp()
         {
+            if (!drawing)
+            {
+                return;
+            }
             StopDrawing();
+            initMesh();
         }
 
         public override void Finish()
@@ -38,6 +47,7 @@ namespace Assets.Scripts.Actions
             {
                 // once the flystick has moved away enough from last position, add new position
                 // this is done to prevent adding 60 positions per second while drawing
+                
                 lineRenderer.positionCount += 1;
                 lineRenderer.SetPosition(lineRenderer.positionCount - 1, tool.transform.position);
                 lastPosition = tool.transform.position;
@@ -49,8 +59,10 @@ namespace Assets.Scripts.Actions
             if (!drawing)
             {
                 // each line has to be its own object, as it can only have one renderer
-                var line = new GameObject();
+                line = new GameObject();
                 line.name = "line_" + System.Guid.NewGuid().ToString();
+                line.tag = "Line";
+
                 lineRenderer = line.AddComponent<LineRenderer>();
                 lineRenderer.numCapVertices = 1;
                 lineRenderer.numCornerVertices = 5;
@@ -71,6 +83,71 @@ namespace Assets.Scripts.Actions
         private void StopDrawing()
         {
             drawing = false;
+        }
+
+        private void initMesh()
+        {
+            points.Clear();
+            GameObject caret = null;
+            caret = new GameObject("Lines");
+
+            Vector3 left, right; // A position to the left of the current line
+
+            // For all but the last point
+            for (var i = 0; i < lineRenderer.positionCount - 1; i++)
+            {
+                caret.transform.position = lineRenderer.GetPosition(i);
+                caret.transform.LookAt(lineRenderer.GetPosition(i + 1));
+                right = caret.transform.position + line.transform.right * lineRenderer.startWidth / 2;
+                left = caret.transform.position - line.transform.right * lineRenderer.startWidth / 2;
+                points.Add(left);
+                points.Add(right);
+            }
+
+            // Last point looks backwards and reverses
+            caret.transform.position = lineRenderer.GetPosition(lineRenderer.positionCount - 1);
+            caret.transform.LookAt(lineRenderer.GetPosition(lineRenderer.positionCount - 2));
+            right = caret.transform.position + line.transform.right * lineRenderer.startWidth / 2;
+            left = caret.transform.position - line.transform.right * lineRenderer.startWidth / 2;
+            points.Add(left);
+            points.Add(right);
+            Object.Destroy(caret);
+            Mesh mesh = drawMesh();
+            var collider = line.AddComponent<MeshCollider>();
+            collider.sharedMesh = mesh;
+        }
+
+        private Mesh drawMesh()
+        {
+            Vector3[] verticies = new Vector3[points.Count];
+
+            for (int i = 0; i < verticies.Length; i++)
+            {
+                verticies[i] = points[i];
+            }
+
+            int[] triangles = new int[((points.Count / 2) - 1) * 6];
+
+            //Works on linear patterns tn = bn+c
+            int position = 6;
+            for (int i = 0; i < (triangles.Length / 6); i++)
+            {
+                triangles[i * position] = 2 * i;
+                triangles[i * position + 3] = 2 * i;
+
+                triangles[i * position + 1] = 2 * i + 3;
+                triangles[i * position + 4] = (2 * i + 3) - 1;
+
+                triangles[i * position + 2] = 2 * i + 1;
+                triangles[i * position + 5] = (2 * i + 1) + 2;
+            }
+
+
+            var mesh = new Mesh();
+            mesh.vertices = verticies;
+            mesh.triangles = triangles;
+            mesh.RecalculateNormals();
+            return mesh;
         }
     }
 }
