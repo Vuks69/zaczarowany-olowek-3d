@@ -11,10 +11,11 @@ namespace Assets.Scripts.Menus
         public MenuIcon selectingIcon { get; set; } = new IconWithoutParametersMenu(GameObject.Find("Selecting"), GameManager.Instance.ActionsData.Selecting);
         public MenuIcon lineDrawingIcon { get; set; } = new ToolsMenuIcon(GameObject.Find("Line Drawing"), GameManager.Instance.ActionsData.LineDrawing, MenuManager.Instance.ParametersMenusData.LineDrawingParametersMenu);
         public MenuIcon erasingIcon { get; set; } = new IconWithoutParametersMenu(GameObject.Find("Erasing"), GameManager.Instance.ActionsData.Erasing);
+        public MenuIcon objectSelecting { get; set; } = new IconWithoutParametersMenu(GameObject.Find("Object Selecting"), GameManager.Instance.ActionsData.ObjectSelecting);
 
         public ToolsMenu()
         {
-            icons = new List<MenuIcon> { colorPickingIcon, selectingIcon, lineDrawingIcon, erasingIcon };
+            icons = new List<MenuIcon> { colorPickingIcon, selectingIcon, lineDrawingIcon, erasingIcon, objectSelecting };
         }
     }
 }

@@ -2,7 +2,6 @@
 using UnityEditor;
 using Assets.Scripts.Managers;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Assets.Scripts.Actions
 {
@@ -33,7 +32,7 @@ namespace Assets.Scripts.Actions
                 return;
             }
             StopDrawing();
-            initMesh();
+            createCollider();
         }
 
         public override void Finish()
@@ -85,7 +84,7 @@ namespace Assets.Scripts.Actions
             drawing = false;
         }
 
-        private void initMesh()
+        private void createCollider()
         {
             points.Clear();
             GameObject caret = null;
