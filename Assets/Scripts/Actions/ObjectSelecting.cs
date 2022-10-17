@@ -44,5 +44,13 @@ namespace Assets.Scripts.Actions
         {
             // Nothing happens
         }
+
+        public void RemoveSelection()
+        {
+            foreach(var selectedObject in SelectedObjects)
+            {
+                Object.Destroy(selectedObject);
+            }
+        }
     }
 }
