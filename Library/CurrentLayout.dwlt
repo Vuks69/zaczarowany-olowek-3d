@@ -109,7 +109,7 @@ MonoBehaviour:
   m_MinSize: {x: 683, y: 442}
   m_MaxSize: {x: 12008, y: 8042}
   vertical: 0
-  controlID: 51
+  controlID: 26
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -133,7 +133,7 @@ MonoBehaviour:
   m_MinSize: {x: 406, y: 442}
   m_MaxSize: {x: 8006, y: 8042}
   vertical: 1
-  controlID: 88
+  controlID: 40
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -232,7 +232,7 @@ MonoBehaviour:
   m_MinSize: {x: 306, y: 221}
   m_MaxSize: {x: 8006, y: 4021}
   vertical: 0
-  controlID: 89
+  controlID: 41
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -276,8 +276,8 @@ MonoBehaviour:
     y: 0
     width: 1361
     height: 517
-  m_MinSize: {x: 104, y: 121}
-  m_MaxSize: {x: 4004, y: 4021}
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 19}
   m_Panes:
   - {fileID: 18}
@@ -335,14 +335,14 @@ MonoBehaviour:
     height: 769
   m_PersistentViewDataDictionary: {fileID: 0}
   m_SceneLighting: 1
-  lastFramingTime: 12231.245922799999
+  lastFramingTime: 4972.8819428
   m_2DMode: 0
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -4.898359, y: -0.26433063, z: 3.9338624}
+    m_Target: {x: -3.684056, y: 2.1911783, z: 0.6410973}
     speed: 2
-    m_Value: {x: -4.898359, y: -0.26433063, z: 3.9338624}
+    m_Value: {x: -3.684056, y: 2.1911783, z: 0.6410973}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -372,11 +372,11 @@ MonoBehaviour:
   m_Rotation:
     m_Target: {x: -0.21110824, y: 0.44851366, z: -0.10990618, w: -0.86150414}
     speed: 2
-    m_Value: {x: -0.21110824, y: 0.44851363, z: -0.109906174, w: -0.86150414}
+    m_Value: {x: -0.21110824, y: 0.44851366, z: -0.10990618, w: -0.86150414}
   m_Size:
-    m_Target: 8.924698
+    m_Target: 5.897355
     speed: 2
-    m_Value: 8.924698
+    m_Value: 5.897355
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -415,9 +415,9 @@ MonoBehaviour:
   m_PersistentViewDataDictionary: {fileID: 0}
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 
-    m_LastClickedID: 0
-    m_ExpandedIDs: f0fbffff00000000
+    m_SelectedIDs: fc6dfeff
+    m_LastClickedID: -102916
+    m_ExpandedIDs: 76f5ffff78f5fffff0fbffff00000000e00d0000840e0000ba0e0000ce0e0000e80e0000040f0000420f0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -578,20 +578,20 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/Materials
+    - Assets/Scripts/Actions
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Materials
+  - Assets/Scripts/Actions
   m_LastFoldersGridSize: -1
   m_LastProjectPath: D:\Program Files (x86)\Programy\unity\zaczarowany-olowek-3d
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 4a0b0000
-    m_LastClickedID: 2890
-    m_ExpandedIDs: 00000000780a0000300b00003a0c0000100d00002c0d0000203100002231000024310000
+    m_SelectedIDs: c80c0000
+    m_LastClickedID: 3272
+    m_ExpandedIDs: 00000000760a00002e0b0000380c00000e0d00002a0d00001e310000203100002231000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -619,7 +619,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000780a0000300b00003a0c0000100d00002c0d0000203100002231000024310000
+    m_ExpandedIDs: 00000000760a00002e0b0000380c00000e0d00002a0d00001e3100002031000022310000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -644,9 +644,9 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 
-    m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 1
+    m_SelectedInstanceIDs: 780e0000
+    m_LastClickedInstanceID: 3704
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c6230000
     m_RenameOverlay:
       m_UserAcceptedRename: 0

@@ -7,13 +7,20 @@ namespace Assets.Scripts.Actions
 {
     public class ObjectSelecting : Action
     {
-        private bool selecting = false;
         public HashSet<GameObject> SelectedObjects { get; set; } = new HashSet<GameObject>();
         private readonly HashSet<GameObject> toBeSelected = new HashSet<GameObject>();
         private readonly HashSet<GameObject> toBeRemoved = new HashSet<GameObject>();
+        private bool selecting = false;
+        private bool movingObjects = false;
 
         public override void HandleTriggerDown()
         {
+            if (movingObjects)
+            {
+                stopMovingObjects();
+                movingObjects = false;
+                return;
+            }
             selecting = true;
         }
 
@@ -69,6 +76,49 @@ namespace Assets.Scripts.Actions
             foreach (var selectedObject in SelectedObjects)
             {
                 Object.Destroy(selectedObject);
+            }
+        }
+
+        public void CopySelection()
+        {
+            var toBeCopied = new HashSet<GameObject>();
+            foreach (var line in SelectedObjects)
+            {
+                var gameObject = new GameObject("line_" + System.Guid.NewGuid().ToString());
+                toBeCopied.Add(gameObject);
+                gameObject.tag = "Line";
+                gameObject.transform.parent = FlystickManager.Instance.MultiTool.transform;
+
+                var copiedLineRenderer = line.GetComponent<LineRenderer>();
+                var lineRenderer = gameObject.AddComponent<LineRenderer>();
+
+                lineRenderer.numCapVertices = copiedLineRenderer.numCapVertices;
+                lineRenderer.numCornerVertices = copiedLineRenderer.numCornerVertices;
+                lineRenderer.positionCount = copiedLineRenderer.positionCount;
+
+                Vector3[] newPos = new Vector3[copiedLineRenderer.positionCount];
+                copiedLineRenderer.GetPositions(newPos);
+                lineRenderer.SetPositions(newPos);
+
+                lineRenderer.useWorldSpace = false;
+                lineRenderer.material = new Material(Shader.Find("Particles/Additive"));
+                lineRenderer.startColor = copiedLineRenderer.startColor;
+                lineRenderer.endColor = copiedLineRenderer.endColor;
+                lineRenderer.startWidth = copiedLineRenderer.startWidth;
+                lineRenderer.endWidth = copiedLineRenderer.endWidth;
+
+                // TODO add collider
+            }
+            SelectedObjects.Clear();
+            SelectedObjects.UnionWith(toBeCopied);
+            movingObjects = true;
+        }
+
+        private void stopMovingObjects()
+        {
+            foreach (var line in SelectedObjects)
+            {
+                line.transform.parent = null;
             }
         }
     }

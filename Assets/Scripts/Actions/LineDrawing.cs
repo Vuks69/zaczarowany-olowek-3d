@@ -58,25 +58,32 @@ namespace Assets.Scripts.Actions
             if (!drawing)
             {
                 // each line has to be its own object, as it can only have one renderer
-                line = new GameObject();
-                line.name = "line_" + System.Guid.NewGuid().ToString();
-                line.tag = "Line";
-
-                lineRenderer = line.AddComponent<LineRenderer>();
-                lineRenderer.numCapVertices = 1;
-                lineRenderer.numCornerVertices = 5;
-                lineRenderer.positionCount = 0;
-
-                lineRenderer.material = new Material(Shader.Find("Particles/Additive"));    // todo add shader selection
-                lineRenderer.startColor = GameManager.Instance.CurrentColor;                // todo add color selection
-                lineRenderer.endColor = GameManager.Instance.CurrentColor;                  // todo add color selection
-                lineRenderer.startWidth = StrokeWidth;                                             // todo add width selection
-                lineRenderer.endWidth = StrokeWidth;                                              // todo add width selection
+                line = instantiateLine();
 
                 Undo.RegisterCreatedObjectUndo(line, "Created new line");
 
                 drawing = true;
             }
+        }
+
+        private GameObject instantiateLine()
+        {
+            var gameObject = new GameObject();
+            gameObject.name = "line_" + System.Guid.NewGuid().ToString();
+            gameObject.tag = "Line";
+
+            lineRenderer = gameObject.AddComponent<LineRenderer>();
+            lineRenderer.numCapVertices = 1;
+            lineRenderer.numCornerVertices = 5;
+            lineRenderer.positionCount = 0;
+
+            lineRenderer.material = new Material(Shader.Find("Particles/Additive"));    // todo add shader selection
+            lineRenderer.startColor = GameManager.Instance.CurrentColor;                // todo add color selection
+            lineRenderer.endColor = GameManager.Instance.CurrentColor;                  // todo add color selection
+            lineRenderer.startWidth = StrokeWidth;                                             // todo add width selection
+            lineRenderer.endWidth = StrokeWidth;                                              // todo add width selection
+
+            return gameObject;
         }
 
         private void StopDrawing()
