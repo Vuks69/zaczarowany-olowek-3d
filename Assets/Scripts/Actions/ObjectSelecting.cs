@@ -8,7 +8,9 @@ namespace Assets.Scripts.Actions
     public class ObjectSelecting : Action
     {
         private bool selecting = false;
-        public List<GameObject> SelectedObjects { get; set; } = new List<GameObject>();
+        public HashSet<GameObject> SelectedObjects { get; set; } = new HashSet<GameObject>();
+        private readonly HashSet<GameObject> toBeSelected = new HashSet<GameObject>();
+        private readonly HashSet<GameObject> toBeRemoved = new HashSet<GameObject>();
 
         public override void HandleTriggerDown()
         {
@@ -18,6 +20,10 @@ namespace Assets.Scripts.Actions
         public override void HandleTriggerUp()
         {
             selecting = false;
+            SelectedObjects.UnionWith(toBeSelected);
+            SelectedObjects.ExceptWith(toBeRemoved);
+            toBeSelected.Clear();
+            toBeRemoved.Clear();
         }
 
         public override void Init()
@@ -34,8 +40,21 @@ namespace Assets.Scripts.Actions
                 var intersectingLines = from line in lines where multiToolBounds.Intersects(line.GetComponent<Collider>().bounds) select line;
                 foreach (var line in intersectingLines)
                 {
-                    SelectedObjects.Add(line);
-                    line.GetComponent<LineRenderer>().material = new Material(Shader.Find("Particles/Multiply"));
+                    bool willBeSelected = toBeSelected.Contains(line);
+                    bool willBeRemoved = toBeRemoved.Contains(line);
+                    if (!(willBeSelected && willBeRemoved))
+                    {
+                        if (SelectedObjects.Contains(line) && !willBeRemoved)
+                        {
+                            line.GetComponent<LineRenderer>().material = new Material(Shader.Find("Particles/Additive"));
+                            toBeRemoved.Add(line);
+                        }
+                        else if (!willBeSelected)
+                        {
+                            line.GetComponent<LineRenderer>().material = new Material(Shader.Find("Particles/Multiply"));
+                            toBeSelected.Add(line);
+                        }
+                    }
                 }
             }
         }
@@ -47,7 +66,7 @@ namespace Assets.Scripts.Actions
 
         public void RemoveSelection()
         {
-            foreach(var selectedObject in SelectedObjects)
+            foreach (var selectedObject in SelectedObjects)
             {
                 Object.Destroy(selectedObject);
             }
