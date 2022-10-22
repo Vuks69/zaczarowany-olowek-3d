@@ -46,9 +46,9 @@ namespace Assets.Scripts.Actions
             {
                 // once the flystick has moved away enough from last position, add new position
                 // this is done to prevent adding 60 positions per second while drawing
-                
+
                 lineRenderer.positionCount += 1;
-                lineRenderer.SetPosition(lineRenderer.positionCount - 1, tool.transform.position);
+                lineRenderer.SetPosition(lineRenderer.positionCount - 1, tool.transform.position - line.transform.position);
                 lastPosition = tool.transform.position;
             }
         }
@@ -71,11 +71,13 @@ namespace Assets.Scripts.Actions
             var gameObject = new GameObject();
             gameObject.name = "line_" + System.Guid.NewGuid().ToString();
             gameObject.tag = "Line";
+            gameObject.transform.position = tool.transform.position;
 
             lineRenderer = gameObject.AddComponent<LineRenderer>();
             lineRenderer.numCapVertices = 1;
             lineRenderer.numCornerVertices = 5;
             lineRenderer.positionCount = 0;
+            lineRenderer.useWorldSpace = false;
 
             lineRenderer.material = new Material(Shader.Find("Particles/Additive"));    // todo add shader selection
             lineRenderer.startColor = GameManager.Instance.CurrentColor;                // todo add color selection
@@ -93,11 +95,16 @@ namespace Assets.Scripts.Actions
 
         private void createCollider()
         {
+            if (lineRenderer.positionCount < 2)
+            {
+                return;
+            }
+
             points.Clear();
             GameObject caret = null;
             caret = new GameObject("Lines");
 
-            Vector3 left, right; // A position to the left of the current line
+            Vector3 left, right;
 
             // For all but the last point
             for (var i = 0; i < lineRenderer.positionCount - 1; i++)
@@ -113,8 +120,8 @@ namespace Assets.Scripts.Actions
             // Last point looks backwards and reverses
             caret.transform.position = lineRenderer.GetPosition(lineRenderer.positionCount - 1);
             caret.transform.LookAt(lineRenderer.GetPosition(lineRenderer.positionCount - 2));
-            right = caret.transform.position + line.transform.right * lineRenderer.startWidth / 2;
-            left = caret.transform.position - line.transform.right * lineRenderer.startWidth / 2;
+            right = caret.transform.position - line.transform.right * lineRenderer.startWidth / 2;
+            left = caret.transform.position + line.transform.right * lineRenderer.startWidth / 2;
             points.Add(left);
             points.Add(right);
             Object.Destroy(caret);
@@ -147,7 +154,6 @@ namespace Assets.Scripts.Actions
                 triangles[i * position + 2] = 2 * i + 1;
                 triangles[i * position + 5] = (2 * i + 1) + 2;
             }
-
 
             var mesh = new Mesh();
             mesh.vertices = verticies;

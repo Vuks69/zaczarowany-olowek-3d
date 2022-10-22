@@ -49,14 +49,14 @@ namespace Assets.Scripts.Actions
                 {
                     bool willBeSelected = toBeSelected.Contains(line);
                     bool willBeRemoved = toBeRemoved.Contains(line);
-                    if (!(willBeSelected && willBeRemoved))
+                    if (!willBeSelected && !willBeRemoved)
                     {
-                        if (SelectedObjects.Contains(line) && !willBeRemoved)
+                        if (SelectedObjects.Contains(line))
                         {
                             line.GetComponent<LineRenderer>().material = new Material(Shader.Find("Particles/Additive"));
                             toBeRemoved.Add(line);
                         }
-                        else if (!willBeSelected)
+                        else
                         {
                             line.GetComponent<LineRenderer>().material = new Material(Shader.Find("Particles/Multiply"));
                             toBeSelected.Add(line);
@@ -77,37 +77,41 @@ namespace Assets.Scripts.Actions
             {
                 Object.Destroy(selectedObject);
             }
+            SelectedObjects.Clear();
         }
 
         public void CopySelection()
         {
             var toBeCopied = new HashSet<GameObject>();
-            foreach (var line in SelectedObjects)
+            foreach (var oldLine in SelectedObjects)
             {
-                var gameObject = new GameObject("line_" + System.Guid.NewGuid().ToString());
-                toBeCopied.Add(gameObject);
-                gameObject.tag = "Line";
-                gameObject.transform.parent = FlystickManager.Instance.MultiTool.transform;
+                var newLine = new GameObject("line_" + System.Guid.NewGuid().ToString());
+                toBeCopied.Add(newLine);
+                newLine.tag = "Line";
+                newLine.transform.position = oldLine.transform.position;
+                newLine.transform.parent = FlystickManager.Instance.MultiTool.transform;
 
-                var copiedLineRenderer = line.GetComponent<LineRenderer>();
-                var lineRenderer = gameObject.AddComponent<LineRenderer>();
+                var oldLineRenderer = oldLine.GetComponent<LineRenderer>();
+                var newLineRenderer = newLine.AddComponent<LineRenderer>();
 
-                lineRenderer.numCapVertices = copiedLineRenderer.numCapVertices;
-                lineRenderer.numCornerVertices = copiedLineRenderer.numCornerVertices;
-                lineRenderer.positionCount = copiedLineRenderer.positionCount;
+                newLineRenderer.numCapVertices = oldLineRenderer.numCapVertices;
+                newLineRenderer.numCornerVertices = oldLineRenderer.numCornerVertices;
+                newLineRenderer.positionCount = oldLineRenderer.positionCount;
 
-                Vector3[] newPos = new Vector3[copiedLineRenderer.positionCount];
-                copiedLineRenderer.GetPositions(newPos);
-                lineRenderer.SetPositions(newPos);
+                Vector3[] newPos = new Vector3[oldLineRenderer.positionCount];
+                oldLineRenderer.GetPositions(newPos);
+                newLineRenderer.SetPositions(newPos);
 
-                lineRenderer.useWorldSpace = false;
-                lineRenderer.material = new Material(Shader.Find("Particles/Additive"));
-                lineRenderer.startColor = copiedLineRenderer.startColor;
-                lineRenderer.endColor = copiedLineRenderer.endColor;
-                lineRenderer.startWidth = copiedLineRenderer.startWidth;
-                lineRenderer.endWidth = copiedLineRenderer.endWidth;
+                newLineRenderer.useWorldSpace = false;
+                newLineRenderer.material = oldLineRenderer.material;
+                oldLineRenderer.material = new Material(Shader.Find("Particles/Additive"));
+                newLineRenderer.startColor = oldLineRenderer.startColor;
+                newLineRenderer.endColor = oldLineRenderer.endColor;
+                newLineRenderer.startWidth = oldLineRenderer.startWidth;
+                newLineRenderer.endWidth = oldLineRenderer.endWidth;
 
-                // TODO add collider
+                newLine.AddComponent<MeshCollider>();
+                newLine.GetComponent<MeshCollider>().sharedMesh = oldLineRenderer.GetComponent<MeshCollider>().sharedMesh;
             }
             SelectedObjects.Clear();
             SelectedObjects.UnionWith(toBeCopied);
@@ -119,7 +123,9 @@ namespace Assets.Scripts.Actions
             foreach (var line in SelectedObjects)
             {
                 line.transform.parent = null;
+                line.GetComponent<LineRenderer>().material = new Material(Shader.Find("Particles/Additive"));
             }
+            SelectedObjects.Clear();
         }
     }
 }
