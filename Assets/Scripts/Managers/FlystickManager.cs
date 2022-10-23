@@ -52,12 +52,12 @@ namespace Assets.Scripts.Managers
                 input = "trigger_up";
             }
 
-            if (Input.GetKeyDown(KeyCode.U))
+            if (Input.GetKeyDown(KeyCode.R))
             {
                 input = "button1";
             }
 
-            if (Input.GetKeyDown(KeyCode.R))
+            if (Input.GetKeyDown(KeyCode.U))
             {
                 input = "button2";
             }
