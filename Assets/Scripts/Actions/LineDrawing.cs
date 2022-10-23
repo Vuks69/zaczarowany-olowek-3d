@@ -17,7 +17,7 @@ namespace Assets.Scripts.Actions
 
         public override void Init()
         {
-            // Nothing happens
+            Undo.undoRedoPerformed += StopDrawing;
         }
 
         public override void HandleTriggerDown()
