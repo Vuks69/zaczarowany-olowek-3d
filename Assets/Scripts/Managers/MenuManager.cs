@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using Assets.Scripts.Menus;
+﻿using Assets.Scripts.Menus;
+using UnityEngine;
 
 namespace Assets.Scripts.Managers
 {

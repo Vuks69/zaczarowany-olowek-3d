@@ -1,6 +1,6 @@
-﻿using UnityEngine;
-using Assets.Scripts.Managers;
+﻿using Assets.Scripts.Managers;
 using System.Linq;
+using UnityEngine;
 
 namespace Assets.Scripts.Actions
 {
@@ -27,7 +27,7 @@ namespace Assets.Scripts.Actions
                 var intersectingLines = from line in lines where multiToolBounds.Intersects(line.GetComponent<Collider>().bounds) select line;
                 foreach (var line in intersectingLines)
                 {
-                    Object.Destroy(line);
+                    UnityEditor.Undo.DestroyObjectImmediate(line);
                 }
             }
         }
