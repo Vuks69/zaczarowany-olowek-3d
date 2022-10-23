@@ -27,12 +27,11 @@ namespace Assets.Scripts.Actions
 
         public override void HandleTriggerUp()
         {
-            if (!drawing)
+            if (drawing)
             {
-                return;
+                StopDrawing();
+                createCollider();
             }
-            StopDrawing();
-            createCollider();
         }
 
         public override void Finish()
@@ -68,9 +67,11 @@ namespace Assets.Scripts.Actions
 
         private GameObject instantiateLine()
         {
-            var gameObject = new GameObject();
-            gameObject.name = "line_" + System.Guid.NewGuid().ToString();
-            gameObject.tag = "Line";
+            var gameObject = new GameObject
+            {
+                name = "line_" + System.Guid.NewGuid().ToString(),
+                tag = "Line"
+            };
             gameObject.transform.position = tool.transform.position;
 
             lineRenderer = gameObject.AddComponent<LineRenderer>();
@@ -80,10 +81,10 @@ namespace Assets.Scripts.Actions
             lineRenderer.useWorldSpace = false;
 
             lineRenderer.material = new Material(Shader.Find("Particles/Additive"));    // todo add shader selection
-            lineRenderer.startColor = GameManager.Instance.CurrentColor;                // todo add color selection
-            lineRenderer.endColor = GameManager.Instance.CurrentColor;                  // todo add color selection
-            lineRenderer.startWidth = StrokeWidth;                                             // todo add width selection
-            lineRenderer.endWidth = StrokeWidth;                                              // todo add width selection
+            lineRenderer.startColor = GameManager.Instance.CurrentColor;
+            lineRenderer.endColor = GameManager.Instance.CurrentColor;
+            lineRenderer.startWidth = StrokeWidth;
+            lineRenderer.endWidth = StrokeWidth;
 
             return gameObject;
         }
