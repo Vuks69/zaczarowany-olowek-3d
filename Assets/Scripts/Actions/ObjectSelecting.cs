@@ -26,6 +26,11 @@ namespace Assets.Scripts.Actions
             toBeRemoved.Clear();
         }
 
+        public override void Init()
+        {
+            // Nothing happens
+        }
+
         public override void Update()
         {
             if (selecting)
@@ -54,22 +59,17 @@ namespace Assets.Scripts.Actions
             }
         }
 
+        public override void Finish()
+        {
+            // Nothing happens
+        }
+
         public void RemoveSelection()
         {
             foreach (var selectedObject in SelectedObjects)
             {
                 UnityEditor.Undo.DestroyObjectImmediate(selectedObject);
             }
-        }
-
-        public override void Finish()
-        {
-            // Nothing happens
-        }
-
-        public override void Init()
-        {
-            // Nothing happens
         }
     }
 }

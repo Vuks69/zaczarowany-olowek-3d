@@ -17,7 +17,7 @@ namespace Assets.Scripts.Actions
 
         public override void Init()
         {
-            Undo.undoRedoPerformed += StopDrawing; // no need to call createCollider()
+            Undo.undoRedoPerformed += StopDrawing;
         }
 
         public override void HandleTriggerDown()
@@ -27,11 +27,12 @@ namespace Assets.Scripts.Actions
 
         public override void HandleTriggerUp()
         {
-            if (drawing)
+            if (!drawing)
             {
-                StopDrawing();
-                createCollider();
+                return;
             }
+            StopDrawing();
+            createCollider();
         }
 
         public override void Finish()
