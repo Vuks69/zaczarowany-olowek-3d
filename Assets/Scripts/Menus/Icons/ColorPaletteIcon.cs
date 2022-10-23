@@ -1,6 +1,6 @@
-﻿using UnityEngine;
-using Assets.Scripts.Actions;
+﻿using Assets.Scripts.Actions;
 using Assets.Scripts.Managers;
+using UnityEngine;
 
 namespace Assets.Scripts.Menus.Icons
 {
@@ -13,12 +13,12 @@ namespace Assets.Scripts.Menus.Icons
             GameManager.Instance.CurrentColor = getColorFromPalette(GameManager.Instance.ActionsData.Selecting.PCoord);
         }
 
-        public override void Highlight() 
+        public override void Highlight()
         {
             // Nothing happens
         }
 
-        public override void Dehighlight() 
+        public override void Dehighlight()
         {
             // Nothing happens
         }

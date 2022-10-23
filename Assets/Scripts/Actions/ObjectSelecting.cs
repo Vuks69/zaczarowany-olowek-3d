@@ -1,7 +1,7 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Managers;
 using System.Collections.Generic;
-using Assets.Scripts.Managers;
 using System.Linq;
+using UnityEngine;
 
 namespace Assets.Scripts.Actions
 {

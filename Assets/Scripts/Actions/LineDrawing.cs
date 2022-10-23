@@ -1,7 +1,7 @@
-﻿using UnityEngine;
-using UnityEditor;
-using Assets.Scripts.Managers;
+﻿using Assets.Scripts.Managers;
 using System.Collections.Generic;
+using UnityEditor;
+using UnityEngine;
 
 namespace Assets.Scripts.Actions
 {
@@ -46,7 +46,7 @@ namespace Assets.Scripts.Actions
             {
                 // once the flystick has moved away enough from last position, add new position
                 // this is done to prevent adding 60 positions per second while drawing
-                
+
                 lineRenderer.positionCount += 1;
                 lineRenderer.SetPosition(lineRenderer.positionCount - 1, tool.transform.position);
                 lastPosition = tool.transform.position;

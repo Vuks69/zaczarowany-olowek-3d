@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-using UnityEditor;
-
-namespace Assets.Scripts.Actions
+﻿namespace Assets.Scripts.Actions
 {
     public abstract class Action
     {

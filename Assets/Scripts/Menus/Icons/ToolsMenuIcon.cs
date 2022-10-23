@@ -1,6 +1,6 @@
-﻿using UnityEngine;
-using Assets.Scripts.Actions;
+﻿using Assets.Scripts.Actions;
 using Assets.Scripts.Managers;
+using UnityEngine;
 
 namespace Assets.Scripts.Menus.Icons
 {

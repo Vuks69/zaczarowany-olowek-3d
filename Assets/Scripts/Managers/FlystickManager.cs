@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Menus;
 using UnityEditor;
-using Assets.Scripts.Menus;
+using UnityEngine;
 
 namespace Assets.Scripts.Managers
 {

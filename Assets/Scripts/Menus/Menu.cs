@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Assets.Scripts.Menus.Icons;
+using System.Collections.Generic;
 using UnityEngine;
-using Assets.Scripts.Menus.Icons;
 
 namespace Assets.Scripts.Menus
 {

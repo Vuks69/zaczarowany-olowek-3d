@@ -2,210 +2,209 @@
 // Date: 05/10/2016
 // No license, do whatever you want with this script
 using UnityEngine;
-using UnityEngine.Serialization;
 
 [ExecuteInEditMode]
 public class TubeRenderer : MonoBehaviour
 {
-	[SerializeField] Vector3[] _positions;
-	[SerializeField] int _sides;
-	[SerializeField] float _radiusOne;
-	[SerializeField] float _radiusTwo;
-	[SerializeField] bool _useWorldSpace = true;
-	[SerializeField] bool _useTwoRadii = false;
-	
-	private Vector3[] _vertices;
-	private Mesh _mesh;
-	private MeshFilter _meshFilter;
-	private MeshRenderer _meshRenderer;
+    [SerializeField] Vector3[] _positions;
+    [SerializeField] int _sides;
+    [SerializeField] float _radiusOne;
+    [SerializeField] float _radiusTwo;
+    [SerializeField] bool _useWorldSpace = true;
+    [SerializeField] bool _useTwoRadii = false;
 
-	public Material material
-	{
-		get { return _meshRenderer.material; }
-		set { _meshRenderer.material = value; }
-	}
+    private Vector3[] _vertices;
+    private Mesh _mesh;
+    private MeshFilter _meshFilter;
+    private MeshRenderer _meshRenderer;
 
-	void Awake()
-	{
-		_meshFilter = GetComponent<MeshFilter>();
-		if (_meshFilter == null)
-		{
-			_meshFilter = gameObject.AddComponent<MeshFilter>();
-		}
+    public Material material
+    {
+        get { return _meshRenderer.material; }
+        set { _meshRenderer.material = value; }
+    }
 
-		_meshRenderer = GetComponent<MeshRenderer>();
-		if (_meshRenderer == null)
-		{
-			_meshRenderer = gameObject.AddComponent<MeshRenderer>();
-		}
+    void Awake()
+    {
+        _meshFilter = GetComponent<MeshFilter>();
+        if (_meshFilter == null)
+        {
+            _meshFilter = gameObject.AddComponent<MeshFilter>();
+        }
 
-		_mesh = new Mesh();
-		_meshFilter.mesh = _mesh;
-	}
+        _meshRenderer = GetComponent<MeshRenderer>();
+        if (_meshRenderer == null)
+        {
+            _meshRenderer = gameObject.AddComponent<MeshRenderer>();
+        }
 
-	private void OnEnable()
-	{
-		_meshRenderer.enabled = true;
-	}
+        _mesh = new Mesh();
+        _meshFilter.mesh = _mesh;
+    }
 
-	private void OnDisable()
-	{
-		_meshRenderer.enabled = false;
-	}
+    private void OnEnable()
+    {
+        _meshRenderer.enabled = true;
+    }
 
-	void Update ()
-	{
-		GenerateMesh();
-	}
+    private void OnDisable()
+    {
+        _meshRenderer.enabled = false;
+    }
 
-	private void OnValidate()
-	{
-		_sides = Mathf.Max(3, _sides);
-	}
+    void Update()
+    {
+        GenerateMesh();
+    }
 
-	public void SetPositions(Vector3[] positions)
-	{
-		_positions = positions;
-		GenerateMesh();
-	}
+    private void OnValidate()
+    {
+        _sides = Mathf.Max(3, _sides);
+    }
 
-	private void GenerateMesh()
-	{
-		if (_mesh == null || _positions == null || _positions.Length <= 1)
-		{
-			_mesh = new Mesh();
-			return;
-		}
+    public void SetPositions(Vector3[] positions)
+    {
+        _positions = positions;
+        GenerateMesh();
+    }
 
-		var verticesLength = _sides*_positions.Length;
-		if (_vertices == null || _vertices.Length != verticesLength)
-		{
-			_vertices = new Vector3[verticesLength];
+    private void GenerateMesh()
+    {
+        if (_mesh == null || _positions == null || _positions.Length <= 1)
+        {
+            _mesh = new Mesh();
+            return;
+        }
 
-			var indices = GenerateIndices();
-			var uvs = GenerateUVs();
+        var verticesLength = _sides * _positions.Length;
+        if (_vertices == null || _vertices.Length != verticesLength)
+        {
+            _vertices = new Vector3[verticesLength];
 
-			if (verticesLength > _mesh.vertexCount)
-			{
-				_mesh.vertices = _vertices;
-				_mesh.triangles = indices;
-				_mesh.uv = uvs;
-			}
-			else
-			{
-				_mesh.triangles = indices;
-				_mesh.vertices = _vertices;
-				_mesh.uv = uvs;
-			}
-		}
+            var indices = GenerateIndices();
+            var uvs = GenerateUVs();
 
-		var currentVertIndex = 0;
+            if (verticesLength > _mesh.vertexCount)
+            {
+                _mesh.vertices = _vertices;
+                _mesh.triangles = indices;
+                _mesh.uv = uvs;
+            }
+            else
+            {
+                _mesh.triangles = indices;
+                _mesh.vertices = _vertices;
+                _mesh.uv = uvs;
+            }
+        }
 
-		for (int i = 0; i < _positions.Length; i++)
-		{
-			var circle = CalculateCircle(i);
-			foreach (var vertex in circle)
-			{
-				_vertices[currentVertIndex++] = _useWorldSpace ? transform.InverseTransformPoint(vertex) : vertex;
-			}
-		}
+        var currentVertIndex = 0;
 
-		_mesh.vertices = _vertices;
-		_mesh.RecalculateNormals();
-		_mesh.RecalculateBounds();
+        for (int i = 0; i < _positions.Length; i++)
+        {
+            var circle = CalculateCircle(i);
+            foreach (var vertex in circle)
+            {
+                _vertices[currentVertIndex++] = _useWorldSpace ? transform.InverseTransformPoint(vertex) : vertex;
+            }
+        }
 
-		_meshFilter.mesh = _mesh;
-	}
+        _mesh.vertices = _vertices;
+        _mesh.RecalculateNormals();
+        _mesh.RecalculateBounds();
 
-	private Vector2[] GenerateUVs()
-	{
-		var uvs = new Vector2[_positions.Length*_sides];
+        _meshFilter.mesh = _mesh;
+    }
 
-		for (int segment = 0; segment < _positions.Length; segment++)
-		{
-			for (int side = 0; side < _sides; side++)
-			{
-				var vertIndex = (segment * _sides + side);
-				var u = side/(_sides-1f);
-				var v = segment/(_positions.Length-1f);
+    private Vector2[] GenerateUVs()
+    {
+        var uvs = new Vector2[_positions.Length * _sides];
 
-				uvs[vertIndex] = new Vector2(u, v);
-			}
-		}
+        for (int segment = 0; segment < _positions.Length; segment++)
+        {
+            for (int side = 0; side < _sides; side++)
+            {
+                var vertIndex = (segment * _sides + side);
+                var u = side / (_sides - 1f);
+                var v = segment / (_positions.Length - 1f);
 
-		return uvs;
-	}
+                uvs[vertIndex] = new Vector2(u, v);
+            }
+        }
 
-	private int[] GenerateIndices()
-	{
-		// Two triangles and 3 vertices
-		var indices = new int[_positions.Length*_sides*2*3];
+        return uvs;
+    }
 
-		var currentIndicesIndex = 0;
-		for (int segment = 1; segment < _positions.Length; segment++)
-		{
-			for (int side = 0; side < _sides; side++)
-			{
-				var vertIndex = (segment*_sides + side);
-				var prevVertIndex = vertIndex - _sides;
+    private int[] GenerateIndices()
+    {
+        // Two triangles and 3 vertices
+        var indices = new int[_positions.Length * _sides * 2 * 3];
 
-				// Triangle one
-				indices[currentIndicesIndex++] = prevVertIndex;
-				indices[currentIndicesIndex++] = (side == _sides - 1) ? (vertIndex - (_sides - 1)) : (vertIndex + 1);
-				indices[currentIndicesIndex++] = vertIndex;
-				
+        var currentIndicesIndex = 0;
+        for (int segment = 1; segment < _positions.Length; segment++)
+        {
+            for (int side = 0; side < _sides; side++)
+            {
+                var vertIndex = (segment * _sides + side);
+                var prevVertIndex = vertIndex - _sides;
 
-				// Triangle two
-				indices[currentIndicesIndex++] = (side == _sides - 1) ? (prevVertIndex - (_sides - 1)) : (prevVertIndex + 1);
-				indices[currentIndicesIndex++] = (side == _sides - 1) ? (vertIndex - (_sides - 1)) : (vertIndex + 1);
-				indices[currentIndicesIndex++] = prevVertIndex;
-			}
-		}
+                // Triangle one
+                indices[currentIndicesIndex++] = prevVertIndex;
+                indices[currentIndicesIndex++] = (side == _sides - 1) ? (vertIndex - (_sides - 1)) : (vertIndex + 1);
+                indices[currentIndicesIndex++] = vertIndex;
 
-		return indices;
-	}
 
-	private Vector3[] CalculateCircle(int index)
-	{
-		var dirCount = 0;
-		var forward = Vector3.zero;
+                // Triangle two
+                indices[currentIndicesIndex++] = (side == _sides - 1) ? (prevVertIndex - (_sides - 1)) : (prevVertIndex + 1);
+                indices[currentIndicesIndex++] = (side == _sides - 1) ? (vertIndex - (_sides - 1)) : (vertIndex + 1);
+                indices[currentIndicesIndex++] = prevVertIndex;
+            }
+        }
 
-		// If not first index
-		if (index > 0)
-		{
-			forward += (_positions[index] - _positions[index - 1]).normalized;
-			dirCount++;
-		}
+        return indices;
+    }
 
-		// If not last index
-		if (index < _positions.Length-1)
-		{
-			forward += (_positions[index + 1] - _positions[index]).normalized;
-			dirCount++;
-		}
+    private Vector3[] CalculateCircle(int index)
+    {
+        var dirCount = 0;
+        var forward = Vector3.zero;
 
-		// Forward is the average of the connecting edges directions
-		forward = (forward/dirCount).normalized;
-		var side = Vector3.Cross(forward, forward+new Vector3(.123564f, .34675f, .756892f)).normalized;
-		var up = Vector3.Cross(forward, side).normalized;
+        // If not first index
+        if (index > 0)
+        {
+            forward += (_positions[index] - _positions[index - 1]).normalized;
+            dirCount++;
+        }
 
-		var circle = new Vector3[_sides];
-		var angle = 0f;
-		var angleStep = (2*Mathf.PI)/_sides;
+        // If not last index
+        if (index < _positions.Length - 1)
+        {
+            forward += (_positions[index + 1] - _positions[index]).normalized;
+            dirCount++;
+        }
 
-		var t = index / (_positions.Length-1f);
-		var radius = _useTwoRadii ? Mathf.Lerp(_radiusOne, _radiusTwo, t) : _radiusOne;
+        // Forward is the average of the connecting edges directions
+        forward = (forward / dirCount).normalized;
+        var side = Vector3.Cross(forward, forward + new Vector3(.123564f, .34675f, .756892f)).normalized;
+        var up = Vector3.Cross(forward, side).normalized;
 
-		for (int i = 0; i < _sides; i++)
-		{
-			var x = Mathf.Cos(angle);
-			var y = Mathf.Sin(angle);
+        var circle = new Vector3[_sides];
+        var angle = 0f;
+        var angleStep = (2 * Mathf.PI) / _sides;
 
-			circle[i] = _positions[index] + side*x* radius + up*y* radius;
+        var t = index / (_positions.Length - 1f);
+        var radius = _useTwoRadii ? Mathf.Lerp(_radiusOne, _radiusTwo, t) : _radiusOne;
 
-			angle += angleStep;
-		}
+        for (int i = 0; i < _sides; i++)
+        {
+            var x = Mathf.Cos(angle);
+            var y = Mathf.Sin(angle);
 
-		return circle;
-	}
+            circle[i] = _positions[index] + side * x * radius + up * y * radius;
+
+            angle += angleStep;
+        }
+
+        return circle;
+    }
 }

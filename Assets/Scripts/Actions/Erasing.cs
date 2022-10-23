@@ -1,6 +1,6 @@
-﻿using UnityEngine;
-using Assets.Scripts.Managers;
+﻿using Assets.Scripts.Managers;
 using System.Linq;
+using UnityEngine;
 
 namespace Assets.Scripts.Actions
 {
