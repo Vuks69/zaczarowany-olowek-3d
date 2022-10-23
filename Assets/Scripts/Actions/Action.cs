@@ -10,12 +10,14 @@ namespace Assets.Scripts.Actions
         public void HandleLeftButton()
         {
             // left button is always Undo so no need to override this
-            Undo.PerformUndo();
+            // NOT NEEDED as undo is not reliant on specific actions
+            //Undo.PerformUndo();
         }
 
         public void HandleRightButton()
         {
-            Undo.PerformRedo();
+            // NOT NEEDED as redo is not reliant on specific actions
+            //Undo.PerformRedo();
         }
 
         public abstract void Init();

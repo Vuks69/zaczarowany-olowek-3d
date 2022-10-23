@@ -13,7 +13,7 @@ namespace Assets.Scripts.Actions
         private GameObject line;
         private Vector3 lastPosition;
         public float StrokeWidth { get; set; } = 0.1f;
-        private List<Vector3> points = new List<Vector3>();
+        private readonly List<Vector3> points = new List<Vector3>();
 
         public override void Init()
         {
@@ -68,10 +68,10 @@ namespace Assets.Scripts.Actions
                 lineRenderer.positionCount = 0;
 
                 lineRenderer.material = new Material(Shader.Find("Particles/Additive"));    // todo add shader selection
-                lineRenderer.startColor = GameManager.Instance.CurrentColor;                // todo add color selection
-                lineRenderer.endColor = GameManager.Instance.CurrentColor;                  // todo add color selection
-                lineRenderer.startWidth = StrokeWidth;                                             // todo add width selection
-                lineRenderer.endWidth = StrokeWidth;                                              // todo add width selection
+                lineRenderer.startColor = GameManager.Instance.CurrentColor;
+                lineRenderer.endColor = GameManager.Instance.CurrentColor;
+                lineRenderer.startWidth = StrokeWidth;
+                lineRenderer.endWidth = StrokeWidth;
 
                 Undo.RegisterCreatedObjectUndo(line, "Created new line");
 
@@ -87,8 +87,7 @@ namespace Assets.Scripts.Actions
         private void createCollider()
         {
             points.Clear();
-            GameObject caret = null;
-            caret = new GameObject("Lines");
+            GameObject caret = new GameObject("Lines");
 
             Vector3 left, right; // A position to the left of the current line
 

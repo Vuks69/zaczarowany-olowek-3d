@@ -68,7 +68,7 @@ namespace Assets.Scripts.Actions
         {
             foreach (var selectedObject in SelectedObjects)
             {
-                Object.Destroy(selectedObject);
+                UnityEditor.Undo.DestroyObjectImmediate(selectedObject);
             }
         }
     }

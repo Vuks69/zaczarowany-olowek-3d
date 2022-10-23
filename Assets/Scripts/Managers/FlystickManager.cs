@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEditor;
 using Assets.Scripts.Menus;
 
 namespace Assets.Scripts.Managers
@@ -21,10 +22,10 @@ namespace Assets.Scripts.Managers
                     GameManager.Instance.CurrentAction.HandleTriggerUp();
                     break;
                 case "button1":
-                    // redo
+                    Undo.PerformRedo();
                     break;
                 case "button2":
-                    // undo
+                    Undo.PerformUndo();
                     break;
                 case "button3":
                     ToolsMenu toolsMenu = MenuManager.Instance.ToolsMenu;
