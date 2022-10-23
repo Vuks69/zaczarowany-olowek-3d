@@ -12,20 +12,28 @@ namespace Assets.Scripts.Managers
         // przykladowe
         void HandleInput(string input)
         {
-            if (input == "trigger_down")
+            switch (input)
             {
-                GameManager.Instance.CurrentAction.HandleTriggerDown();
-            }
-            else if (input == "trigger_up")
-            {
-                GameManager.Instance.CurrentAction.HandleTriggerUp();
-            }
-            else if (input == "button3")
-            {
-                ToolsMenu toolsMenu = MenuManager.Instance.ToolsMenu;
-                toolsMenu.selectingIcon.Select();
-                toolsMenu.SelectedIcon.Deselect();
-                toolsMenu.SelectedIcon = toolsMenu.selectingIcon;
+                case "trigger_down":
+                    GameManager.Instance.CurrentAction.HandleTriggerDown();
+                    break;
+                case "trigger_up":
+                    GameManager.Instance.CurrentAction.HandleTriggerUp();
+                    break;
+                case "button1":
+                    // redo
+                    break;
+                case "button2":
+                    // undo
+                    break;
+                case "button3":
+                    ToolsMenu toolsMenu = MenuManager.Instance.ToolsMenu;
+                    toolsMenu.selectingIcon.Select();
+                    toolsMenu.SelectedIcon.Deselect();
+                    toolsMenu.SelectedIcon = toolsMenu.selectingIcon;
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -41,6 +49,16 @@ namespace Assets.Scripts.Managers
             if (Input.GetButtonUp("Trigger"))
             {
                 input = "trigger_up";
+            }
+
+            if (Input.GetKeyDown(KeyCode.U))
+            {
+                input = "button1";
+            }
+
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                input = "button2";
             }
 
             if (Input.GetKeyDown(KeyCode.Space))
