@@ -7,13 +7,20 @@ namespace Assets.Scripts.Actions
 {
     public class ObjectSelecting : Action
     {
-        private bool selecting = false;
         public HashSet<GameObject> SelectedObjects { get; set; } = new HashSet<GameObject>();
         private readonly HashSet<GameObject> toBeSelected = new HashSet<GameObject>();
         private readonly HashSet<GameObject> toBeRemoved = new HashSet<GameObject>();
+        private bool selecting = false;
+        private bool movingObjects = false;
 
         public override void HandleTriggerDown()
         {
+            if (movingObjects)
+            {
+                stopMovingObjects();
+                movingObjects = false;
+                return;
+            }
             selecting = true;
         }
 
@@ -42,14 +49,14 @@ namespace Assets.Scripts.Actions
                 {
                     bool willBeSelected = toBeSelected.Contains(line);
                     bool willBeRemoved = toBeRemoved.Contains(line);
-                    if (!(willBeSelected && willBeRemoved))
+                    if (!willBeSelected && !willBeRemoved)
                     {
-                        if (SelectedObjects.Contains(line) && !willBeRemoved)
+                        if (SelectedObjects.Contains(line))
                         {
                             line.GetComponent<LineRenderer>().material = new Material(Shader.Find("Particles/Additive"));
                             toBeRemoved.Add(line);
                         }
-                        else if (!willBeSelected)
+                        else
                         {
                             line.GetComponent<LineRenderer>().material = new Material(Shader.Find("Particles/Multiply"));
                             toBeSelected.Add(line);
@@ -70,6 +77,55 @@ namespace Assets.Scripts.Actions
             {
                 UnityEditor.Undo.DestroyObjectImmediate(selectedObject);
             }
+            SelectedObjects.Clear();
+        }
+
+        public void CopySelection()
+        {
+            var toBeCopied = new HashSet<GameObject>();
+            foreach (var oldLine in SelectedObjects)
+            {
+                var newLine = new GameObject("line_" + System.Guid.NewGuid().ToString());
+                toBeCopied.Add(newLine);
+                newLine.tag = "Line";
+                newLine.transform.position = oldLine.transform.position;
+                newLine.transform.parent = FlystickManager.Instance.MultiTool.transform;
+
+                var oldLineRenderer = oldLine.GetComponent<LineRenderer>();
+                var newLineRenderer = newLine.AddComponent<LineRenderer>();
+
+                newLineRenderer.numCapVertices = oldLineRenderer.numCapVertices;
+                newLineRenderer.numCornerVertices = oldLineRenderer.numCornerVertices;
+                newLineRenderer.positionCount = oldLineRenderer.positionCount;
+
+                Vector3[] newPos = new Vector3[oldLineRenderer.positionCount];
+                oldLineRenderer.GetPositions(newPos);
+                newLineRenderer.SetPositions(newPos);
+
+                newLineRenderer.useWorldSpace = false;
+                newLineRenderer.material = oldLineRenderer.material;
+                oldLineRenderer.material = new Material(Shader.Find("Particles/Additive"));
+                newLineRenderer.startColor = oldLineRenderer.startColor;
+                newLineRenderer.endColor = oldLineRenderer.endColor;
+                newLineRenderer.startWidth = oldLineRenderer.startWidth;
+                newLineRenderer.endWidth = oldLineRenderer.endWidth;
+
+                newLine.AddComponent<MeshCollider>();
+                newLine.GetComponent<MeshCollider>().sharedMesh = oldLineRenderer.GetComponent<MeshCollider>().sharedMesh;
+            }
+            SelectedObjects.Clear();
+            SelectedObjects.UnionWith(toBeCopied);
+            movingObjects = true;
+        }
+
+        private void stopMovingObjects()
+        {
+            foreach (var line in SelectedObjects)
+            {
+                line.transform.parent = null;
+                line.GetComponent<LineRenderer>().material = new Material(Shader.Find("Particles/Additive"));
+            }
+            SelectedObjects.Clear();
         }
     }
 }

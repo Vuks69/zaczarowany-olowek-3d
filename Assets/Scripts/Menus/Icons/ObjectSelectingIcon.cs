@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Actions;
 using UnityEngine;
+using Assets.Scripts.Managers;
 
 namespace Assets.Scripts.Menus.Icons
 {
@@ -14,6 +15,7 @@ namespace Assets.Scripts.Menus.Icons
         public override void Select()
         {
             SetDefaultColor();
+            GameManager.Instance.changeCurrentAction(action);
             doWhenSelected();
         }
     }
