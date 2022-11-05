@@ -1,26 +1,13 @@
 ﻿using System;
-using UnityEngine;
 
 namespace Assets.Scripts.Serialization
 {
     [Serializable]
-    public abstract class SerializableObject
+    public class SerializableObject
     {
         public string name;
         public string tag;
         public SerializableVector3 position;
-
-        public struct SerializableVector3
-        {
-            public float x;
-            public float y;
-            public float z;
-        }
-    }
-
-    [Serializable]
-    public class SerializableLine : SerializableObject
-    {
         public LineRendererData lineRendererData;
 
         [Serializable]
@@ -38,6 +25,14 @@ namespace Assets.Scripts.Serialization
         }
 
         [Serializable]
+        public struct SerializableVector3
+        {
+            public float x;
+            public float y;
+            public float z;
+        }
+
+        [Serializable]
         public struct SerializableColor
         {
             public float r;
@@ -52,6 +47,4 @@ namespace Assets.Scripts.Serialization
     {
         public T[] objects;
     }
-
-
 }

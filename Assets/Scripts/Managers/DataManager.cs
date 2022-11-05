@@ -66,7 +66,7 @@ namespace Assets.Scripts.Managers
             {
                 case GlobalVars.LineName: // to serialize: transform.position and LineRenderer variables
                     var lr = toSerialize.GetComponent<LineRenderer>();
-                    serializableObject = new SerializableLine
+                    serializableObject = new SerializableObject
                     {
                         name = toSerialize.name,
                         tag = toSerialize.tag,
@@ -76,21 +76,21 @@ namespace Assets.Scripts.Managers
                             y = toSerialize.transform.position.y,
                             z = toSerialize.transform.position.z
                         },
-                        lineRendererData = new SerializableLine.LineRendererData
+                        lineRendererData = new SerializableObject.LineRendererData
                         {
                             numCapVertices = lr.numCapVertices,
                             numCornerVertices = lr.numCornerVertices,
                             positionCount = lr.positionCount,
                             useWorldSpace = lr.useWorldSpace,
                             shader = lr.material.shader.name,
-                            startColor = new SerializableLine.SerializableColor
+                            startColor = new SerializableObject.SerializableColor
                             {
                                 r = lr.startColor.r,
                                 g = lr.startColor.g,
                                 b = lr.startColor.b,
                                 a = lr.startColor.a
                             },
-                            endColor = new SerializableLine.SerializableColor
+                            endColor = new SerializableObject.SerializableColor
                             {
                                 r = lr.endColor.r,
                                 g = lr.endColor.g,
