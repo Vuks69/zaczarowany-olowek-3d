@@ -3,7 +3,7 @@
 namespace Assets.Scripts.Serialization
 {
     [Serializable]
-    public partial struct SerializableLine
+    public struct SerializableLine
     {
         public string name;
         public string tag;
