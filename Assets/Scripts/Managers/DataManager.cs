@@ -27,18 +27,22 @@ namespace Assets.Scripts.Managers
             if (objectList.Length != 0)
             {
                 // Parse the objects into serializable versions
-                var serializableArray = new SerializableObjectArrayWrapper<SerializableObject>
-                {
-                    objects = new SerializableObject[objectList.Length]
-                };
-                int i = 0;
+                var serializableArray = new SerializableObjectArrayWrapper();
                 foreach (GameObject item in objectList)
                 {
-                    serializableArray.objects[i++] = Serializator.SerializeObject(item);
+                    switch (item.name)
+                    {
+                        case GlobalVars.LineName:
+                            serializableArray.lines.Add(Serializator.SerializeLine(item));
+                            break;
+                        default:
+                            Debug.LogError("Attempted serialization of unsupported GameObject [" + item.name + "]");
+                            break;
+                    }
                 }
 
                 // Write new save
-                Debug.Log("Saving world to file: " + path + "\nObjects: " + serializableArray.objects.Length);
+                Debug.Log("Saving world to file: " + path + "\nLines: " + serializableArray.lines.Count);
                 using (StreamWriter sw = File.CreateText(path)) // overwrites old save
                 {
                     sw.Write(JsonUtility.ToJson(serializableArray));

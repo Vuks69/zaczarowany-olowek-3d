@@ -4,56 +4,37 @@ namespace Assets.Scripts.Serialization
 {
     public static class Serializator
     {
-        public static SerializableObject SerializeObject(GameObject toSerialize)
+        public static SerializableLine SerializeLine(GameObject toSerialize)
         {
-            SerializableObject serializableObject;
-            switch (toSerialize.name)
+            var lr = toSerialize.GetComponent<LineRenderer>();
+            var lrpos = new Vector3[lr.positionCount];
+            var serpos = new SerializableVector3[lr.GetPositions(lrpos)];
+            for (int i = 0; i < lrpos.Length; i++)
             {
-                case GlobalVars.LineName: // to serialize: transform.position and LineRenderer variables
-                    var lr = toSerialize.GetComponent<LineRenderer>();
-                    serializableObject = new SerializableObject
-                    {
-                        name = toSerialize.name,
-                        tag = toSerialize.tag,
-                        position = new SerializableObject.SerializableVector3
-                        {
-                            x = toSerialize.transform.position.x,
-                            y = toSerialize.transform.position.y,
-                            z = toSerialize.transform.position.z
-                        },
-                        lineRendererData = new SerializableObject.LineRendererData
-                        {
-                            numCapVertices = lr.numCapVertices,
-                            numCornerVertices = lr.numCornerVertices,
-                            positionCount = lr.positionCount,
-                            useWorldSpace = lr.useWorldSpace,
-                            shader = lr.material.shader.name,
-                            startColor = new SerializableObject.SerializableColor
-                            {
-                                r = lr.startColor.r,
-                                g = lr.startColor.g,
-                                b = lr.startColor.b,
-                                a = lr.startColor.a
-                            },
-                            endColor = new SerializableObject.SerializableColor
-                            {
-                                r = lr.endColor.r,
-                                g = lr.endColor.g,
-                                b = lr.endColor.b,
-                                a = lr.endColor.a
-                            },
-                            startWidth = lr.startWidth,
-                            endWidth = lr.endWidth,
-                        }
-                    };
-                    break;
-                default:
-                    Debug.LogError("Attempted serialization of unsupported GameObject [" + toSerialize.name + "]");
-                    return null;
+                serpos[i] = new SerializableVector3(lrpos[i]);
             }
 
-            return serializableObject;
+            SerializableLine serializableLine = new SerializableLine
+            {
+                name = toSerialize.name,
+                tag = toSerialize.tag,
+                position = new SerializableVector3(toSerialize.transform.position),
+                lineRendererData = new SerializableLine.LineRendererData
+                {
+                    numCapVertices = lr.numCapVertices,
+                    numCornerVertices = lr.numCornerVertices,
+                    positionCount = lr.positionCount,
+                    useWorldSpace = lr.useWorldSpace,
+                    shader = lr.material.shader.name,
+                    startColor = new SerializableColor(lr.startColor),
+                    endColor = new SerializableColor(lr.endColor),
+                    startWidth = lr.startWidth,
+                    endWidth = lr.endWidth,
+                    positions = serpos
+                }
+            };
+
+            return serializableLine;
         }
     }
-
 }
