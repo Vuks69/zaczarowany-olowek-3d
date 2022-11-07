@@ -33,6 +33,12 @@ namespace Assets.Scripts.Managers
                     toolsMenu.SelectedIcon.Deselect();
                     toolsMenu.SelectedIcon = toolsMenu.selectingIcon;
                     break;
+                case "save_state":
+                    DataManager.Instance.SaveWorld();
+                    break;
+                case "load_state":
+                    DataManager.Instance.LoadWorld();
+                    break;
                 default:
                     break;
             }
@@ -65,6 +71,16 @@ namespace Assets.Scripts.Managers
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 input = "button3";
+            }
+
+            if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.S))
+            {
+                input = "save_state";
+            }
+
+            if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.R))
+            {
+                input = "load_state";
             }
 
             HandleInput(input);

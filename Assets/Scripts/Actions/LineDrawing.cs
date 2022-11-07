@@ -30,7 +30,14 @@ namespace Assets.Scripts.Actions
             if (drawing)
             {
                 StopDrawing();
-                createCollider();
+                if (lineRenderer.positionCount < 2)
+                {
+                    Undo.RevertAllInCurrentGroup();
+                }
+                else
+                {
+                    createCollider();
+                }
             }
         }
 
@@ -41,7 +48,7 @@ namespace Assets.Scripts.Actions
 
         public override void Update()
         {
-            if (drawing && Vector3.Distance(lastPosition, tool.transform.position) > 0.02f)
+            if (drawing && Vector3.Distance(lastPosition, tool.transform.position) > 0.005f)
             {
                 // once the flystick has moved away enough from last position, add new position
                 // this is done to prevent adding 60 positions per second while drawing
@@ -67,10 +74,10 @@ namespace Assets.Scripts.Actions
 
         private GameObject instantiateLine()
         {
-            var gameObject = new GameObject
+            GameObject gameObject = new GameObject
             {
-                name = "line_" + System.Guid.NewGuid().ToString(),
-                tag = "Line"
+                name = GlobalVars.LineName,
+                tag = GlobalVars.UniversalTag
             };
             gameObject.transform.position = tool.transform.position;
 
@@ -96,11 +103,6 @@ namespace Assets.Scripts.Actions
 
         private void createCollider()
         {
-            if (lineRenderer.positionCount < 2)
-            {
-                return;
-            }
-
             points.Clear();
             GameObject caret = new GameObject("Lines");
 
