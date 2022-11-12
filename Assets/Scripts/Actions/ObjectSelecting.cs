@@ -11,27 +11,46 @@ namespace Assets.Scripts.Actions
         public HashSet<GameObject> SelectedObjects { get; set; } = new HashSet<GameObject>();
         private readonly HashSet<GameObject> toBeSelected = new HashSet<GameObject>();
         private readonly HashSet<GameObject> toBeRemoved = new HashSet<GameObject>();
-        private bool selecting = false;
-        private bool movingObjects = false;
+        private GameObject[] gameObjects;
+        protected SelectionState CurrentState = SelectionState.STANDBY;
+
+        protected enum SelectionState
+        {
+            STANDBY,
+            SELECTING,
+            COPYING
+        }
 
         public override void HandleTriggerDown()
         {
-            if (movingObjects)
+            switch (CurrentState)
             {
-                stopMovingObjects();
-                movingObjects = false;
-                return;
+                case SelectionState.COPYING:
+                    StopMovingObjects();
+                    CurrentState = SelectionState.STANDBY;
+                    break;
+                default:
+                    CurrentState = SelectionState.SELECTING;
+                    gameObjects = GameObject.FindGameObjectsWithTag(GlobalVars.UniversalTag);
+                    break;
             }
-            selecting = true;
         }
 
         public override void HandleTriggerUp()
         {
-            selecting = false;
-            SelectedObjects.UnionWith(toBeSelected);
-            SelectedObjects.ExceptWith(toBeRemoved);
-            toBeSelected.Clear();
-            toBeRemoved.Clear();
+            switch(CurrentState)
+            {
+                case SelectionState.SELECTING:
+                    CurrentState = SelectionState.STANDBY;
+                    SelectedObjects.UnionWith(toBeSelected);
+                    SelectedObjects.ExceptWith(toBeRemoved);
+                    toBeSelected.Clear();
+                    toBeRemoved.Clear();
+                    break;
+                default:
+                    break;
+            }
+            
         }
 
         public override void Init()
@@ -41,26 +60,28 @@ namespace Assets.Scripts.Actions
 
         public override void Update()
         {
-            if (selecting)
+            if (CurrentState == SelectionState.SELECTING)
             {
                 Bounds multiToolBounds = FlystickManager.Instance.MultiTool.GetComponent<Collider>().bounds;
-                var lines = GameObject.FindGameObjectsWithTag("Line");
-                var intersectingLines = from line in lines where multiToolBounds.Intersects(line.GetComponent<Collider>().bounds) select line;
-                foreach (var line in intersectingLines)
+                var intersectingObjects = from item
+                                          in gameObjects
+                                          where multiToolBounds.Intersects(item.GetComponent<Collider>().bounds)
+                                          select item;
+                foreach (GameObject intersectingObject in intersectingObjects)
                 {
-                    bool willBeSelected = toBeSelected.Contains(line);
-                    bool willBeRemoved = toBeRemoved.Contains(line);
+                    bool willBeSelected = toBeSelected.Contains(intersectingObject);
+                    bool willBeRemoved = toBeRemoved.Contains(intersectingObject);
                     if (!willBeSelected && !willBeRemoved)
                     {
-                        if (SelectedObjects.Contains(line))
+                        if (SelectedObjects.Contains(intersectingObject))
                         {
-                            line.GetComponent<LineRenderer>().material = new Material(Shader.Find("Particles/Additive"));
-                            toBeRemoved.Add(line);
+                            intersectingObject.GetComponent<LineRenderer>().material = new Material(Shader.Find("Particles/Additive"));
+                            toBeRemoved.Add(intersectingObject);
                         }
                         else
                         {
-                            line.GetComponent<LineRenderer>().material = new Material(Shader.Find("Particles/Multiply"));
-                            toBeSelected.Add(line);
+                            intersectingObject.GetComponent<LineRenderer>().material = new Material(Shader.Find("Particles/Multiply"));
+                            toBeSelected.Add(intersectingObject);
                         }
                     }
                 }
@@ -85,17 +106,22 @@ namespace Assets.Scripts.Actions
         {
             Undo.SetCurrentGroupName("Copy Selection");
             int group = Undo.GetCurrentGroup();
-            var toBeCopied = new HashSet<GameObject>();
-            foreach (var oldLine in SelectedObjects)
-            {
-                var newLine = new GameObject("line_" + System.Guid.NewGuid().ToString());
-                toBeCopied.Add(newLine);
-                newLine.tag = "Line";
-                newLine.transform.position = oldLine.transform.position;
-                newLine.transform.parent = FlystickManager.Instance.MultiTool.transform;
 
-                var oldLineRenderer = oldLine.GetComponent<LineRenderer>();
-                var newLineRenderer = newLine.AddComponent<LineRenderer>();
+            var toBeCopied = new HashSet<GameObject>();
+            foreach (var oldObj in SelectedObjects)
+            {
+
+                GameObject newObj = new GameObject
+                {
+                    name = GlobalVars.LineName,
+                    tag = GlobalVars.UniversalTag
+                };
+                newObj.transform.position = oldObj.transform.position;
+                newObj.transform.rotation = oldObj.transform.rotation;
+                newObj.transform.parent = FlystickManager.Instance.MultiTool.transform;
+
+                var oldLineRenderer = oldObj.GetComponent<LineRenderer>();
+                var newLineRenderer = newObj.AddComponent<LineRenderer>();
 
                 newLineRenderer.numCapVertices = oldLineRenderer.numCapVertices;
                 newLineRenderer.numCornerVertices = oldLineRenderer.numCornerVertices;
@@ -113,23 +139,24 @@ namespace Assets.Scripts.Actions
                 newLineRenderer.startWidth = oldLineRenderer.startWidth;
                 newLineRenderer.endWidth = oldLineRenderer.endWidth;
 
-                newLine.AddComponent<MeshCollider>();
-                newLine.GetComponent<MeshCollider>().sharedMesh = oldLineRenderer.GetComponent<MeshCollider>().sharedMesh;
+                newObj.AddComponent<MeshCollider>();
+                newObj.GetComponent<MeshCollider>().sharedMesh = oldLineRenderer.GetComponent<MeshCollider>().sharedMesh;
 
-                Undo.RegisterCreatedObjectUndo(newLine, "Create Copied Line");
+                Undo.RegisterCreatedObjectUndo(newObj, "Create Copied Object");
+                toBeCopied.Add(newObj);
             }
             Undo.CollapseUndoOperations(group);
             SelectedObjects.Clear();
             SelectedObjects.UnionWith(toBeCopied);
-            movingObjects = true;
+            CurrentState = SelectionState.COPYING;
         }
 
-        private void stopMovingObjects()
+        private void StopMovingObjects()
         {
-            foreach (var line in SelectedObjects)
+            foreach (var obj in SelectedObjects)
             {
-                line.transform.parent = null;
-                line.GetComponent<LineRenderer>().material = new Material(Shader.Find("Particles/Additive"));
+                obj.transform.parent = null;
+                obj.GetComponent<LineRenderer>().material = new Material(Shader.Find("Particles/Additive"));
             }
             SelectedObjects.Clear();
         }

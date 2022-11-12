@@ -7,10 +7,12 @@ namespace Assets.Scripts.Actions
     public class Erasing : Action
     {
         private bool erasing = false;
+        private GameObject[] gameObjects;
 
         public override void HandleTriggerDown()
         {
             erasing = true;
+            gameObjects = GameObject.FindGameObjectsWithTag(GlobalVars.UniversalTag);
         }
 
         public override void HandleTriggerUp()
@@ -23,11 +25,14 @@ namespace Assets.Scripts.Actions
             if (erasing)
             {
                 Bounds multiToolBounds = FlystickManager.Instance.MultiTool.GetComponent<Collider>().bounds;
-                var lines = GameObject.FindGameObjectsWithTag("Line");
-                var intersectingLines = from line in lines where multiToolBounds.Intersects(line.GetComponent<Collider>().bounds) select line;
-                foreach (var line in intersectingLines)
+                var intersectingObjects = from item
+                                          in gameObjects
+                                          where item != null
+                                          where multiToolBounds.Intersects(item.GetComponent<Collider>().bounds)
+                                          select item;
+                foreach (GameObject objToDelete in intersectingObjects)
                 {
-                    UnityEditor.Undo.DestroyObjectImmediate(line);
+                    UnityEditor.Undo.DestroyObjectImmediate(objToDelete);
                 }
             }
         }
