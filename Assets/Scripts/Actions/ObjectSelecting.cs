@@ -38,7 +38,7 @@ namespace Assets.Scripts.Actions
 
         public override void HandleTriggerUp()
         {
-            switch(CurrentState)
+            switch (CurrentState)
             {
                 case SelectionState.SELECTING:
                     CurrentState = SelectionState.STANDBY;
@@ -50,7 +50,7 @@ namespace Assets.Scripts.Actions
                 default:
                     break;
             }
-            
+
         }
 
         public override void Init()
