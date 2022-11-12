@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Actions;
+using System.Collections.Generic;
+using UnityEditor;
+using UnityEngine;
 
 namespace Assets.Scripts.Serialization
 {
@@ -35,6 +38,62 @@ namespace Assets.Scripts.Serialization
             };
 
             return serializableLine;
+        }
+
+        public static GameObject DeserializeLine(SerializableLine toDeserialize)
+        {
+            GameObject line = new GameObject()
+            {
+                name = toDeserialize.name,
+                tag = toDeserialize.tag
+            };
+            line.transform.position = new Vector3()
+            {
+                x = toDeserialize.position.x,
+                y = toDeserialize.position.y,
+                z = toDeserialize.position.z
+            };
+
+            LineRenderer lr = line.AddComponent<LineRenderer>();
+            lr.numCapVertices = toDeserialize.lineRendererData.numCapVertices;
+            lr.numCornerVertices = toDeserialize.lineRendererData.numCornerVertices;
+            lr.positionCount = toDeserialize.lineRendererData.positionCount;
+            lr.useWorldSpace = toDeserialize.lineRendererData.useWorldSpace;
+            lr.material = new Material(Shader.Find(toDeserialize.lineRendererData.shader));
+            lr.startColor = new Color()
+            {
+                r = toDeserialize.lineRendererData.startColor.r,
+                g = toDeserialize.lineRendererData.startColor.g,
+                b = toDeserialize.lineRendererData.startColor.b,
+                a = toDeserialize.lineRendererData.startColor.a
+            };
+            lr.endColor = new Color()
+            {
+                r = toDeserialize.lineRendererData.endColor.r,
+                g = toDeserialize.lineRendererData.endColor.g,
+                b = toDeserialize.lineRendererData.endColor.b,
+                a = toDeserialize.lineRendererData.endColor.a
+            };
+            lr.startWidth = toDeserialize.lineRendererData.startWidth;
+            lr.endWidth = toDeserialize.lineRendererData.endWidth;
+
+            Vector3[] positions = new Vector3[toDeserialize.lineRendererData.positionCount];
+            for (int i = 0; i < positions.Length; i++)
+            {
+                positions[i] = new Vector3()
+                {
+                    x = toDeserialize.lineRendererData.positions[i].x,
+                    y = toDeserialize.lineRendererData.positions[i].y,
+                    z = toDeserialize.lineRendererData.positions[i].z
+                };
+            }
+            lr.SetPositions(positions);
+
+            LineDrawing.createCollider(line);
+
+            Undo.RegisterCreatedObjectUndo(line, "Deserialized Line");
+
+            return line;
         }
     }
 }
