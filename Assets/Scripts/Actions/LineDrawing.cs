@@ -13,7 +13,6 @@ namespace Assets.Scripts.Actions
         private GameObject line;
         private Vector3 lastPosition;
         public float StrokeWidth { get; set; } = 0.1f;
-        private readonly List<Vector3> points = new List<Vector3>();
 
         public override void Init()
         {
@@ -36,7 +35,7 @@ namespace Assets.Scripts.Actions
                 }
                 else
                 {
-                    createCollider();
+                    createCollider(line);
                 }
             }
         }
@@ -101,11 +100,11 @@ namespace Assets.Scripts.Actions
             drawing = false;
         }
 
-        private void createCollider()
+        public static void createCollider(GameObject line)
         {
-            points.Clear();
             GameObject caret = new GameObject("Lines");
-
+            LineRenderer lineRenderer = line.GetComponent<LineRenderer>();
+            List<Vector3> points = new List<Vector3>();
             Vector3 left, right;
 
             // For all but the last point
@@ -127,18 +126,18 @@ namespace Assets.Scripts.Actions
             points.Add(left);
             points.Add(right);
             Object.Destroy(caret);
-            Mesh mesh = drawMesh();
+            Mesh mesh = drawMesh(points);
             var collider = line.AddComponent<MeshCollider>();
             collider.sharedMesh = mesh;
         }
 
-        private Mesh drawMesh()
+        public static Mesh drawMesh(List<Vector3> points)
         {
-            Vector3[] verticies = new Vector3[points.Count];
+            Vector3[] vertices = new Vector3[points.Count];
 
-            for (int i = 0; i < verticies.Length; i++)
+            for (int i = 0; i < vertices.Length; i++)
             {
-                verticies[i] = points[i];
+                vertices[i] = points[i];
             }
 
             int[] triangles = new int[((points.Count / 2) - 1) * 6];
@@ -158,7 +157,7 @@ namespace Assets.Scripts.Actions
             }
 
             var mesh = new Mesh();
-            mesh.vertices = verticies;
+            mesh.vertices = vertices;
             mesh.triangles = triangles;
             mesh.RecalculateNormals();
             return mesh;
