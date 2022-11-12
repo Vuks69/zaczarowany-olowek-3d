@@ -52,15 +52,24 @@ namespace Assets.Scripts.Managers
 
         public void LoadWorld()
         {
-            //if (File.Exists(path))
-            //{
-            //    Debug.Log("Loading world from file: " + path);
-            //    GameObject[] objectList = JsonUtility.FromJson<GameObject[]>(File.ReadAllText(path));
-            //}
-            //else
-            //{
-            //    Debug.LogError("Savefile not found at " + path);
-            //}
+            if (!File.Exists(path))
+            {
+                Debug.LogError("Savefile not found at: " + path);
+                return;
+            }
+
+            Debug.Log("Loading world from file: " + path);
+            string toDeserialize;
+            using (StreamReader sw = File.OpenText(path))
+            {
+                toDeserialize = sw.ReadToEnd();
+            }
+
+            var serializableArray = JsonUtility.FromJson<SerializableObjectArrayWrapper>(toDeserialize);
+            foreach (var serializableLine in serializableArray.lines)
+            {
+                Serializator.DeserializeLine(serializableLine);
+            }
         }
     }
 }
