@@ -8,17 +8,25 @@ namespace Assets.Scripts.Actions
     {
         private GameObject pointer;
         private GameObject lastHit;
+        private Transform lastParent;
         private Color lastColor;
         private LineRenderer pointerLineRenderer;
 
         public override void HandleTriggerDown()
         {
-            // nothing
+            if (lastHit != null)
+            {
+                lastParent = lastHit.transform.parent;
+                lastHit.transform.parent = FlystickManager.Instance.MultiTool.transform;
+            }
         }
 
         public override void HandleTriggerUp()
         {
-            // nothing
+            if (lastHit != null)
+            {
+                lastHit.transform.parent = lastParent;
+            }
         }
 
         public override void Init()
@@ -39,18 +47,21 @@ namespace Assets.Scripts.Actions
             pointerLineRenderer.SetPosition(0, multiToolTransform.position);
             pointerLineRenderer.SetPosition(1, flystickTransform.forward * 100);
             RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, 1000) && hit.collider.transform.gameObject != lastHit &&
-                    hit.collider.transform.gameObject.CompareTag(GlobalVars.UniversalTag))
+            if (Physics.Raycast(ray, out hit, 1000))
             {
-                //we got a hit on new object
-                Unhighlight();
-                lastHit = hit.collider.transform.gameObject;
-                Highlight();
+                pointerLineRenderer.SetPosition(1, hit.point);
+
+                if (hit.collider.transform.gameObject != lastHit &&
+                       hit.collider.transform.gameObject.CompareTag(GlobalVars.UniversalTag))
+                {
+                    //we got a hit on new object
+                    Unhighlight();
+                    lastHit = hit.collider.transform.gameObject;
+                    Highlight();
+                    return;
+                }
             }
-            else
-            {
-                Unhighlight();
-            }
+            Unhighlight();
         }
 
         public override void Finish()
