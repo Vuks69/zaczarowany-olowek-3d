@@ -76,7 +76,7 @@ namespace Assets.Scripts.Actions
             pointerLineRenderer.SetPosition(1, multiToolTransform.position + multiToolTransform.forward * 10.0f);
 
             RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, 10))
+            if (Physics.Raycast(ray, out hit, 100))
             {
                 pointerLineRenderer.SetPosition(1, hit.point);
                 PCoord = hit.textureCoord;
