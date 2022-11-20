@@ -25,7 +25,7 @@ namespace Assets.Scripts.Actions
         {
             pointer = new GameObject("Selecting Pointer");
             pointerLineRenderer = pointer.AddComponent<LineRenderer>();
-            pointerLineRenderer.startWidth = 0.1f;
+            pointerLineRenderer.startWidth = 0.03f;
             pointerLineRenderer.endWidth = 0.01f;
             pointerLineRenderer.enabled = true;
         }
