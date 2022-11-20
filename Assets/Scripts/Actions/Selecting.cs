@@ -76,8 +76,9 @@ namespace Assets.Scripts.Actions
             pointerLineRenderer.SetPosition(1, multiToolTransform.position + multiToolTransform.forward * 10.0f);
 
             RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, 1000))
+            if (Physics.Raycast(ray, out hit, 10))
             {
+                pointerLineRenderer.SetPosition(1, hit.point);
                 PCoord = hit.textureCoord;
 
                 if (isHighlightedIcon)
@@ -99,7 +100,6 @@ namespace Assets.Scripts.Actions
             }
             else
             {
-                //pointerLineRenderer.enabled = false;
                 if (isHighlightedIcon)
                 {
                     changeHighlightedIconsColor();
