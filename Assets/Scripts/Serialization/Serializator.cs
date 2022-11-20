@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts.Actions;
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
