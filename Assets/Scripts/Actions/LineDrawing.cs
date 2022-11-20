@@ -7,20 +7,12 @@ namespace Assets.Scripts.Actions
 {
     public class LineDrawing : Action
     {
-		public enum LineType
-		{
-			LineRenderer, 
-			Cylinder,
-			Cube
-		}
-
         private bool drawing = false;
         private readonly GameObject tool = FlystickManager.Instance.MultiTool;
         private LineRenderer lineRenderer;
         private GameObject line;
         private Vector3 lastPosition;
         public float StrokeWidth { get; set; } = 0.1f;
-		public LineType type = LineType.Cylinder;
 
         public override void Init()
         {
@@ -37,18 +29,14 @@ namespace Assets.Scripts.Actions
             if (drawing)
             {
                 StopDrawing();
-				if (type == LineType.LineRenderer)
-				{
-					if (lineRenderer.positionCount < 2)
-					{
-						Undo.RevertAllInCurrentGroup();
-					}
-					else
-					{
-						createCollider(line);
-					}
-				}
-               
+                if (lineRenderer.positionCount < 2)
+                {
+                    Undo.RevertAllInCurrentGroup();
+                }
+                else
+                {
+                    createCollider(line);
+                }
             }
         }
 
@@ -59,44 +47,14 @@ namespace Assets.Scripts.Actions
 
         public override void Update()
         {
-			if (drawing && Vector3.Distance (lastPosition, tool.transform.position) > 0.005f)
+            if (drawing && Vector3.Distance(lastPosition, tool.transform.position) > 0.005f)
             {
                 // once the flystick has moved away enough from last position, add new position
                 // this is done to prevent adding 60 positions per second while drawing
-				if (type == LineType.LineRenderer) {
-					//if (Vector3.Distance (lastPosition, tool.transform.position) > 0.005f) {
-					lineRenderer.positionCount += 1;
-					lineRenderer.SetPosition (lineRenderer.positionCount - 1, tool.transform.position - line.transform.position);
-					//}
-				} else 
-				{
-					GameObject newSegment = new GameObject ();
-					if (type == LineType.Cylinder) 
-					{
-						newSegment = GameObject.CreatePrimitive (PrimitiveType.Cylinder);
-					} 
-					else if (type == LineType.Cube) 
-					{
-						newSegment = GameObject.CreatePrimitive (PrimitiveType.Cube);
-					}
-					else 
-					{
-						Debug.Log ("Unknown line type!");
-					}
-					newSegment.transform.parent = line.transform;
-					newSegment.GetComponent<Renderer>().material.color = GameManager.Instance.CurrentColor;
-					newSegment.transform.position = Vector3.Lerp (lastPosition, tool.transform.position, 0.5f);		
-					newSegment.transform.localScale = (new Vector3 (StrokeWidth, StrokeWidth, StrokeWidth)) / 2;
-					Vector3 cylinderScale = newSegment.transform.localScale;
-					cylinderScale.y = Vector3.Distance (tool.transform.position, lastPosition);
-					newSegment.transform.localScale = cylinderScale;
-					Vector3 rotationVector = Vector3.Normalize (tool.transform.position - lastPosition);
-					rotationVector += new Vector3 (0, 1, 0);
-					newSegment.transform.rotation = new Quaternion (rotationVector.x, rotationVector.y, rotationVector.z, 0);
-					lastPosition = tool.transform.position;
-				}
 
-				lastPosition = tool.transform.position;  
+                lineRenderer.positionCount += 1;
+                lineRenderer.SetPosition(lineRenderer.positionCount - 1, tool.transform.position - line.transform.position);
+                lastPosition = tool.transform.position;
             }
         }
 
@@ -122,21 +80,17 @@ namespace Assets.Scripts.Actions
             };
             gameObject.transform.position = tool.transform.position;
 
-			if (type == LineType.LineRenderer) {
-				lineRenderer = gameObject.AddComponent<LineRenderer> ();
-				lineRenderer.numCapVertices = 1;
-				lineRenderer.numCornerVertices = 5;
-				lineRenderer.positionCount = 0;
-				lineRenderer.useWorldSpace = false;
+            lineRenderer = gameObject.AddComponent<LineRenderer>();
+            lineRenderer.numCapVertices = 1;
+            lineRenderer.numCornerVertices = 5;
+            lineRenderer.positionCount = 0;
+            lineRenderer.useWorldSpace = false;
 
-				lineRenderer.material = new Material (Shader.Find ("Particles/Additive"));    // todo add shader selection
-				lineRenderer.startColor = GameManager.Instance.CurrentColor;
-				lineRenderer.endColor = GameManager.Instance.CurrentColor;
-				lineRenderer.startWidth = StrokeWidth;
-				lineRenderer.endWidth = StrokeWidth;
-			}
-            
-			lastPosition = tool.transform.position;
+            lineRenderer.material = new Material(Shader.Find("Particles/Additive"));    // todo add shader selection
+            lineRenderer.startColor = GameManager.Instance.CurrentColor;
+            lineRenderer.endColor = GameManager.Instance.CurrentColor;
+            lineRenderer.startWidth = StrokeWidth;
+            lineRenderer.endWidth = StrokeWidth;
 
             return gameObject;
         }
@@ -208,10 +162,5 @@ namespace Assets.Scripts.Actions
             mesh.RecalculateNormals();
             return mesh;
         }
-
-		public void SetLineType(LineType lineType)
-		{
-			this.type = lineType;
-		}
     }
 }
