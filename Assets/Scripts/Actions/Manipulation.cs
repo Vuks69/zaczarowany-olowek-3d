@@ -8,6 +8,7 @@ namespace Assets.Scripts.Actions
     {
         private GameObject pointer;
         private GameObject lastHit;
+        private GameObject currentlyMoved;
         private Transform lastParent;
         private Color lastColor;
         private LineRenderer pointerLineRenderer;
@@ -17,15 +18,17 @@ namespace Assets.Scripts.Actions
             if (lastHit != null)
             {
                 lastParent = lastHit.transform.parent;
+                currentlyMoved = lastHit;
                 lastHit.transform.parent = FlystickManager.Instance.MultiTool.transform;
             }
         }
 
         public override void HandleTriggerUp()
         {
-            if (lastHit != null)
+            if (currentlyMoved != null)
             {
-                lastHit.transform.parent = lastParent;
+                currentlyMoved.transform.parent = lastParent;
+                currentlyMoved = null;
             }
         }
 
@@ -40,19 +43,22 @@ namespace Assets.Scripts.Actions
 
         public override void Update()
         {
-            var flystickTransform = FlystickManager.Instance.Flystick.transform;
             var multiToolTransform = FlystickManager.Instance.MultiTool.transform;
-            var ray = new Ray(multiToolTransform.position, flystickTransform.forward);
-            pointerLineRenderer.enabled = true;
+            var ray = new Ray(multiToolTransform.position, multiToolTransform.forward);
             pointerLineRenderer.SetPosition(0, multiToolTransform.position);
-            pointerLineRenderer.SetPosition(1, flystickTransform.forward * 100);
+            pointerLineRenderer.SetPosition(1, multiToolTransform.position + multiToolTransform.forward * 10.0f);
+
             RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, 1000))
+            if (Physics.Raycast(ray, out hit, 100))
             {
                 pointerLineRenderer.SetPosition(1, hit.point);
 
-                if (hit.collider.transform.gameObject != lastHit &&
-                       hit.collider.transform.gameObject.CompareTag(GlobalVars.UniversalTag))
+                if (hit.collider.transform.gameObject == lastHit)
+                {
+                    return;
+                }
+
+                if (hit.collider.transform.gameObject.CompareTag(GlobalVars.UniversalTag))
                 {
                     //we got a hit on new object
                     Unhighlight();

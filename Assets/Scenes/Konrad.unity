@@ -1876,7 +1876,7 @@ GameObject:
   - component: {fileID: 722778470}
   - component: {fileID: 722778469}
   m_Layer: 5
-  m_Name: Manipulation
+  m_Name: Object Manipulation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
