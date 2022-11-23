@@ -65,7 +65,7 @@ namespace Assets.Scripts.Actions
                 Bounds multiToolBounds = FlystickManager.Instance.MultiTool.GetComponent<Collider>().bounds;
                 var intersectingObjects = from item
                                           in gameObjects
-                                          where multiToolBounds.Intersects(item.GetComponent<Collider>().bounds)
+						where ((item.GetComponent<Collider>()!=null) && (multiToolBounds.Intersects(item.GetComponent<Collider>().bounds))) //temporary solution, TODO: handle 3D lines (have no collider, but childer have colliders
                                           select item;
                 foreach (GameObject intersectingObject in intersectingObjects)
                 {

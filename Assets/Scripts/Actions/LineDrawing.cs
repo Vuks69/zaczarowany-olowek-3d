@@ -70,7 +70,7 @@ namespace Assets.Scripts.Actions
 					//}
 				} else 
 				{
-					GameObject newSegment = new GameObject ();
+					GameObject newSegment;
 					if (type == LineType.Cylinder) 
 					{
 						newSegment = GameObject.CreatePrimitive (PrimitiveType.Cylinder);
@@ -82,6 +82,7 @@ namespace Assets.Scripts.Actions
 					else 
 					{
 						Debug.Log ("Unknown line type!");
+						return;
 					}
 					newSegment.transform.parent = line.transform;
 					newSegment.GetComponent<Renderer>().material.color = GameManager.Instance.CurrentColor;
@@ -134,6 +135,11 @@ namespace Assets.Scripts.Actions
 				lineRenderer.endColor = GameManager.Instance.CurrentColor;
 				lineRenderer.startWidth = StrokeWidth;
 				lineRenderer.endWidth = StrokeWidth;
+			}
+			else {
+				gameObject.AddComponent<Rigidbody> ();
+				gameObject.GetComponent<Rigidbody> ().isKinematic = true;
+
 			}
             
 			lastPosition = tool.transform.position;

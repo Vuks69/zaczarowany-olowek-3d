@@ -58,17 +58,17 @@ namespace Assets.Scripts.Managers
                 input = "trigger_up";
             }
 
-            if (Input.GetKeyDown(KeyCode.R))
+            if (Input.GetButtonDown("Redo Button"))
             {
                 input = "button1";
             }
 
-            if (Input.GetKeyDown(KeyCode.U))
+            if (Input.GetButtonDown("Undo Button"))
             {
                 input = "button2";
             }
 
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetButtonDown("Selecting Mode Button"))
             {
                 input = "button3";
             }
