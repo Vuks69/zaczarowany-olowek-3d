@@ -33,12 +33,6 @@ namespace Assets.Scripts.Managers
                     toolsMenu.SelectedIcon.Deselect();
                     toolsMenu.SelectedIcon = toolsMenu.selectingIcon;
                     break;
-                case "save_state":
-                    DataManager.Instance.SaveWorld();
-                    break;
-                case "load_state":
-                    DataManager.Instance.LoadWorld();
-                    break;
                 default:
                     break;
             }
