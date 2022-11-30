@@ -98,6 +98,7 @@ namespace Assets.Scripts.Actions
             foreach (var selectedObject in SelectedObjects)
             {
                 //UnityEditor.//Undo.DestroyObjectImmediate(selectedObject);
+                GameObject.Destroy(selectedObject);
             }
             SelectedObjects.Clear();
         }
