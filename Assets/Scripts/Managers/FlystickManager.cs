@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts.Menus;
-using UnityEditor;
 using UnityEngine;
 
 namespace Assets.Scripts.Managers
@@ -20,12 +19,6 @@ namespace Assets.Scripts.Managers
                     break;
                 case "trigger_up":
                     GameManager.Instance.CurrentAction.HandleTriggerUp();
-                    break;
-                case "button1":
-                    Undo.PerformRedo();
-                    break;
-                case "button2":
-                    Undo.PerformUndo();
                     break;
                 case "button3":
                     ToolsMenu toolsMenu = MenuManager.Instance.ToolsMenu;

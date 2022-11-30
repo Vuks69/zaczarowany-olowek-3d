@@ -1,6 +1,5 @@
 ﻿using Assets.Scripts.Actions;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 namespace Assets.Scripts.Serialization
@@ -90,9 +89,7 @@ namespace Assets.Scripts.Serialization
             lr.SetPositions(positions);
 
             LineDrawing.createCollider(line);
-
-            Undo.RegisterCreatedObjectUndo(line, "Deserialized Line");
-
+            
             return line;
         }
     }

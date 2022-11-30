@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEditor;
 using Assets.Scripts.Actions;
 using Assets.Scripts.Serialization;
 using Assets.Scripts.Managers;
@@ -33,14 +32,11 @@ namespace Assets.Scripts.Menus.Icons
                 toDeserialize = sw.ReadToEnd();
             }
 
-            Undo.SetCurrentGroupName("Loading world from save");
-            int group = Undo.GetCurrentGroup();
-
             GameObject[] objectList = GameObject.FindGameObjectsWithTag(GlobalVars.UniversalTag);
             Debug.Log("Destroying " + objectList.Length + " objects.");
             foreach (var item in objectList)
             {
-                Undo.DestroyObjectImmediate(item);
+                Object.Destroy(item);
             }
 
             var serializableArray = JsonUtility.FromJson<SerializableObjectArrayWrapper>(toDeserialize);
@@ -49,8 +45,6 @@ namespace Assets.Scripts.Menus.Icons
             {
                 Serializator.DeserializeLine(serializableLine);
             }
-
-            Undo.CollapseUndoOperations(group);
         }
     }
 }
