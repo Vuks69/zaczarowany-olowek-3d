@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Menus;
 using UnityEditor;
 using UnityEngine;
+using Assets.Scripts.Actions;
 
 namespace Assets.Scripts.Managers
 {
@@ -102,9 +103,36 @@ namespace Assets.Scripts.Managers
         void Start()
         {
             Instance = this;
-            Lzwp.input.flysticks[flystickIdx].GetButton(LzwpInput.Flystick.ButtonID.Fire).OnPress += HandleInput;
-            Lzwp.input.flysticks[flystickIdx].GetButton(LzwpInput.Flystick.ButtonID.Fire).OnRelease += GameManager.Instance.CurrentAction.HandleTriggerUp;
+            Lzwp.input.flysticks[flystickIdx].GetButton(LzwpInput.Flystick.ButtonID.Fire).OnPress += HandleInputTriggerDown;
+            Lzwp.input.flysticks[flystickIdx].GetButton(LzwpInput.Flystick.ButtonID.Fire).OnRelease += HandleInputTriggerUp;
             Lzwp.input.flysticks[flystickIdx].GetButton(LzwpInput.Flystick.ButtonID.Button3).OnPress += action3;
         }
+
+        void HandleInputTriggerDown()
+        {
+            //HandleInput("trigger_down");
+            if (GameManager.Instance.CurrentAction is Selecting)
+            {
+                GameManager.Instance.ActionsData.Selecting.HandleTriggerDown();
+            }
+            else if (GameManager.Instance.CurrentAction is LineDrawing)
+            {
+                GameManager.Instance.ActionsData.LineDrawing.HandleTriggerDown();
+            }
+        }
+
+        void HandleInputTriggerUp()
+        {
+            //andleInput("trigger_up");
+            if (GameManager.Instance.CurrentAction is Selecting)
+            {
+                GameManager.Instance.ActionsData.Selecting.HandleTriggerUp();
+            }
+            else if (GameManager.Instance.CurrentAction is LineDrawing)
+            {
+                GameManager.Instance.ActionsData.LineDrawing.HandleTriggerUp();
+            }
+        }
+    
     }
 }
