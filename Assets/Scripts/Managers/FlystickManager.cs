@@ -9,6 +9,7 @@ namespace Assets.Scripts.Managers
         public static FlystickManager Instance;
         public GameObject Flystick;
         public GameObject MultiTool;
+        int flystickIdx = 0;
 
         // przykladowe
         void HandleInput(string input)
@@ -22,20 +23,32 @@ namespace Assets.Scripts.Managers
                     GameManager.Instance.CurrentAction.HandleTriggerUp();
                     break;
                 case "button1":
-                    Undo.PerformRedo();
+                    //Undo.PerformRedo();
                     break;
                 case "button2":
-                    Undo.PerformUndo();
+                    //Undo.Perform//Undo();
                     break;
                 case "button3":
-                    ToolsMenu toolsMenu = MenuManager.Instance.ToolsMenu;
-                    toolsMenu.selectingIcon.Select();
-                    toolsMenu.SelectedIcon.Deselect();
-                    toolsMenu.SelectedIcon = toolsMenu.selectingIcon;
+                    action3();
+                    break;
+                case "save_state":
+                    DataManager.Instance.SaveWorld();
+                    break;
+                case "load_state":
+                    DataManager.Instance.LoadWorld();
                     break;
                 default:
                     break;
             }
+        }
+
+
+        void action3()
+        {
+            ToolsMenu toolsMenu = MenuManager.Instance.ToolsMenu;
+            toolsMenu.selectingIcon.Select();
+            toolsMenu.SelectedIcon.Deselect();
+            toolsMenu.SelectedIcon = toolsMenu.selectingIcon;
         }
 
         void Update()
@@ -83,7 +96,15 @@ namespace Assets.Scripts.Managers
 
         void Awake()
         {
+
+        }
+
+        void Start()
+        {
             Instance = this;
+            Lzwp.input.flysticks[flystickIdx].GetButton(LzwpInput.Flystick.ButtonID.Fire).OnPress += HandleInput;
+            Lzwp.input.flysticks[flystickIdx].GetButton(LzwpInput.Flystick.ButtonID.Fire).OnRelease += GameManager.Instance.CurrentAction.HandleTriggerUp;
+            Lzwp.input.flysticks[flystickIdx].GetButton(LzwpInput.Flystick.ButtonID.Button3).OnPress += action3;
         }
     }
 }

@@ -8,7 +8,7 @@ namespace Assets.Scripts.Actions
     public class LineDrawing : Action
     {
         private bool drawing = false;
-        private readonly GameObject tool = FlystickManager.Instance.MultiTool;
+        private GameObject tool;
         private LineRenderer lineRenderer;
         private GameObject line;
         private Vector3 lastPosition;
@@ -16,7 +16,8 @@ namespace Assets.Scripts.Actions
 
         public override void Init()
         {
-            Undo.undoRedoPerformed += StopDrawing;
+            tool = FlystickManager.Instance.MultiTool;
+            //Undo.//UndoRedoPerformed += StopDrawing;
         }
 
         public override void HandleTriggerDown()
@@ -26,12 +27,13 @@ namespace Assets.Scripts.Actions
 
         public override void HandleTriggerUp()
         {
+            //throw new System.Exception();
             if (drawing)
             {
                 StopDrawing();
                 if (lineRenderer.positionCount < 2)
                 {
-                    Undo.RevertAllInCurrentGroup();
+                    //Undo.RevertAllInCurrentGroup();
                 }
                 else
                 {
@@ -65,7 +67,7 @@ namespace Assets.Scripts.Actions
                 // each line has to be its own object, as it can only have one renderer
                 line = instantiateLine();
 
-                Undo.RegisterCreatedObjectUndo(line, "Created new line");
+                //Undo.RegisterCreatedObject//Undo(line, "Created new line");
 
                 drawing = true;
             }

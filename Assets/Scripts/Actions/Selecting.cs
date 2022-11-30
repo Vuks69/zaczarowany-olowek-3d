@@ -18,8 +18,9 @@ namespace Assets.Scripts.Actions
         {
             pointer = new GameObject("Selecting Pointer");
             pointerLineRenderer = pointer.AddComponent<LineRenderer>();
-            pointerLineRenderer.startWidth = 0.1f;
-            pointerLineRenderer.endWidth = 0.1f;
+            pointerLineRenderer.startWidth = 0.01f;
+            pointerLineRenderer.endWidth = 0.01f;
+            pointerLineRenderer.enabled = true;
         }
 
         public override void HandleTriggerUp()
@@ -76,7 +77,6 @@ namespace Assets.Scripts.Actions
             if (Physics.Raycast(ray, out hit, 1000))
             {
                 PCoord = hit.textureCoord;
-                pointerLineRenderer.enabled = true;
                 pointerLineRenderer.SetPosition(0, multiToolTransform.position);
                 pointerLineRenderer.SetPosition(1, hit.point);
 
@@ -99,7 +99,7 @@ namespace Assets.Scripts.Actions
             }
             else
             {
-                pointerLineRenderer.enabled = false;
+                //pointerLineRenderer.enabled = false;
                 if (isHighlightedIcon)
                 {
                     changeHighlightedIconsColor();

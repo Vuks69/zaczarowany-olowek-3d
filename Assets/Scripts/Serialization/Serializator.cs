@@ -91,7 +91,7 @@ namespace Assets.Scripts.Serialization
 
             LineDrawing.createCollider(line);
 
-            Undo.RegisterCreatedObjectUndo(line, "Deserialized Line");
+            //Undo.RegisterCreatedObject//Undo(line, "Deserialized Line");
 
             return line;
         }
