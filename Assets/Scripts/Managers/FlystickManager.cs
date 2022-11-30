@@ -1,6 +1,6 @@
-﻿using Assets.Scripts.Menus;
+﻿using Assets.Scripts.Actions;
+using Assets.Scripts.Menus;
 using UnityEngine;
-using Assets.Scripts.Actions;
 
 namespace Assets.Scripts.Managers
 {
@@ -126,6 +126,6 @@ namespace Assets.Scripts.Managers
                 GameManager.Instance.ActionsData.LineDrawing.HandleTriggerUp();
             }
         }
-    
+
     }
 }
