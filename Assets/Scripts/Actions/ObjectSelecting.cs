@@ -1,7 +1,6 @@
 ﻿using Assets.Scripts.Managers;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
 
 namespace Assets.Scripts.Actions
@@ -97,16 +96,13 @@ namespace Assets.Scripts.Actions
         {
             foreach (var selectedObject in SelectedObjects)
             {
-                //Undo.DestroyObjectImmediate(selectedObject);
+                Object.Destroy(selectedObject);
             }
             SelectedObjects.Clear();
         }
 
         public void CopySelection()
         {
-            //Undo.SetCurrentGroupName("Copy Selection");
-            //int group = //Undo.GetCurrentGroup();
-
             var toBeCopied = new HashSet<GameObject>();
             foreach (var oldObj in SelectedObjects)
             {
@@ -142,10 +138,8 @@ namespace Assets.Scripts.Actions
                 newObj.AddComponent<MeshCollider>();
                 newObj.GetComponent<MeshCollider>().sharedMesh = oldLineRenderer.GetComponent<MeshCollider>().sharedMesh;
 
-                //Undo.RegisterCreatedObject//Undo(newObj, "Create Copied Object");
                 toBeCopied.Add(newObj);
             }
-            //Undo.Collapse//UndoOperations(group);
             SelectedObjects.Clear();
             SelectedObjects.UnionWith(toBeCopied);
             CurrentState = SelectionState.COPYING;

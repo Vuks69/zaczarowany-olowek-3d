@@ -9,7 +9,7 @@ namespace Assets.Scripts.Menus.Icons
         public Color DefaultColor { get; set; } = Color.white;
         public Color SelectedColor { get; set; } = Color.green;
         public Color DisabledColor { get; set; } = Color.grey;
-        public Color HighlightedColor { get; set; } = Color.blue;
+        public Color HighlightedColor { get; set; } = Color.cyan;
         protected Color currentColor;
         public Action action;
         public GameObject gameObject;

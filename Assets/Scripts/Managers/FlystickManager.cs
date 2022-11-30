@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts.Menus;
-using UnityEditor;
 using UnityEngine;
 using Assets.Scripts.Actions;
 
@@ -22,12 +21,6 @@ namespace Assets.Scripts.Managers
                     break;
                 case "trigger_up":
                     GameManager.Instance.CurrentAction.HandleTriggerUp();
-                    break;
-                case "button1":
-                    //Undo.PerformRedo();
-                    break;
-                case "button2":
-                    //Undo.Perform//Undo();
                     break;
                 case "button3":
                     action3();
@@ -123,7 +116,7 @@ namespace Assets.Scripts.Managers
 
         void HandleInputTriggerUp()
         {
-            //andleInput("trigger_up");
+            //HandleInput("trigger_up");
             if (GameManager.Instance.CurrentAction is Selecting)
             {
                 GameManager.Instance.ActionsData.Selecting.HandleTriggerUp();

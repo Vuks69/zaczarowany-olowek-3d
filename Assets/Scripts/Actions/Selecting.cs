@@ -18,7 +18,7 @@ namespace Assets.Scripts.Actions
         {
             pointer = new GameObject("Selecting Pointer");
             pointerLineRenderer = pointer.AddComponent<LineRenderer>();
-            pointerLineRenderer.startWidth = 0.01f;
+            pointerLineRenderer.startWidth = 0.03f;
             pointerLineRenderer.endWidth = 0.01f;
             pointerLineRenderer.enabled = true;
         }
@@ -70,15 +70,16 @@ namespace Assets.Scripts.Actions
                 }
                 return;
             }
-            var flystickTransform = FlystickManager.Instance.Flystick.transform;
             var multiToolTransform = FlystickManager.Instance.MultiTool.transform;
-            var ray = new Ray(multiToolTransform.position, flystickTransform.forward);
+            var ray = new Ray(multiToolTransform.position, multiToolTransform.forward);
+            pointerLineRenderer.SetPosition(0, multiToolTransform.position);
+            pointerLineRenderer.SetPosition(1, multiToolTransform.position + multiToolTransform.forward * 10.0f);
+
             RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, 1000))
+            if (Physics.Raycast(ray, out hit, 100))
             {
-                PCoord = hit.textureCoord;
-                pointerLineRenderer.SetPosition(0, multiToolTransform.position);
                 pointerLineRenderer.SetPosition(1, hit.point);
+                PCoord = hit.textureCoord;
 
                 if (isHighlightedIcon)
                 {
@@ -99,7 +100,6 @@ namespace Assets.Scripts.Actions
             }
             else
             {
-                //pointerLineRenderer.enabled = false;
                 if (isHighlightedIcon)
                 {
                     changeHighlightedIconsColor();
