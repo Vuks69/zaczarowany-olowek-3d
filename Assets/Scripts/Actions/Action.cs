@@ -6,15 +6,15 @@
 
         public void HandleLeftButton()
         {
-            // left button is always Undo so no need to override this
-            // NOT NEEDED as undo is not reliant on specific actions
-            //Undo.PerformUndo();
+            // left button is always //Undo so no need to override this
+            // NOT NEEDED as //Undo is not reliant on specific actions
+            ////Undo.Perform//Undo();
         }
 
         public void HandleRightButton()
         {
-            // NOT NEEDED as redo is not reliant on specific actions
-            //Undo.PerformRedo();
+            // NOT NEEDED as //Redo is not reliant on specific actions
+            ////Undo.Perform//Redo();
         }
 
         public abstract void Init();

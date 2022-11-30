@@ -33,14 +33,14 @@ namespace Assets.Scripts.Menus.Icons
                 toDeserialize = sw.ReadToEnd();
             }
 
-            Undo.SetCurrentGroupName("Loading world from save");
-            int group = Undo.GetCurrentGroup();
+            //Undo.SetCurrentGroupName("Loading world from save");
+            //int group = //Undo.GetCurrentGroup();
 
             GameObject[] objectList = GameObject.FindGameObjectsWithTag(GlobalVars.UniversalTag);
             Debug.Log("Destroying " + objectList.Length + " objects.");
             foreach (var item in objectList)
             {
-                Undo.DestroyObjectImmediate(item);
+                //Undo.DestroyObjectImmediate(item);
             }
 
             var serializableArray = JsonUtility.FromJson<SerializableObjectArrayWrapper>(toDeserialize);
@@ -50,7 +50,7 @@ namespace Assets.Scripts.Menus.Icons
                 Serializator.DeserializeLine(serializableLine);
             }
 
-            Undo.CollapseUndoOperations(group);
+            //Undo.Collapse//UndoOperations(group);
         }
     }
 }

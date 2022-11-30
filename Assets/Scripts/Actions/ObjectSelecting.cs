@@ -97,15 +97,15 @@ namespace Assets.Scripts.Actions
         {
             foreach (var selectedObject in SelectedObjects)
             {
-                UnityEditor.Undo.DestroyObjectImmediate(selectedObject);
+                //UnityEditor.//Undo.DestroyObjectImmediate(selectedObject);
             }
             SelectedObjects.Clear();
         }
 
         public void CopySelection()
         {
-            Undo.SetCurrentGroupName("Copy Selection");
-            int group = Undo.GetCurrentGroup();
+            //Undo.SetCurrentGroupName("Copy Selection");
+            //int group = //Undo.GetCurrentGroup();
 
             var toBeCopied = new HashSet<GameObject>();
             foreach (var oldObj in SelectedObjects)
@@ -142,10 +142,10 @@ namespace Assets.Scripts.Actions
                 newObj.AddComponent<MeshCollider>();
                 newObj.GetComponent<MeshCollider>().sharedMesh = oldLineRenderer.GetComponent<MeshCollider>().sharedMesh;
 
-                Undo.RegisterCreatedObjectUndo(newObj, "Create Copied Object");
+                //Undo.RegisterCreatedObject//Undo(newObj, "Create Copied Object");
                 toBeCopied.Add(newObj);
             }
-            Undo.CollapseUndoOperations(group);
+            //Undo.Collapse//UndoOperations(group);
             SelectedObjects.Clear();
             SelectedObjects.UnionWith(toBeCopied);
             CurrentState = SelectionState.COPYING;

@@ -32,7 +32,7 @@ namespace Assets.Scripts.Actions
                                           select item;
                 foreach (GameObject objToDelete in intersectingObjects)
                 {
-                    UnityEditor.Undo.DestroyObjectImmediate(objToDelete);
+                    //UnityEditor.//Undo.DestroyObjectImmediate(objToDelete);
                 }
             }
         }

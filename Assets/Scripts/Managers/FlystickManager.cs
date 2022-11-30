@@ -22,10 +22,10 @@ namespace Assets.Scripts.Managers
                     GameManager.Instance.CurrentAction.HandleTriggerUp();
                     break;
                 case "button1":
-                    Undo.PerformRedo();
+                    //Undo.Perform//Redo();
                     break;
                 case "button2":
-                    Undo.PerformUndo();
+                    //Undo.Perform//Undo();
                     break;
                 case "button3":
                     ToolsMenu toolsMenu = MenuManager.Instance.ToolsMenu;
