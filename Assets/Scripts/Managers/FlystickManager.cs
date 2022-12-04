@@ -74,16 +74,6 @@ namespace Assets.Scripts.Managers
                 input = "button3";
             }
 
-            if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.S))
-            {
-                input = "save_state";
-            }
-
-            if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.R))
-            {
-                input = "load_state";
-            }
-
             HandleInput(input);
             GameManager.Instance.CurrentAction.Update();
         }

@@ -46,6 +46,10 @@ namespace Assets.Scripts.Actions
                 MenuManager.Instance.ToolsMenu.SelectedIcon = selectedIcon;
                 isHighlightedIcon = false;
                 MenuManager.Instance.ToolsMenu.IsSelectedIcon = true;
+                if (highlightedIcon.GetType() != typeof(ObjectSelectingMenuIcon) && highlightedIcon.gameObject.name != "Object Selecting")
+                {
+                    ObjectSelecting.DeselectAll();
+                }
                 if (highlightedIcon.GetType() == typeof(Slider))
                 {
                     moveSlider = true;
