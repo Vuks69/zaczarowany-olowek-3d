@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts.Actions;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts.Serialization
@@ -89,7 +88,7 @@ namespace Assets.Scripts.Serialization
             lr.SetPositions(positions);
 
             LineDrawing.createCollider(line);
-            
+
             return line;
         }
     }

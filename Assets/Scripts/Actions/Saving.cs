@@ -1,7 +1,4 @@
-﻿using UnityEditor;
-using UnityEngine;
-
-namespace Assets.Scripts.Actions
+﻿namespace Assets.Scripts.Actions
 {
     public class Saving : Action
     {

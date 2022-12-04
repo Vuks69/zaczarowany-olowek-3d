@@ -7,30 +7,50 @@ namespace Assets.Scripts.Actions
 {
     public class ObjectSelecting : Action
     {
-        public HashSet<GameObject> SelectedObjects { get; set; } = new HashSet<GameObject>();
+        private static HashSet<GameObject> SelectedObjects { get; set; } = new HashSet<GameObject>();
         private readonly HashSet<GameObject> toBeSelected = new HashSet<GameObject>();
         private readonly HashSet<GameObject> toBeRemoved = new HashSet<GameObject>();
         private GameObject[] gameObjects;
-        protected SelectionState CurrentState = SelectionState.STANDBY;
+        private SelectionState CurrentState = SelectionState.STANDBY;
+        private SelectionState ToolState = SelectionState.SELECTING;
 
-        protected enum SelectionState
+        private enum SelectionState
         {
             STANDBY,
             SELECTING,
-            COPYING
+            COPYING,
+            MOVING
+        }
+
+        public void SetStateCopying()
+        {
+            ToolState = SelectionState.COPYING;
+        }
+
+        public void SetStateMoving()
+        {
+            ToolState = SelectionState.MOVING;
         }
 
         public override void HandleTriggerDown()
         {
-            switch (CurrentState)
+            switch (ToolState)
             {
-                case SelectionState.COPYING:
-                    StopMovingObjects();
-                    CurrentState = SelectionState.STANDBY;
-                    break;
-                default:
+                case SelectionState.SELECTING: // select objects
                     CurrentState = SelectionState.SELECTING;
                     gameObjects = GameObject.FindGameObjectsWithTag(GlobalVars.UniversalTag);
+                    break;
+                case SelectionState.COPYING: // copy selected objects relative to flystick position
+                    CopySelection();
+                    CurrentState = SelectionState.MOVING;
+                    MoveObjects();
+                    break;
+                case SelectionState.MOVING: // move selected objects relative to flystick position
+                    CurrentState = SelectionState.MOVING;
+                    MoveObjects();
+                    break;
+                default: // catching bugs
+                    ToolState = SelectionState.SELECTING;
                     break;
             }
         }
@@ -40,16 +60,23 @@ namespace Assets.Scripts.Actions
             switch (CurrentState)
             {
                 case SelectionState.SELECTING:
+                    ToolState = SelectionState.SELECTING;
                     CurrentState = SelectionState.STANDBY;
                     SelectedObjects.UnionWith(toBeSelected);
                     SelectedObjects.ExceptWith(toBeRemoved);
                     toBeSelected.Clear();
                     toBeRemoved.Clear();
                     break;
+
+                case SelectionState.MOVING:
+                    ToolState = SelectionState.SELECTING;
+                    CurrentState = SelectionState.STANDBY;
+                    StopMovingObjects(deselect: false);
+                    break;
+
                 default:
                     break;
             }
-
         }
 
         public override void Init()
@@ -92,7 +119,7 @@ namespace Assets.Scripts.Actions
             // Nothing happens
         }
 
-        public void RemoveSelection()
+        public void DeleteSelection()
         {
             foreach (var selectedObject in SelectedObjects)
             {
@@ -106,7 +133,6 @@ namespace Assets.Scripts.Actions
             var toBeCopied = new HashSet<GameObject>();
             foreach (var oldObj in SelectedObjects)
             {
-
                 GameObject newObj = new GameObject
                 {
                     name = GlobalVars.LineName,
@@ -114,7 +140,6 @@ namespace Assets.Scripts.Actions
                 };
                 newObj.transform.position = oldObj.transform.position;
                 newObj.transform.rotation = oldObj.transform.rotation;
-                newObj.transform.parent = FlystickManager.Instance.MultiTool.transform;
 
                 var oldLineRenderer = oldObj.GetComponent<LineRenderer>();
                 var newLineRenderer = newObj.AddComponent<LineRenderer>();
@@ -142,15 +167,30 @@ namespace Assets.Scripts.Actions
             }
             SelectedObjects.Clear();
             SelectedObjects.UnionWith(toBeCopied);
-            CurrentState = SelectionState.COPYING;
         }
 
-        private void StopMovingObjects()
+        internal void MoveObjects()
+        {
+            foreach (var obj in SelectedObjects)
+            {
+                obj.transform.parent = FlystickManager.Instance.MultiTool.transform;
+            }
+        }
+
+        private void StopMovingObjects(bool deselect = true)
         {
             foreach (var obj in SelectedObjects)
             {
                 obj.transform.parent = null;
-                obj.GetComponent<LineRenderer>().material = new Material(Shader.Find("Particles/Additive"));
+            }
+            if (deselect) DeselectAll();
+        }
+
+        public static void DeselectAll()
+        {
+            foreach (var obj in SelectedObjects)
+            {
+                obj.GetComponent<LineRenderer>().material = new Material(Shader.Find("Particles/Additive")); // todo replace with previous material
             }
             SelectedObjects.Clear();
         }
