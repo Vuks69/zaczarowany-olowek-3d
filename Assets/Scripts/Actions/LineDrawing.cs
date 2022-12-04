@@ -12,7 +12,7 @@ namespace Assets.Scripts.Actions
         private LineRenderer lineRenderer;
         private GameObject line;
         private Vector3 lastPosition;
-        public float StrokeWidth { get; set; } = 0.1f;
+        public float StrokeWidth { get; set; } = 0.01f;
 
         public override void Init()
         {
