@@ -14,7 +14,7 @@ namespace Assets.Scripts.Menus
         public MenuIcon objectSelectingIcon { get; set; } = new ToolsMenuIcon(GameObject.Find("Object Selecting"), GameManager.Instance.ActionsData.ObjectSelecting, MenuManager.Instance.ParametersMenusData.ObjectSelectingParametersMenu);
         public MenuIcon objectManipulation { get; set; } = new IconWithoutParametersMenu(GameObject.Find("Object Manipulation"), GameManager.Instance.ActionsData.Manipulation);
         public MenuIcon savingLoadingIcon { get; set; } = new ToolsMenuIcon(GameObject.Find("Saving Loading"), GameManager.Instance.ActionsData.Selecting, MenuManager.Instance.ParametersMenusData.SavingLoadingParametersMenu);
-        
+
         public ToolsMenu()
         {
             icons = new List<MenuIcon> {

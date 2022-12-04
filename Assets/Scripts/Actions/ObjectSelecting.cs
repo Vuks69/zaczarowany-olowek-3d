@@ -34,7 +34,7 @@ namespace Assets.Scripts.Actions
 
         public override void HandleTriggerDown()
         {
-            switch(ToolState)
+            switch (ToolState)
             {
                 case SelectionState.SELECTING: // select objects
                     CurrentState = SelectionState.SELECTING;
@@ -71,7 +71,7 @@ namespace Assets.Scripts.Actions
                 case SelectionState.MOVING:
                     ToolState = SelectionState.SELECTING;
                     CurrentState = SelectionState.STANDBY;
-                    StopMovingObjects(deselect:false);
+                    StopMovingObjects(deselect: false);
                     break;
 
                 default:
@@ -177,7 +177,7 @@ namespace Assets.Scripts.Actions
             }
         }
 
-        private void StopMovingObjects(bool deselect=true)
+        private void StopMovingObjects(bool deselect = true)
         {
             foreach (var obj in SelectedObjects)
             {

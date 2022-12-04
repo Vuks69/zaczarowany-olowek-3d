@@ -1,8 +1,8 @@
 ﻿using Assets.Scripts.Actions;
+using Assets.Scripts.Managers;
+using Assets.Scripts.Serialization;
 using System.IO;
 using UnityEngine;
-using Assets.Scripts.Serialization;
-using Assets.Scripts.Managers;
 
 namespace Assets.Scripts.Menus.Icons
 {
