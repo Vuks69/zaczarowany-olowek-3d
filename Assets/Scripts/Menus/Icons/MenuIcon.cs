@@ -25,7 +25,7 @@ namespace Assets.Scripts.Menus.Icons
         public virtual void Select()
         {
             GameManager.Instance.changeCurrentAction(action);
-            SetColor(SelectedColor);
+            SetSelectedColor();
             MenuManager.Instance.ParametersMenu.MenuObject.SetActive(false);
         }
 

@@ -10,11 +10,13 @@ namespace Assets.Scripts.Managers
         public Action CurrentAction { get; set; }
         public ActionsData ActionsData { get; set; }
         public float CurrentLineThickness { get; set; } = 0.0f;
-        public float MinStrokeWidth { get; set; } = 0.01f;
+        public float MinStrokeWidth { get; set; } = 0.05f;
+        public string PathToSaveFile { get; set; }
 
         void Awake()
         {
             Instance = this;
+            PathToSaveFile = Application.persistentDataPath + "/save.json";
         }
 
         void Start()

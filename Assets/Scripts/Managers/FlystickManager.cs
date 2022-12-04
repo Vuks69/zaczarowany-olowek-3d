@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts.Menus;
-using UnityEditor;
 using UnityEngine;
 
 namespace Assets.Scripts.Managers
@@ -21,23 +20,11 @@ namespace Assets.Scripts.Managers
                 case "trigger_up":
                     GameManager.Instance.CurrentAction.HandleTriggerUp();
                     break;
-                case "button1":
-                    Undo.PerformRedo();
-                    break;
-                case "button2":
-                    Undo.PerformUndo();
-                    break;
                 case "button3":
                     ToolsMenu toolsMenu = MenuManager.Instance.ToolsMenu;
                     toolsMenu.selectingIcon.Select();
                     toolsMenu.SelectedIcon.Deselect();
                     toolsMenu.SelectedIcon = toolsMenu.selectingIcon;
-                    break;
-                case "save_state":
-                    DataManager.Instance.SaveWorld();
-                    break;
-                case "load_state":
-                    DataManager.Instance.LoadWorld();
                     break;
                 default:
                     break;
