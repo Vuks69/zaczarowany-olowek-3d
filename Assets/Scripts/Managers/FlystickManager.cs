@@ -21,10 +21,7 @@ namespace Assets.Scripts.Managers
                     GameManager.Instance.CurrentAction.HandleTriggerUp();
                     break;
                 case "button3":
-                    ToolsMenu toolsMenu = MenuManager.Instance.ToolsMenu;
-                    toolsMenu.selectingIcon.Select();
-                    toolsMenu.SelectedIcon.Deselect();
-                    toolsMenu.SelectedIcon = toolsMenu.selectingIcon;
+                    toggleAction();
                     break;
                 default:
                     break;
@@ -67,6 +64,20 @@ namespace Assets.Scripts.Managers
         void Awake()
         {
             Instance = this;
+        }
+
+        private void toggleAction()
+        {
+            ToolsMenu toolsMenu = MenuManager.Instance.ToolsMenu;
+            if (toolsMenu.PreviouslySelectedIcon != toolsMenu.selectingIcon && toolsMenu.SelectedIcon != toolsMenu.selectingIcon)
+            {
+                toolsMenu.PreviouslySelectedIcon = toolsMenu.selectingIcon;
+            }
+            var tmp = toolsMenu.PreviouslySelectedIcon;
+            toolsMenu.PreviouslySelectedIcon = toolsMenu.SelectedIcon;
+            toolsMenu.SelectedIcon = tmp;
+            toolsMenu.SelectedIcon.Select();
+            toolsMenu.PreviouslySelectedIcon.Deselect();
         }
     }
 }
