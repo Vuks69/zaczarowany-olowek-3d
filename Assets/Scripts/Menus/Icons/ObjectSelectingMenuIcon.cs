@@ -14,7 +14,7 @@ namespace Assets.Scripts.Menus.Icons
 
         public override void Select()
         {
-            SetDefaultColor();
+            SetSelectedColor();
             GameManager.Instance.changeCurrentAction(action);
             doWhenSelected();
         }
