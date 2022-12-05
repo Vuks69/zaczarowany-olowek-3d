@@ -10,7 +10,8 @@ namespace Assets.Scripts.Managers
         public Action CurrentAction { get; set; }
         public ActionsData ActionsData { get; set; }
         public float CurrentLineThickness { get; set; } = 0.0f;
-        public float MinStrokeWidth { get; set; } = 0.05f;
+        public float MinStrokeWidth { get; set; } = 0.01f;
+        public float MaxStrokeWidth { get; set; } = 0.5f;
         public string PathToSaveFile { get; set; }
 
         void Awake()
