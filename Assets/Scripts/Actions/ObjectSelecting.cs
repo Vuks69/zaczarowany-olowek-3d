@@ -101,12 +101,14 @@ namespace Assets.Scripts.Actions
                     {
                         if (SelectedObjects.Contains(intersectingObject))
                         {
-                            intersectingObject.GetComponent<LineRenderer>().material = new Material(Shader.Find("Particles/Additive"));
+                            intersectingObject.GetComponent<LineRenderer>().startColor += new Color(0f, 0f, 0f, 0.9f);
+                            intersectingObject.GetComponent<LineRenderer>().endColor += new Color(0f, 0f, 0f, 0.9f);
                             toBeRemoved.Add(intersectingObject);
                         }
                         else
                         {
-                            intersectingObject.GetComponent<LineRenderer>().material = new Material(Shader.Find("Particles/Multiply"));
+                            intersectingObject.GetComponent<LineRenderer>().startColor -= new Color(0f, 0f, 0f, 0.9f);
+                            intersectingObject.GetComponent<LineRenderer>().endColor -= new Color(0f, 0f, 0f, 0.9f);
                             toBeSelected.Add(intersectingObject);
                         }
                     }
@@ -190,7 +192,8 @@ namespace Assets.Scripts.Actions
         {
             foreach (var obj in SelectedObjects)
             {
-                obj.GetComponent<LineRenderer>().material = new Material(Shader.Find("Particles/Additive")); // todo replace with previous material
+                obj.GetComponent<LineRenderer>().startColor += new Color(0f, 0f, 0f, 0.9f);
+                obj.GetComponent<LineRenderer>().endColor += new Color(0f, 0f, 0f, 0.9f);
             }
             SelectedObjects.Clear();
         }
