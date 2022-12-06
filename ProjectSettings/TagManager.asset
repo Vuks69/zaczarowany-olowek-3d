@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - CreatedObjects
+  - Line3D
   layers:
   - Default
   - TransparentFX

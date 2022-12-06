@@ -32,7 +32,13 @@ namespace Assets.Scripts.Actions
                                           select item;
                 foreach (GameObject objToDelete in intersectingObjects)
                 {
-                    Object.Destroy(objToDelete);
+					if (objToDelete.transform.parent != null) {
+						Object.Destroy (objToDelete.transform.parent.gameObject);
+					} 
+					else 
+					{
+						Object.Destroy(objToDelete);
+					}       
                 }
             }
         }
