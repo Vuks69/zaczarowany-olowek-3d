@@ -15,7 +15,7 @@ namespace Assets.Scripts.Menus.Icons
 
         public override void Select()
         {
-            SetColor(SelectedColor);
+            SetDefaultColor();
             GameManager.Instance.CurrentColor = predefinedColor;
         }
     }

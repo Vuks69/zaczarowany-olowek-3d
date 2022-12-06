@@ -1,30 +1,21 @@
 ﻿using Assets.Scripts.Managers;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 namespace Assets.Scripts.Actions
 {
     public class LineDrawing : Action
     {
-		public enum LineType
-		{
-			LineRenderer, 
-			Cylinder,
-			Cube
-		}
-
         private bool drawing = false;
         private readonly GameObject tool = FlystickManager.Instance.MultiTool;
         private LineRenderer lineRenderer;
         private GameObject line;
         private Vector3 lastPosition;
-        public float StrokeWidth { get; set; } = 0.1f;
-		public LineType type = LineType.Cylinder;
+        public float StrokeWidth { get; set; } = GameManager.Instance.MinStrokeWidth;
 
         public override void Init()
         {
-            Undo.undoRedoPerformed += StopDrawing;
+            // Nothing
         }
 
         public override void HandleTriggerDown()
@@ -36,19 +27,15 @@ namespace Assets.Scripts.Actions
         {
             if (drawing)
             {
-                StopDrawing();
-				if (type == LineType.LineRenderer)
-				{
-					if (lineRenderer.positionCount < 2)
-					{
-						Undo.RevertAllInCurrentGroup();
-					}
-					else
-					{
-						createCollider(line);
-					}
-				}
-               
+                drawing = false;
+                if (lineRenderer.positionCount < 2)
+                {
+                    Object.Destroy(line);
+                }
+                else
+                {
+                    createCollider(line);
+                }
             }
         }
 
@@ -59,7 +46,7 @@ namespace Assets.Scripts.Actions
 
         public override void Update()
         {
-			if (drawing && Vector3.Distance (lastPosition, tool.transform.position) > 0.005f)
+            if (drawing && Vector3.Distance(lastPosition, tool.transform.position) > 0.005f)
             {
                 // once the flystick has moved away enough from last position, add new position
                 // this is done to prevent adding 60 positions per second while drawing
@@ -97,7 +84,9 @@ namespace Assets.Scripts.Actions
 					lastPosition = tool.transform.position;
 				}
 
-				lastPosition = tool.transform.position;  
+                lineRenderer.positionCount += 1;
+                lineRenderer.SetPosition(lineRenderer.positionCount - 1, tool.transform.position - line.transform.position);
+                lastPosition = tool.transform.position;
             }
         }
 
@@ -107,9 +96,6 @@ namespace Assets.Scripts.Actions
             {
                 // each line has to be its own object, as it can only have one renderer
                 line = instantiateLine();
-
-                Undo.RegisterCreatedObjectUndo(line, "Created new line");
-
                 drawing = true;
             }
         }
@@ -123,14 +109,13 @@ namespace Assets.Scripts.Actions
             };
             gameObject.transform.position = tool.transform.position;
 
-			if (type == LineType.LineRenderer) {
-				lineRenderer = gameObject.AddComponent<LineRenderer> ();
-				lineRenderer.numCapVertices = 1;
-				lineRenderer.numCornerVertices = 5;
-				lineRenderer.positionCount = 0;
-				lineRenderer.useWorldSpace = false;
+            lineRenderer = gameObject.AddComponent<LineRenderer>();
+            lineRenderer.numCapVertices = 1;
+            lineRenderer.numCornerVertices = 5;
+            lineRenderer.positionCount = 0;
+            lineRenderer.useWorldSpace = false;
 
-				lineRenderer.material = new Material (Shader.Find ("Particles/Additive"));    // todo add shader selection
+				lineRenderer.material = new Material(Shader.Find ("Particles/Additive"));    // todo add shader selection
 				lineRenderer.startColor = GameManager.Instance.CurrentColor;
 				lineRenderer.endColor = GameManager.Instance.CurrentColor;
 				lineRenderer.startWidth = StrokeWidth;
@@ -147,34 +132,29 @@ namespace Assets.Scripts.Actions
             return gameObject;
         }
 
-        private void StopDrawing()
-        {
-            drawing = false;
-        }
-
         public static void createCollider(GameObject line)
         {
             GameObject caret = new GameObject("Lines");
-            LineRenderer lineRenderer = line.GetComponent<LineRenderer>();
+            LineRenderer _lineRenderer = line.GetComponent<LineRenderer>();
             List<Vector3> points = new List<Vector3>();
             Vector3 left, right;
 
             // For all but the last point
-            for (var i = 0; i < lineRenderer.positionCount - 1; i++)
+            for (var i = 0; i < _lineRenderer.positionCount - 1; i++)
             {
-                caret.transform.position = lineRenderer.GetPosition(i);
-                caret.transform.LookAt(lineRenderer.GetPosition(i + 1));
-                right = caret.transform.position + line.transform.right * lineRenderer.startWidth / 2;
-                left = caret.transform.position - line.transform.right * lineRenderer.startWidth / 2;
+                caret.transform.position = _lineRenderer.GetPosition(i);
+                caret.transform.LookAt(_lineRenderer.GetPosition(i + 1));
+                right = caret.transform.position + line.transform.right * _lineRenderer.startWidth / 2;
+                left = caret.transform.position - line.transform.right * _lineRenderer.startWidth / 2;
                 points.Add(left);
                 points.Add(right);
             }
 
             // Last point looks backwards and reverses
-            caret.transform.position = lineRenderer.GetPosition(lineRenderer.positionCount - 1);
-            caret.transform.LookAt(lineRenderer.GetPosition(lineRenderer.positionCount - 2));
-            right = caret.transform.position - line.transform.right * lineRenderer.startWidth / 2;
-            left = caret.transform.position + line.transform.right * lineRenderer.startWidth / 2;
+            caret.transform.position = _lineRenderer.GetPosition(_lineRenderer.positionCount - 1);
+            caret.transform.LookAt(_lineRenderer.GetPosition(_lineRenderer.positionCount - 2));
+            right = caret.transform.position - line.transform.right * _lineRenderer.startWidth / 2;
+            left = caret.transform.position + line.transform.right * _lineRenderer.startWidth / 2;
             points.Add(left);
             points.Add(right);
             Object.Destroy(caret);
@@ -214,10 +194,5 @@ namespace Assets.Scripts.Actions
             mesh.RecalculateNormals();
             return mesh;
         }
-
-		public void SetLineType(LineType lineType)
-		{
-			this.type = lineType;
-		}
     }
 }

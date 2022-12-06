@@ -22,6 +22,7 @@ namespace Assets.Scripts.Managers
             ToolsMenu = new ToolsMenu();
             ToolsMenu.SelectedIcon = ToolsMenu.selectingIcon;
             ToolsMenu.SelectedIcon.SetSelectedColor();
+            ToolsMenu.PreviouslySelectedIcon = ToolsMenu.selectingIcon;
         }
     }
 }

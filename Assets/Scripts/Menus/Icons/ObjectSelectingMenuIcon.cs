@@ -4,17 +4,17 @@ using UnityEngine;
 
 namespace Assets.Scripts.Menus.Icons
 {
-    public class ObjectSelectingIcon : MenuIcon
+    public class ObjectSelectingMenuIcon : MenuIcon
     {
         private readonly System.Action doWhenSelected;
-        public ObjectSelectingIcon(GameObject icon, Action action, System.Action doWhenSelected) : base(icon, action)
+        public ObjectSelectingMenuIcon(GameObject icon, Action action, System.Action doWhenSelected) : base(icon, action)
         {
             this.doWhenSelected = doWhenSelected;
         }
 
         public override void Select()
         {
-            SetDefaultColor();
+            SetSelectedColor();
             GameManager.Instance.changeCurrentAction(action);
             doWhenSelected();
         }
