@@ -28,11 +28,17 @@ namespace Assets.Scripts.Actions
                 var intersectingObjects = from item
                                           in gameObjects
                                           where item != null
-                                          where multiToolBounds.Intersects(item.GetComponent<Collider>().bounds)
+						where ((item.GetComponent<Collider>()!=null) && (multiToolBounds.Intersects(item.GetComponent<Collider>().bounds)))
                                           select item;
                 foreach (GameObject objToDelete in intersectingObjects)
                 {
-                    Object.Destroy(objToDelete);
+					if (objToDelete.transform.parent != null) {
+						Object.Destroy (objToDelete.transform.parent.gameObject);
+					} 
+					else 
+					{
+						Object.Destroy(objToDelete);
+					}       
                 }
             }
         }

@@ -4,58 +4,98 @@ using UnityEngine;
 
 namespace Assets.Scripts.Actions
 {
-    public class LineDrawing : Action
-    {
+	public class LineDrawing : Action
+	{
+		public enum LineType
+		{
+			LineRenderer, 
+			Cylinder,
+			Cube
+		}
+
         private bool drawing = false;
         private readonly GameObject tool = FlystickManager.Instance.MultiTool;
         private LineRenderer lineRenderer;
         private GameObject line;
         private Vector3 lastPosition;
         public float StrokeWidth { get; set; } = GameManager.Instance.MinStrokeWidth;
+		public LineType type = LineType.Cylinder;
 
         public override void Init()
         {
             // Nothing
         }
 
-        public override void HandleTriggerDown()
-        {
-            StartDrawing();
-        }
+		public override void HandleTriggerDown()
+		{
+			StartDrawing();
+		}
 
         public override void HandleTriggerUp()
         {
             if (drawing)
             {
                 drawing = false;
-                if (lineRenderer.positionCount < 2)
-                {
-                    Object.Destroy(line);
-                }
-                else
-                {
-                    createCollider(line);
-                }
-            }
-        }
+				if (type == LineType.LineRenderer)
+				{
+                    if (lineRenderer.positionCount < 2)
+                    {
+                        Object.Destroy(line);
+                    }
+                    else
+                    {
+                        createCollider(line);
+                    }
+				}
 
-        public override void Finish()
-        {
-            // Nothing happens
-        }
+			}
+		}
 
-        public override void Update()
-        {
-            if (drawing && Vector3.Distance(lastPosition, tool.transform.position) > 0.005f)
-            {
-                // once the flystick has moved away enough from last position, add new position
-                // this is done to prevent adding 60 positions per second while drawing
+		public override void Finish()
+		{
+			// Nothing happens
+		}
 
-                lineRenderer.positionCount += 1;
-                lineRenderer.SetPosition(lineRenderer.positionCount - 1, tool.transform.position - line.transform.position);
-                lastPosition = tool.transform.position;
-            }
-        }
+		public override void Update()
+		{
+			if (drawing && Vector3.Distance (lastPosition, tool.transform.position) > 0.005f)
+			{
+				// once the flystick has moved away enough from last position, add new position
+				// this is done to prevent adding 60 positions per second while drawing
+				if (type == LineType.LineRenderer) {
+					//if (Vector3.Distance (lastPosition, tool.transform.position) > 0.005f) {
+					lineRenderer.positionCount += 1;
+					lineRenderer.SetPosition (lineRenderer.positionCount - 1, tool.transform.position - line.transform.position);
+					//}
+				} else 
+				{
+					GameObject newSegment;
+					if (type == LineType.Cylinder) {
+						newSegment = GameObject.CreatePrimitive (PrimitiveType.Cylinder);
+					} else if (type == LineType.Cube) {
+						newSegment = GameObject.CreatePrimitive (PrimitiveType.Cube);
+					} else {
+						Debug.Log ("Unknown line type!");
+						return;
+					}
+					newSegment.name = "LineSegment";
+					newSegment.tag = GlobalVars.UniversalTag;
+					newSegment.transform.parent = line.transform;
+					newSegment.GetComponent<Renderer>().material.color = GameManager.Instance.CurrentColor;
+					newSegment.transform.position = Vector3.Lerp (lastPosition, tool.transform.position, 0.5f);		
+					newSegment.transform.localScale = (new Vector3 (StrokeWidth, StrokeWidth, StrokeWidth)) / 2;
+					Vector3 cylinderScale = newSegment.transform.localScale;
+					cylinderScale.y = Vector3.Distance (tool.transform.position, lastPosition);
+					newSegment.transform.localScale = cylinderScale;
+					Vector3 rotationVector = Vector3.Normalize (tool.transform.position - lastPosition);
+					rotationVector += new Vector3 (0, 1, 0);
+					newSegment.transform.rotation = new Quaternion (rotationVector.x, rotationVector.y, rotationVector.z, 0);
+					lastPosition = tool.transform.position;
+				}
+
+				lastPosition = tool.transform.position;  
+			}
+		}
 
         private void StartDrawing()
         {
@@ -67,29 +107,39 @@ namespace Assets.Scripts.Actions
             }
         }
 
-        private GameObject instantiateLine()
-        {
-            GameObject gameObject = new GameObject
-            {
-                name = GlobalVars.LineName,
-                tag = GlobalVars.UniversalTag
-            };
-            gameObject.transform.position = tool.transform.position;
+		private GameObject instantiateLine()
+		{
+			GameObject gameObject = new GameObject
+			{
+				name = GlobalVars.LineName,
+			};
+			gameObject.transform.position = tool.transform.position;
 
-            lineRenderer = gameObject.AddComponent<LineRenderer>();
-            lineRenderer.numCapVertices = 1;
-            lineRenderer.numCornerVertices = 5;
-            lineRenderer.positionCount = 0;
-            lineRenderer.useWorldSpace = false;
+			if (type == LineType.LineRenderer) {
+				gameObject.tag = GlobalVars.UniversalTag;
+				lineRenderer = gameObject.AddComponent<LineRenderer> ();
+				lineRenderer.numCapVertices = 1;
+				lineRenderer.numCornerVertices = 5;
+				lineRenderer.positionCount = 0;
+				lineRenderer.useWorldSpace = false;
 
-            lineRenderer.material = new Material(Shader.Find("Particles/Additive"));    // todo add shader selection
-            lineRenderer.startColor = GameManager.Instance.CurrentColor;
-            lineRenderer.endColor = GameManager.Instance.CurrentColor;
-            lineRenderer.startWidth = StrokeWidth;
-            lineRenderer.endWidth = StrokeWidth;
+				lineRenderer.material = new Material (Shader.Find ("Particles/Additive"));    // todo add shader selection
+				lineRenderer.startColor = GameManager.Instance.CurrentColor;
+				lineRenderer.endColor = GameManager.Instance.CurrentColor;
+				lineRenderer.startWidth = StrokeWidth;
+				lineRenderer.endWidth = StrokeWidth;
+			}
+			else {
+				gameObject.tag = "Line3D";
+				gameObject.AddComponent<Rigidbody> ();
+				gameObject.GetComponent<Rigidbody> ().isKinematic = true;
 
-            return gameObject;
-        }
+			}
+
+			lastPosition = tool.transform.position;
+
+			return gameObject;
+		}
 
         public static void createCollider(GameObject line)
         {
@@ -122,36 +172,41 @@ namespace Assets.Scripts.Actions
             collider.sharedMesh = mesh;
         }
 
-        public static Mesh drawMesh(List<Vector3> points)
-        {
-            Vector3[] vertices = new Vector3[points.Count];
+		public static Mesh drawMesh(List<Vector3> points)
+		{
+			Vector3[] vertices = new Vector3[points.Count];
 
-            for (int i = 0; i < vertices.Length; i++)
-            {
-                vertices[i] = points[i];
-            }
+			for (int i = 0; i < vertices.Length; i++)
+			{
+				vertices[i] = points[i];
+			}
 
-            int[] triangles = new int[((points.Count / 2) - 1) * 6];
+			int[] triangles = new int[((points.Count / 2) - 1) * 6];
 
-            //Works on linear patterns tn = bn+c
-            int position = 6;
-            for (int i = 0; i < (triangles.Length / 6); i++)
-            {
-                triangles[i * position] = 2 * i;
-                triangles[i * position + 3] = 2 * i;
+			//Works on linear patterns tn = bn+c
+			int position = 6;
+			for (int i = 0; i < (triangles.Length / 6); i++)
+			{
+				triangles[i * position] = 2 * i;
+				triangles[i * position + 3] = 2 * i;
 
-                triangles[i * position + 1] = 2 * i + 3;
-                triangles[i * position + 4] = (2 * i + 3) - 1;
+				triangles[i * position + 1] = 2 * i + 3;
+				triangles[i * position + 4] = (2 * i + 3) - 1;
 
-                triangles[i * position + 2] = 2 * i + 1;
-                triangles[i * position + 5] = (2 * i + 1) + 2;
-            }
+				triangles[i * position + 2] = 2 * i + 1;
+				triangles[i * position + 5] = (2 * i + 1) + 2;
+			}
 
-            var mesh = new Mesh();
-            mesh.vertices = vertices;
-            mesh.triangles = triangles;
-            mesh.RecalculateNormals();
-            return mesh;
-        }
-    }
+			var mesh = new Mesh();
+			mesh.vertices = vertices;
+			mesh.triangles = triangles;
+			mesh.RecalculateNormals();
+			return mesh;
+		}
+
+		public void SetLineType(LineType lineType)
+		{
+			this.type = lineType;
+		}
+	}
 }
