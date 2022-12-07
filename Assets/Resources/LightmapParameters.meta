@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Resources/UI.meta
+guid: 468d195c4db76c94fa930aa70af288bf
+========
 guid: c1bf5cb1be65c41428391fb4b63a1683
+>>>>>>>> master:Assets/Resources/LightmapParameters.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
