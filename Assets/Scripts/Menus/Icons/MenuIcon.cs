@@ -27,11 +27,18 @@ namespace Assets.Scripts.Menus.Icons
             GameManager.Instance.changeCurrentAction(action);
             SetColor(SelectedColor);
             MenuManager.Instance.ParametersMenu.MenuObject.SetActive(false);
+            if (MenuManager.Instance.ParametersMenu.SelectedIcon != null)
+            {
+                MenuManager.Instance.ParametersMenu.SelectedIcon.Deselect();
+            }
+            MenuManager.Instance.ParametersMenu.IsSelectedIcon = false;
+            getIconsMenu().SelectedIcon = this;
         }
 
-        public void Deselect()
+        public virtual void Deselect()
         {
-            SetColor(DefaultColor);
+            SetDefaultColor();
+            getIconsMenu().PreviouslySelectedIcon = MenuManager.Instance.ToolsMenu.SelectedIcon;
         }
 
         public virtual void UpdateColor()
@@ -69,6 +76,20 @@ namespace Assets.Scripts.Menus.Icons
         public virtual bool IsGameObjectInIcon(GameObject gameObject)
         {
             return this.gameObject == gameObject;
+        }
+
+        public bool IsIconInToolsMenu()
+        {
+            return GetType() == typeof(ToolsMenuIcon) || GetType() == typeof(IconWithoutParametersMenu);
+        }
+
+        public Menu getIconsMenu()
+        {
+            if (IsIconInToolsMenu())
+            {
+                return MenuManager.Instance.ToolsMenu;
+            }
+            return MenuManager.Instance.ParametersMenu;
         }
     }
 }

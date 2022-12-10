@@ -92,11 +92,10 @@ namespace Assets.Scripts.Managers
             {
                 toolsMenu.PreviouslySelectedIcon = toolsMenu.selectingIcon;
             }
+            Debug.Log(GetType().Name + ": deselecting " + toolsMenu.SelectedIcon.gameObject.name + " selecting " + toolsMenu.PreviouslySelectedIcon.gameObject.name);
             var tmp = toolsMenu.PreviouslySelectedIcon;
-            toolsMenu.PreviouslySelectedIcon = toolsMenu.SelectedIcon;
-            toolsMenu.SelectedIcon = tmp;
-            toolsMenu.SelectedIcon.Select();
-            toolsMenu.PreviouslySelectedIcon.Deselect();
+            toolsMenu.SelectedIcon.Deselect();
+            tmp.Select();
         }
     }
 }
