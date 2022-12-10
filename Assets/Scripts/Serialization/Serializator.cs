@@ -87,7 +87,7 @@ namespace Assets.Scripts.Serialization
             }
             lr.SetPositions(positions);
 
-            LineDrawing.createCollider(line);
+            LineDrawing.CreateCollider(line);
 
             return line;
         }
