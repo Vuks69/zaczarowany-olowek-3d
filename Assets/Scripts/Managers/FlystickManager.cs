@@ -23,13 +23,7 @@ namespace Assets.Scripts.Managers
                     GameManager.Instance.CurrentAction.HandleTriggerUp();
                     break;
                 case "button3":
-                    action3();
-                    break;
-                case "save_state":
-                    DataManager.Instance.SaveWorld();
-                    break;
-                case "load_state":
-                    DataManager.Instance.LoadWorld();
+                    toggleAction();
                     break;
                 default:
                     break;
@@ -59,17 +53,17 @@ namespace Assets.Scripts.Managers
                 input = "trigger_up";
             }
 
-            if (Input.GetKeyDown(KeyCode.R))
+            if (Input.GetButtonDown("Redo Button"))
             {
                 input = "button1";
             }
 
-            if (Input.GetKeyDown(KeyCode.U))
+            if (Input.GetButtonDown("Undo Button"))
             {
                 input = "button2";
             }
 
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetButtonDown("Selecting Mode Button"))
             {
                 input = "button3";
             }
@@ -91,31 +85,18 @@ namespace Assets.Scripts.Managers
             Lzwp.input.flysticks[flystickIdx].GetButton(LzwpInput.Flystick.ButtonID.Button3).OnPress += action3;
         }
 
-        void HandleInputTriggerDown()
+        private void toggleAction()
         {
-            //HandleInput("trigger_down");
-            if (GameManager.Instance.CurrentAction is Selecting)
+            ToolsMenu toolsMenu = MenuManager.Instance.ToolsMenu;
+            if (toolsMenu.PreviouslySelectedIcon != toolsMenu.selectingIcon && toolsMenu.SelectedIcon != toolsMenu.selectingIcon)
             {
-                GameManager.Instance.ActionsData.Selecting.HandleTriggerDown();
+                toolsMenu.PreviouslySelectedIcon = toolsMenu.selectingIcon;
             }
-            else if (GameManager.Instance.CurrentAction is LineDrawing)
-            {
-                GameManager.Instance.ActionsData.LineDrawing.HandleTriggerDown();
-            }
+            var tmp = toolsMenu.PreviouslySelectedIcon;
+            toolsMenu.PreviouslySelectedIcon = toolsMenu.SelectedIcon;
+            toolsMenu.SelectedIcon = tmp;
+            toolsMenu.SelectedIcon.Select();
+            toolsMenu.PreviouslySelectedIcon.Deselect();
         }
-
-        void HandleInputTriggerUp()
-        {
-            //HandleInput("trigger_up");
-            if (GameManager.Instance.CurrentAction is Selecting)
-            {
-                GameManager.Instance.ActionsData.Selecting.HandleTriggerUp();
-            }
-            else if (GameManager.Instance.CurrentAction is LineDrawing)
-            {
-                GameManager.Instance.ActionsData.LineDrawing.HandleTriggerUp();
-            }
-        }
-
     }
 }
