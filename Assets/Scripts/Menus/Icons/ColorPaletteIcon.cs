@@ -11,6 +11,7 @@ namespace Assets.Scripts.Menus.Icons
         public override void Select()
         {
             GameManager.Instance.CurrentColor = getColorFromPalette(GameManager.Instance.ActionsData.Selecting.PCoord);
+            getIconsMenu().SelectedIcon = this;
         }
 
         public override void Highlight()

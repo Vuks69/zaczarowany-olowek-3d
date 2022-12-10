@@ -13,9 +13,11 @@ namespace Assets.Scripts.Menus.Icons
             this.lineType = lineType;
         }
 
-        public override void Select()
-        {
-            GameManager.Instance.ActionsData.LineDrawing.SetLineType(lineType);
-        }
-    }
+		public override void Select()
+		{
+			GameManager.Instance.ActionsData.LineDrawing.SetLineType(lineType);
+			SetSelectedColor();
+			getIconsMenu().SelectedIcon = this;
+		}
+	}
 }

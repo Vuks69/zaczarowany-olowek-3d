@@ -32,6 +32,12 @@ namespace Assets.Scripts.Actions
             ToolState = SelectionState.MOVING;
         }
 
+        public void SetStateChangeColor()
+        {
+            ChangeSelectionColor();
+            ToolState = SelectionState.STANDBY;
+        }
+
         public override void HandleTriggerDown()
         {
             switch (ToolState)
@@ -245,6 +251,25 @@ namespace Assets.Scripts.Actions
                 }
             }
             SelectedObjects.Clear();
+        }
+
+        public void ChangeSelectionColor()
+        {
+            foreach (var obj in SelectedObjects)
+            {
+                if (obj.GetComponent<LineRenderer>() != null)
+                {
+                    obj.GetComponent<LineRenderer>().startColor = GameManager.Instance.CurrentColor;
+                    obj.GetComponent<LineRenderer>().endColor = GameManager.Instance.CurrentColor;
+                }
+                else
+                {
+                    foreach (Transform child in obj.transform)
+                    {
+                        child.gameObject.GetComponent<Renderer>().material.color = GameManager.Instance.CurrentColor;
+                    }
+                }
+            }
         }
     }
 }
