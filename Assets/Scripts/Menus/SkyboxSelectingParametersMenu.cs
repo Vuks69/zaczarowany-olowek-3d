@@ -20,7 +20,6 @@ namespace Assets.Scripts.Menus
         {
             icons = new List<MenuIcon> {
                 skyboxSelectingMenuIcon1,
-                skyboxSelectingMenuIcon1,
                 skyboxSelectingMenuIcon2,
                 skyboxSelectingMenuIcon3,
                 skyboxSelectingMenuIcon4,
