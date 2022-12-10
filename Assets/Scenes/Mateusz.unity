@@ -4763,6 +4763,26 @@ Prefab:
       propertyPath: m_Texture
       value: 
       objectReference: {fileID: 2800000, guid: 0cc96636d1a7d22479466fefc3845a83, type: 3}
+    - target: {fileID: 114872239380369248, guid: 2007bd4a77bf23f4e855d477f45f03eb,
+        type: 2}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114872239380369248, guid: 2007bd4a77bf23f4e855d477f45f03eb,
+        type: 2}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114872239380369248, guid: 2007bd4a77bf23f4e855d477f45f03eb,
+        type: 2}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 23637488639884940, guid: 2007bd4a77bf23f4e855d477f45f03eb,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 43b98058521b44244a545191d3dd0b2d, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2007bd4a77bf23f4e855d477f45f03eb, type: 2}
   m_IsPrefabParent: 0
@@ -4953,7 +4973,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1066838065}
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0.6, y: -0.1, z: -0}
+  m_LocalPosition: {x: 1, y: -0.1, z: -0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 1915278353}
