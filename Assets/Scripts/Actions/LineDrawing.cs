@@ -58,7 +58,7 @@ namespace Assets.Scripts.Actions
 
 		public override void Update()
 		{
-			if (drawing && Vector3.Distance (lastPosition, tool.transform.position) > 0.005f)
+			if (drawing )//&& Vector3.Distance (lastPosition, tool.transform.position) > 0.005f)
 			{
 				// once the flystick has moved away enough from last position, add new position
 				// this is done to prevent adding 60 positions per second while drawing
