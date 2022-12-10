@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Managers;
 using Assets.Scripts.Menus.Icons;
+using Assets.Scripts.Menus;
 using System.Linq;
 using UnityEngine;
 
@@ -31,21 +32,21 @@ namespace Assets.Scripts.Actions
                 pointer.SetActive(true);
             }
         }
-
+        
         public override void HandleTriggerDown()
         {
             if (isHighlightedIcon)
             {
-                var selectedIcon = MenuManager.Instance.ToolsMenu.SelectedIcon;
-                if (MenuManager.Instance.ToolsMenu.IsSelectedIcon)
+                var rightMenu = getRightSelectedIconMenu();
+                var rightSelectedIcon = rightMenu.SelectedIcon;
+                if (rightMenu.IsSelectedIcon)
                 {
-                    selectedIcon.Deselect();
+                    rightSelectedIcon.Deselect();
                 }
-                selectedIcon = highlightedIcon;
-                selectedIcon.Select();
-                MenuManager.Instance.ToolsMenu.SelectedIcon = selectedIcon;
+                rightSelectedIcon = highlightedIcon;
+                rightSelectedIcon.Select();
+                rightMenu.IsSelectedIcon = true;
                 isHighlightedIcon = false;
-                MenuManager.Instance.ToolsMenu.IsSelectedIcon = true;
                 if (highlightedIcon.GetType() != typeof(ObjectSelectingMenuIcon) && highlightedIcon.gameObject.name != "Object Selecting")
                 {
                     ObjectSelecting.DeselectAll();
@@ -97,9 +98,12 @@ namespace Assets.Scripts.Actions
                 var allMenusIcons = MenuManager.Instance.ToolsMenu.icons.Concat(MenuManager.Instance.ParametersMenu.icons);
                 foreach (var icon in allMenusIcons.Where(y => isIconHit(y, hit)))
                 {
-                    highlightedIcon = icon;
-                    isHighlightedIcon = true;
-                    highlightedIcon.Highlight();
+                    //if (!isSelectedTheSameObject(icon))
+                    //{
+                        highlightedIcon = icon;
+                        isHighlightedIcon = true;
+                        highlightedIcon.Highlight();
+                    //}
                 }
             }
             else
@@ -114,7 +118,7 @@ namespace Assets.Scripts.Actions
         private void changeHighlightedIconsColor()
         {
             isHighlightedIcon = false;
-            if (highlightedIcon == MenuManager.Instance.ToolsMenu.SelectedIcon)
+            if (highlightedIcon == getRightSelectedIcon())
             {
                 highlightedIcon.SetSelectedColor();
                 return;
@@ -122,14 +126,34 @@ namespace Assets.Scripts.Actions
             highlightedIcon.Dehighlight();
         }
 
-        private bool isSelectedTheSameObject(MenuIcon icon)
-        {
-            return MenuManager.Instance.ToolsMenu.IsSelectedIcon && icon.gameObject == MenuManager.Instance.ToolsMenu.SelectedIcon.gameObject;
-        }
-
         private bool isIconHit(MenuIcon icon, RaycastHit hit)
         {
-            return icon.IsGameObjectInIcon(hit.collider.transform.gameObject) && !isSelectedTheSameObject(icon);
+            return icon.IsGameObjectInIcon(hit.collider.transform.gameObject);
+        }
+
+        private bool isSelectedTheSameObject(MenuIcon icon)
+        {
+            var rightMenu = getRightSelectedIconMenu(icon);
+            return rightMenu.IsSelectedIcon && icon.gameObject == rightMenu.SelectedIcon.gameObject;
+        }
+
+        private MenuIcon getRightSelectedIcon()
+        {
+            return getRightSelectedIconMenu().SelectedIcon;
+        }
+
+        private Menu getRightSelectedIconMenu()
+        {
+            return getRightSelectedIconMenu(highlightedIcon);
+        }
+
+        private Menu getRightSelectedIconMenu(MenuIcon icon)
+        {
+            if (icon != null && !icon.IsIconInToolsMenu())
+            {
+                return MenuManager.Instance.ParametersMenu;
+            }
+            return MenuManager.Instance.ToolsMenu;
         }
     }
 }

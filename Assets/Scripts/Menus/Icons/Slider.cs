@@ -26,7 +26,8 @@ namespace Assets.Scripts.Menus.Icons
 
         public override void Select()
         {
-            // Nothing happens
+            SetSelectedColor();
+            getIconsMenu().SelectedIcon = this;
         }
 
         public override void UpdateColor()

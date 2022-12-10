@@ -23,7 +23,6 @@ namespace Assets.Scripts.Menus
                 lineDrawingIcon,
                 erasingIcon,
                 objectSelectingIcon,
-                objectManipulation,
                 savingLoadingIcon
             };
         }

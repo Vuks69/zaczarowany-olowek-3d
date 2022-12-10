@@ -13,6 +13,7 @@ namespace Assets.Scripts.Menus.Icons
         public override void Select()
         {
             SetSelectedColor();
+            getIconsMenu().SelectedIcon = this;
             save();
         }
 
