@@ -6,6 +6,7 @@ TagManager:
   tags:
   - CreatedObjects
   - Line3D
+  - NonSerializable
   layers:
   - Default
   - TransparentFX

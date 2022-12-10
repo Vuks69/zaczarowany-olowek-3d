@@ -12,8 +12,8 @@ namespace Assets.Scripts.Menus
         public MenuIcon lineDrawingIcon { get; set; } = new ToolsMenuIcon(GameObject.Find("Line Drawing"), GameManager.Instance.ActionsData.LineDrawing, MenuManager.Instance.ParametersMenusData.LineDrawingParametersMenu);
         public MenuIcon erasingIcon { get; set; } = new IconWithoutParametersMenu(GameObject.Find("Erasing"), GameManager.Instance.ActionsData.Erasing);
         public MenuIcon objectSelectingIcon { get; set; } = new ToolsMenuIcon(GameObject.Find("Object Selecting"), GameManager.Instance.ActionsData.ObjectSelecting, MenuManager.Instance.ParametersMenusData.ObjectSelectingParametersMenu);
-        public MenuIcon objectManipulation { get; set; } = new IconWithoutParametersMenu(GameObject.Find("Object Manipulation"), GameManager.Instance.ActionsData.Manipulation);
         public MenuIcon savingLoadingIcon { get; set; } = new ToolsMenuIcon(GameObject.Find("Saving Loading"), GameManager.Instance.ActionsData.Selecting, MenuManager.Instance.ParametersMenusData.SavingLoadingParametersMenu);
+        public MenuIcon clearSceneIcon { get; set; } = new ClearSceneIcon(GameObject.Find("Clear Scene"), GameManager.Instance.ActionsData.Selecting);
 
         public ToolsMenu()
         {
@@ -23,8 +23,8 @@ namespace Assets.Scripts.Menus
                 lineDrawingIcon,
                 erasingIcon,
                 objectSelectingIcon,
-                objectManipulation,
-                savingLoadingIcon
+                savingLoadingIcon,
+                clearSceneIcon
             };
         }
     }

@@ -32,13 +32,6 @@ namespace Assets.Scripts.Menus.Icons
                 toDeserialize = sw.ReadToEnd();
             }
 
-            GameObject[] objectList = GameObject.FindGameObjectsWithTag(GlobalVars.UniversalTag);
-            Debug.Log("Destroying " + objectList.Length + " objects.");
-            foreach (var item in objectList)
-            {
-                Object.Destroy(item);
-            }
-
             var serializableArray = JsonUtility.FromJson<SerializableObjectArrayWrapper>(toDeserialize);
             Debug.Log("Deserializing and recreating " + serializableArray.lines.Count + " [" + GlobalVars.LineName + "] objects.");
             foreach (var serializableLine in serializableArray.lines)
