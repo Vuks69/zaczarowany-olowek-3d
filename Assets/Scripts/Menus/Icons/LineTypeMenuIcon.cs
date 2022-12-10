@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Assets.Scripts.Actions;
+﻿using Assets.Scripts.Actions;
 using Assets.Scripts.Managers;
 using UnityEngine;
 
@@ -18,6 +16,8 @@ namespace Assets.Scripts.Menus.Icons
 		public override void Select()
 		{
 			GameManager.Instance.ActionsData.LineDrawing.SetLineType (lineType);
+			SetSelectedColor();
+			getIconsMenu().SelectedIcon = this;
 		}
 	}
 }

@@ -256,8 +256,18 @@ namespace Assets.Scripts.Actions
         {
             foreach (var obj in SelectedObjects)
             {
-                obj.GetComponent<LineRenderer>().startColor = GameManager.Instance.CurrentColor;
-                obj.GetComponent<LineRenderer>().endColor = GameManager.Instance.CurrentColor;
+                if (obj.GetComponent<LineRenderer>() != null)
+                {
+                    obj.GetComponent<LineRenderer>().startColor = GameManager.Instance.CurrentColor;
+                    obj.GetComponent<LineRenderer>().endColor = GameManager.Instance.CurrentColor;
+                }
+                else
+                {
+                    foreach (Transform child in obj.transform)
+                    {
+                        child.gameObject.GetComponent<Renderer>().material.color = GameManager.Instance.CurrentColor;
+                    }
+                }
             }
         }
     }
