@@ -54,30 +54,30 @@ namespace Assets.Scripts.Actions
         {
             // Nothing happens
         }
-		public override void Update()
-		{
-			if (drawing) //&& Vector3.Distance (lastPosition, tool.transform.position) > 0.005f)
-			{
-				// once the flystick has moved away enough from last position, add new position
-				// this is done to prevent adding 60 positions per second while drawing
-				if (type == LineType.LineRenderer)
+        public override void Update()
+        {
+            if (drawing) //&& Vector3.Distance (lastPosition, tool.transform.position) > 0.005f)
+            {
+                // once the flystick has moved away enough from last position, add new position
+                // this is done to prevent adding 60 positions per second while drawing
+                if (type == LineType.LineRenderer)
                 {
-					//if (Vector3.Distance (lastPosition, tool.transform.position) > 0.005f) {
-					lineRenderer.positionCount += 1;
-					lineRenderer.SetPosition(lineRenderer.positionCount - 1, tool.transform.position - line.transform.position);
-					//}
-				}
-                else 
-				{
-					GameObject newSegment;
-					if (type == LineType.Cylinder)
+                    //if (Vector3.Distance (lastPosition, tool.transform.position) > 0.005f) {
+                    lineRenderer.positionCount += 1;
+                    lineRenderer.SetPosition(lineRenderer.positionCount - 1, tool.transform.position - line.transform.position);
+                    //}
+                }
+                else
+                {
+                    GameObject newSegment;
+                    if (type == LineType.Cylinder)
                     {
-						newSegment = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
-					}
+                        newSegment = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+                    }
                     else if (type == LineType.Cube)
                     {
-						newSegment = GameObject.CreatePrimitive(PrimitiveType.Cube);
-					}
+                        newSegment = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    }
                     else
                     {
                         Debug.LogError("Line type not implemented: " + type.ToString());
@@ -85,22 +85,22 @@ namespace Assets.Scripts.Actions
                     }
                     newSegment.name = GlobalVars.Line3DSegmentName;
                     newSegment.tag = GlobalVars.NonSerializableTag;
-					newSegment.transform.parent = line.transform;
-					newSegment.GetComponent<Renderer>().material.color = GameManager.Instance.CurrentColor;
-					newSegment.transform.position = Vector3.Lerp(lastPosition, tool.transform.position, 0.5f);		
-					newSegment.transform.localScale = (new Vector3(StrokeWidth, StrokeWidth, StrokeWidth)) / 2;
-					Vector3 cylinderScale = newSegment.transform.localScale;
-					cylinderScale.y = Vector3.Distance(tool.transform.position, lastPosition);
-					newSegment.transform.localScale = cylinderScale;
-					Vector3 rotationVector = Vector3.Normalize(tool.transform.position - lastPosition);
-					rotationVector += new Vector3(0, 1, 0);
-					newSegment.transform.rotation = new Quaternion(rotationVector.x, rotationVector.y, rotationVector.z, 0);
-					lastPosition = tool.transform.position;
-				}
+                    newSegment.transform.parent = line.transform;
+                    newSegment.GetComponent<Renderer>().material.color = GameManager.Instance.CurrentColor;
+                    newSegment.transform.position = Vector3.Lerp(lastPosition, tool.transform.position, 0.5f);
+                    newSegment.transform.localScale = (new Vector3(StrokeWidth, StrokeWidth, StrokeWidth)) / 2;
+                    Vector3 cylinderScale = newSegment.transform.localScale;
+                    cylinderScale.y = Vector3.Distance(tool.transform.position, lastPosition);
+                    newSegment.transform.localScale = cylinderScale;
+                    Vector3 rotationVector = Vector3.Normalize(tool.transform.position - lastPosition);
+                    rotationVector += new Vector3(0, 1, 0);
+                    newSegment.transform.rotation = new Quaternion(rotationVector.x, rotationVector.y, rotationVector.z, 0);
+                    lastPosition = tool.transform.position;
+                }
 
-				lastPosition = tool.transform.position;  
-			}
-		}
+                lastPosition = tool.transform.position;
+            }
+        }
 
         private void StartDrawing()
         {

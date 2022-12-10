@@ -1,6 +1,6 @@
 ﻿using Assets.Scripts.Managers;
-using Assets.Scripts.Menus.Icons;
 using Assets.Scripts.Menus;
+using Assets.Scripts.Menus.Icons;
 using System.Linq;
 using UnityEngine;
 
@@ -32,7 +32,7 @@ namespace Assets.Scripts.Actions
                 pointer.SetActive(true);
             }
         }
-        
+
         public override void HandleTriggerDown()
         {
             if (isHighlightedIcon)
@@ -100,9 +100,9 @@ namespace Assets.Scripts.Actions
                 {
                     //if (!isSelectedTheSameObject(icon))
                     //{
-                        highlightedIcon = icon;
-                        isHighlightedIcon = true;
-                        highlightedIcon.Highlight();
+                    highlightedIcon = icon;
+                    isHighlightedIcon = true;
+                    highlightedIcon.Highlight();
                     //}
                 }
             }
