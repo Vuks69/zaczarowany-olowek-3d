@@ -11,6 +11,7 @@ namespace Assets.Scripts.Menus.Icons
         public Vector3 PreviousFlystickForward { get; set; } = new Vector3(0, 0, 0);
         private Vector3 initialSphereCoord;
         private readonly float sensitivity = 3f;
+        protected float value;
 
         public Slider(GameObject icon, Action action) : base(icon, action)
         {
@@ -45,11 +46,11 @@ namespace Assets.Scripts.Menus.Icons
                 var flystickForward = FlystickManager.Instance.MultiTool.transform.forward;
                 sphere.transform.position = new Vector3(sphere.transform.position.x - sensitivity * (PreviousFlystickForward.x - flystickForward.x), sphere.transform.position.y, sphere.transform.position.z);
                 PreviousFlystickForward = flystickForward;
-                var normalizedNewPositionLocalY = (newPositionLocal.y + 1.0f) / 2.0f;
-                var strokeWidth = (normalizedNewPositionLocalY * (GameManager.Instance.MaxStrokeWidth - GameManager.Instance.MinStrokeWidth)) + GameManager.Instance.MinStrokeWidth;
-                GameManager.Instance.CurrentLineThickness = strokeWidth;
-                GameManager.Instance.ActionsData.LineDrawing.StrokeWidth = strokeWidth;
+                value = (newPositionLocal.y + 1.0f) / 2.0f;
+                OnMove();
             }
         }
+
+        protected virtual void OnMove() { }
     }
 }

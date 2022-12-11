@@ -47,14 +47,14 @@ namespace Assets.Scripts.Actions
                 rightSelectedIcon.Select();
                 rightMenu.IsSelectedIcon = true;
                 isHighlightedIcon = false;
-                if (highlightedIcon.GetType() != typeof(ObjectSelectingMenuIcon) && highlightedIcon.gameObject.name != "Object Selecting")
+                if (highlightedIcon.GetType() != typeof(ObjectSelectingMenuIcon) && highlightedIcon.GetType() != typeof(SelectionScaleSlider) && highlightedIcon.gameObject.name != "Object Selecting")
                 {
                     ObjectSelecting.DeselectAll();
                 }
-                if (highlightedIcon.GetType() == typeof(Slider))
+                if (highlightedIcon is Slider)
                 {
                     moveSlider = true;
-                    ((Slider)highlightedIcon).PreviousFlystickForward = FlystickManager.Instance.Flystick.transform.forward;
+                    (highlightedIcon as Slider).PreviousFlystickForward = FlystickManager.Instance.Flystick.transform.forward;
                     pointer.SetActive(false);
                 }
             }
@@ -69,9 +69,9 @@ namespace Assets.Scripts.Actions
         {
             if (moveSlider)
             {
-                if (highlightedIcon.GetType() == typeof(Slider))
+                if (highlightedIcon is Slider)
                 {
-                    ((Slider)highlightedIcon).Move();
+                    (highlightedIcon as Slider).Move();
                 }
                 return;
             }

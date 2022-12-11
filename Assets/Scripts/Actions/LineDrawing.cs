@@ -62,11 +62,11 @@ namespace Assets.Scripts.Actions
                 // this is done to prevent adding 60 positions per second while drawing
                 if (type == LineType.LineRenderer)
                 {
-                    if (Vector3.Distance(lastPosition, tool.transform.position) > 0.005f)
-                    {
+                    //if (Vector3.Distance(lastPosition, tool.transform.position) > 0.005f)
+                    //{
                         lineRenderer.positionCount += 1;
                         lineRenderer.SetPosition(lineRenderer.positionCount - 1, tool.transform.position - line.transform.position);
-                    }
+                    //}
                 }
                 else
                 {
