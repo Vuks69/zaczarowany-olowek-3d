@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using Assets.Scripts.Managers;
 using Assets.Scripts.Menus.Icons;
-using Assets.Scripts.Managers;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace Assets.Scripts.Menus
 {
