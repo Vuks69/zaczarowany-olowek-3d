@@ -56,16 +56,17 @@ namespace Assets.Scripts.Actions
         }
         public override void Update()
         {
-            if (drawing) //&& Vector3.Distance (lastPosition, tool.transform.position) > 0.005f)
+            if (drawing && Vector3.Distance (lastPosition, tool.transform.position) > 0.005f)
             {
                 // once the flystick has moved away enough from last position, add new position
                 // this is done to prevent adding 60 positions per second while drawing
                 if (type == LineType.LineRenderer)
                 {
-                    //if (Vector3.Distance (lastPosition, tool.transform.position) > 0.005f) {
-                    lineRenderer.positionCount += 1;
-                    lineRenderer.SetPosition(lineRenderer.positionCount - 1, tool.transform.position - line.transform.position);
-                    //}
+                    if (Vector3.Distance(lastPosition, tool.transform.position) > 0.005f)
+                    {
+                        lineRenderer.positionCount += 1;
+                        lineRenderer.SetPosition(lineRenderer.positionCount - 1, tool.transform.position - line.transform.position);
+                    }
                 }
                 else
                 {
