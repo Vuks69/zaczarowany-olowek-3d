@@ -32,6 +32,12 @@ namespace Assets.Scripts.Menus.Icons
                         case GlobalVars.LineName:
                             serializableArray.lines.Add(Serializator.SerializeLine(item));
                             break;
+                        case GlobalVars.Line3DName:
+                            serializableArray.lines3d.Add(Serializator.SerializeLine3D(item));
+                            break;
+                        case GlobalVars.Line3DCubeSegmentName:
+                        case GlobalVars.Line3DCylinderSegmentName:
+                            break; // ignore these, they're handled by Line3DName
                         default:
                             Debug.LogError("Attempted serialization of unsupported GameObject [" + item.name + "]");
                             break;
@@ -39,7 +45,9 @@ namespace Assets.Scripts.Menus.Icons
                 }
 
                 // Write new save
-                Debug.Log("Saving world to file: " + GameManager.Instance.PathToSaveFile + "\nLines: " + serializableArray.lines.Count);
+                Debug.Log("Saving world to file: " + GameManager.Instance.PathToSaveFile);
+                Debug.Log("    Lines: " + serializableArray.lines.Count);
+                Debug.Log("    Lines3D: " + serializableArray.lines3d.Count);
                 using (StreamWriter sw = File.CreateText(GameManager.Instance.PathToSaveFile)) // overwrites old save
                 {
                     sw.Write(JsonUtility.ToJson(serializableArray));

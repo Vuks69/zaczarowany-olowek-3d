@@ -56,7 +56,7 @@ namespace Assets.Scripts.Actions
         }
         public override void Update()
         {
-            if (drawing && Vector3.Distance (lastPosition, tool.transform.position) > 0.005f)
+            if (drawing && Vector3.Distance(lastPosition, tool.transform.position) > 0.005f)
             {
                 // once the flystick has moved away enough from last position, add new position
                 // this is done to prevent adding 60 positions per second while drawing
@@ -71,28 +71,29 @@ namespace Assets.Scripts.Actions
                 else
                 {
                     GameObject newSegment;
+                    float localScaleY;
                     if (type == LineType.Cylinder)
                     {
                         newSegment = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+                        newSegment.name = GlobalVars.Line3DCylinderSegmentName;
+                        localScaleY = Vector3.Distance(tool.transform.position, lastPosition) * 1.5f;
                     }
                     else if (type == LineType.Cube)
                     {
                         newSegment = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                        newSegment.name = GlobalVars.Line3DCubeSegmentName;
+                        localScaleY = Vector3.Distance(tool.transform.position, lastPosition) * 2;
                     }
                     else
                     {
                         Debug.LogError("Line type not implemented: " + type.ToString());
                         return;
                     }
-                    newSegment.name = GlobalVars.Line3DSegmentName;
                     newSegment.tag = GlobalVars.UniversalTag;
                     newSegment.transform.parent = line.transform;
                     newSegment.GetComponent<Renderer>().material.color = GameManager.Instance.CurrentColor;
                     newSegment.transform.position = Vector3.Lerp(lastPosition, tool.transform.position, 0.5f);
-                    newSegment.transform.localScale = (new Vector3(StrokeWidth, StrokeWidth, StrokeWidth)) / 2;
-                    Vector3 cylinderScale = newSegment.transform.localScale;
-                    cylinderScale.y = Vector3.Distance(tool.transform.position, lastPosition);
-                    newSegment.transform.localScale = cylinderScale;
+                    newSegment.transform.localScale = (new Vector3(StrokeWidth, localScaleY, StrokeWidth)) / 2;
                     Vector3 rotationVector = Vector3.Normalize(tool.transform.position - lastPosition);
                     rotationVector += new Vector3(0, 1, 0);
                     newSegment.transform.rotation = new Quaternion(rotationVector.x, rotationVector.y, rotationVector.z, 0);
@@ -141,7 +142,6 @@ namespace Assets.Scripts.Actions
                 gameObject.name = GlobalVars.Line3DName;
                 gameObject.AddComponent<Rigidbody>();
                 gameObject.GetComponent<Rigidbody>().isKinematic = true;
-
             }
 
             lastPosition = tool.transform.position;
