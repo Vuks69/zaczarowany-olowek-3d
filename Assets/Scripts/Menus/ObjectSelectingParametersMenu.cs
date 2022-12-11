@@ -16,5 +16,10 @@ namespace Assets.Scripts.Menus
         {
             icons = new List<MenuIcon> { removeSelectionIcon, copySelectionIcon, moveSelectionIcon, changeSelectionColorIcon, selectionScaleSlider };
         }
+
+        public void SetSelectionSliderToDefaultPosition()
+        {
+            selectionScaleSlider.SetValueToInitial();
+        }
     }
 }

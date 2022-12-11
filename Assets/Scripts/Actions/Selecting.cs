@@ -47,9 +47,10 @@ namespace Assets.Scripts.Actions
                 rightSelectedIcon.Select();
                 rightMenu.IsSelectedIcon = true;
                 isHighlightedIcon = false;
-                if (highlightedIcon.GetType() != typeof(ObjectSelectingMenuIcon) && highlightedIcon.GetType() != typeof(SelectionScaleSlider) && highlightedIcon.gameObject.name != "Object Selecting")
+                if (isObjectSelectingIcon(highlightedIcon))
                 {
                     ObjectSelecting.DeselectAll();
+                    MenuManager.Instance.ParametersMenusData.ObjectSelectingParametersMenu.SetSelectionSliderToDefaultPosition();
                 }
                 if (highlightedIcon is Slider)
                 {
@@ -154,6 +155,11 @@ namespace Assets.Scripts.Actions
                 return MenuManager.Instance.ParametersMenu;
             }
             return MenuManager.Instance.ToolsMenu;
+        }
+
+        private bool isObjectSelectingIcon(MenuIcon icon)
+        {
+            return icon.GetType() != typeof(ObjectSelectingMenuIcon) && icon.GetType() != typeof(SelectionScaleSlider) && icon.gameObject.name != "Object Selecting";
         }
     }
 }

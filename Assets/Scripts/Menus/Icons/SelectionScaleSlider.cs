@@ -11,7 +11,8 @@ namespace Assets.Scripts.Menus.Icons
         
         public SelectionScaleSlider(GameObject icon, Action action) : base(icon, action)
         {
-            value = 0.5f;
+            initialValue = 0.5f;
+            SetValueToInitial();
         }
 
         protected override void OnMove()

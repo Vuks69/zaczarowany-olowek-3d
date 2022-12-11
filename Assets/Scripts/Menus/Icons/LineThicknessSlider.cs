@@ -10,6 +10,7 @@ namespace Assets.Scripts.Menus.Icons
         public LineThicknessSlider(GameObject icon, Action action) : base(icon, action)
         {
             value = 0.0f;
+            value = initialValue;
         }
 
         protected override void OnMove()

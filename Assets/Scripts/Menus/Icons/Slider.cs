@@ -12,6 +12,7 @@ namespace Assets.Scripts.Menus.Icons
         private Vector3 initialSphereCoord;
         private readonly float sensitivity = 3f;
         protected float value;
+        protected float initialValue;
 
         public Slider(GameObject icon, Action action) : base(icon, action)
         {
@@ -46,9 +47,25 @@ namespace Assets.Scripts.Menus.Icons
                 var flystickForward = FlystickManager.Instance.MultiTool.transform.forward;
                 sphere.transform.position = new Vector3(sphere.transform.position.x - sensitivity * (PreviousFlystickForward.x - flystickForward.x), sphere.transform.position.y, sphere.transform.position.z);
                 PreviousFlystickForward = flystickForward;
-                value = (newPositionLocal.y + 1.0f) / 2.0f;
+                value = normalized(newPositionLocal.y);
                 OnMove();
             }
+        }
+
+        public void SetValueToInitial()
+        {
+            value = initialValue;
+            sphere.transform.localPosition = new Vector3(sphere.transform.localPosition.x, unnormalized(value), sphere.transform.localPosition.z);
+        }
+
+        protected float normalized(float val)
+        {
+            return (val + 1.0f) / 2.0f;
+        }
+
+        protected float unnormalized(float val)
+        {
+            return (val * 2.0f) - 1.0f;
         }
 
         protected virtual void OnMove() { }
