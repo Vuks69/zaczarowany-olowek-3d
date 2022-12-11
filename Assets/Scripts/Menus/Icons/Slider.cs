@@ -11,6 +11,8 @@ namespace Assets.Scripts.Menus.Icons
         public Vector3 PreviousFlystickForward { get; set; } = new Vector3(0, 0, 0);
         private Vector3 initialSphereCoord;
         private readonly float sensitivity = 3f;
+        protected float value;
+        protected float initialValue;
 
         public Slider(GameObject icon, Action action) : base(icon, action)
         {
@@ -45,11 +47,27 @@ namespace Assets.Scripts.Menus.Icons
                 var flystickForward = FlystickManager.Instance.MultiTool.transform.forward;
                 sphere.transform.position = new Vector3(sphere.transform.position.x - sensitivity * (PreviousFlystickForward.x - flystickForward.x), sphere.transform.position.y, sphere.transform.position.z);
                 PreviousFlystickForward = flystickForward;
-                var normalizedNewPositionLocalY = (newPositionLocal.y + 1.0f) / 2.0f;
-                var strokeWidth = (normalizedNewPositionLocalY * (GameManager.Instance.MaxStrokeWidth - GameManager.Instance.MinStrokeWidth)) + GameManager.Instance.MinStrokeWidth;
-                GameManager.Instance.CurrentLineThickness = strokeWidth;
-                GameManager.Instance.ActionsData.LineDrawing.StrokeWidth = strokeWidth;
+                value = normalized(newPositionLocal.y);
+                OnMove();
             }
         }
+
+        public void SetValueToInitial()
+        {
+            value = initialValue;
+            sphere.transform.localPosition = new Vector3(sphere.transform.localPosition.x, unnormalized(value), sphere.transform.localPosition.z);
+        }
+
+        protected float normalized(float val)
+        {
+            return (val + 1.0f) / 2.0f;
+        }
+
+        protected float unnormalized(float val)
+        {
+            return (val * 2.0f) - 1.0f;
+        }
+
+        protected virtual void OnMove() { }
     }
 }

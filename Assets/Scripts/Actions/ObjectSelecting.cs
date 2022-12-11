@@ -271,5 +271,13 @@ namespace Assets.Scripts.Actions
                 }
             }
         }
+
+        public void ChangeSelectionScale(Vector3 scale)
+        {
+            foreach (var obj in SelectedObjects)
+            {
+                obj.transform.localScale = scale;
+            }
+        }
     }
 }
