@@ -34,10 +34,16 @@ namespace Assets.Scripts.Menus.Icons
             }
 
             var serializableArray = JsonUtility.FromJson<SerializableObjectArrayWrapper>(toDeserialize);
-            Debug.Log("Deserializing and recreating " + serializableArray.lines.Count + " [" + GlobalVars.LineName + "] objects.");
+            Debug.Log("Deserializing and recreating objects:");
+            Debug.Log("    " + serializableArray.lines.Count + " [" + GlobalVars.LineName + "]");
             foreach (var serializableLine in serializableArray.lines)
             {
                 Serializator.DeserializeLine(serializableLine);
+            }
+            Debug.Log("    " + serializableArray.lines3d.Count + " [" + GlobalVars.Line3DName + "]");
+            foreach (var serializableLine3D in serializableArray.lines3d)
+            {
+                Serializator.DeserializeLine3D(serializableLine3D);
             }
         }
     }

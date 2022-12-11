@@ -1,10 +1,14 @@
 ﻿using Assets.Scripts.Actions;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts.Serialization
 {
     public static class Serializator
     {
+        // Note we have to explicitly create a method for each type, due to JsonUtility not working well with class inheritance
+        // Also, thanks Unity for STILL not having sane, working serialization.
+
         public static SerializableLine SerializeLine(GameObject toSerialize)
         {
             var lr = toSerialize.GetComponent<LineRenderer>();
@@ -20,7 +24,7 @@ namespace Assets.Scripts.Serialization
                 name = toSerialize.name,
                 tag = toSerialize.tag,
                 position = new SerializableVector3(toSerialize.transform.position),
-                lineRendererData = new SerializableLine.LineRendererData
+                lineRendererData = new LineRendererData
                 {
                     numCapVertices = lr.numCapVertices,
                     numCornerVertices = lr.numCornerVertices,
@@ -38,7 +42,7 @@ namespace Assets.Scripts.Serialization
             return serializableLine;
         }
 
-        public static GameObject DeserializeLine(SerializableLine toDeserialize)
+        public static void DeserializeLine(SerializableLine toDeserialize)
         {
             GameObject line = new GameObject()
             {
@@ -88,8 +92,111 @@ namespace Assets.Scripts.Serialization
             lr.SetPositions(positions);
 
             LineDrawing.CreateCollider(line);
+        }
 
-            return line;
+        public static SerializableLine3D SerializeLine3D(GameObject toSerialize)
+        {
+            List<SerializableSegment> segments = new List<SerializableSegment>();
+            for (int index = 0; index < toSerialize.transform.childCount; index++)
+            {
+                var transform = toSerialize.transform.GetChild(index);
+                var segment = transform.gameObject;
+
+                SerializableVector3 rotation = new SerializableVector3
+                {
+                    x = segment.transform.rotation.x,
+                    y = segment.transform.rotation.y,
+                    z = segment.transform.rotation.z
+                }; // discarding rotation.w as it is always 0
+
+                var serializableSegment = new SerializableSegment
+                {
+                    name = segment.name,
+                    tag = segment.tag,
+                    position = new SerializableVector3(segment.transform.position),
+                    objectScaleY = segment.transform.localScale.y,
+                    rotation = rotation
+                };
+                segments.Add(serializableSegment);
+            }
+
+            SerializableLine3D serializableLine3D = new SerializableLine3D
+            {
+                name = toSerialize.name, // doubles as linetype
+                tag = toSerialize.tag,
+                position = new SerializableVector3(toSerialize.transform.position),
+                color = new SerializableColor(toSerialize.transform.GetChild(0).GetComponent<Renderer>().material.color),
+                localScale = new SerializableVector3(toSerialize.transform.GetChild(0).transform.localScale),
+                segments = segments
+            };
+
+            return serializableLine3D;
+        }
+
+        public static void DeserializeLine3D(SerializableLine3D toDeserialize)
+        {
+            GameObject line = new GameObject()
+            {
+                name = toDeserialize.name,
+                tag = toDeserialize.tag
+            };
+            line.transform.position = new Vector3()
+            {
+                x = toDeserialize.position.x,
+                y = toDeserialize.position.y,
+                z = toDeserialize.position.z
+            };
+
+            line.AddComponent<Rigidbody>();
+            line.GetComponent<Rigidbody>().isKinematic = true;
+
+            foreach (var segment in toDeserialize.segments)
+            {
+                GameObject newSegment;
+                if (segment.name == GlobalVars.Line3DCylinderSegmentName)
+                {
+                    newSegment = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+                }
+                else if (segment.name == GlobalVars.Line3DCubeSegmentName)
+                {
+                    newSegment = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                }
+                else
+                {
+                    Debug.LogError("Attempted deserialization of unsupported linetype: [" + segment.name + "]");
+                    Object.Destroy(line);
+                    return;
+                }
+                newSegment.name = segment.name;
+                newSegment.tag = segment.tag;
+                newSegment.transform.parent = line.transform;
+                newSegment.transform.position = new Vector3()
+                {
+                    x = segment.position.x,
+                    y = segment.position.y,
+                    z = segment.position.z
+                };
+                newSegment.GetComponent<Renderer>().material.color = new Color()
+                {
+                    r = toDeserialize.color.r,
+                    g = toDeserialize.color.g,
+                    b = toDeserialize.color.b,
+                    a = toDeserialize.color.a
+                };
+                newSegment.transform.localScale = new Vector3()
+                {
+                    x = toDeserialize.localScale.x,
+                    y = segment.objectScaleY,
+                    z = toDeserialize.localScale.z
+                };
+                newSegment.transform.rotation = new Quaternion()
+                {
+                    x = segment.rotation.x,
+                    y = segment.rotation.y,
+                    z = segment.rotation.z,
+                    w = 0
+                };
+            }
         }
     }
 }
