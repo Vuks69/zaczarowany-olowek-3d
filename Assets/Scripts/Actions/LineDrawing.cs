@@ -85,7 +85,7 @@ namespace Assets.Scripts.Actions
                         return;
                     }
                     newSegment.name = GlobalVars.Line3DSegmentName;
-                    newSegment.tag = GlobalVars.NonSerializableTag;
+                    newSegment.tag = GlobalVars.UniversalTag;
                     newSegment.transform.parent = line.transform;
                     newSegment.GetComponent<Renderer>().material.color = GameManager.Instance.CurrentColor;
                     newSegment.transform.position = Vector3.Lerp(lastPosition, tool.transform.position, 0.5f);
