@@ -116,6 +116,12 @@ namespace Assets.Scripts.Actions
             }
         }
 
+		public void UpdatePointerColor()
+		{
+			pointerLineRenderer.startColor = GameManager.Instance.CurrentColor;
+			pointerLineRenderer.endColor = GameManager.Instance.CurrentColor;
+		}
+
         private void changeHighlightedIconsColor()
         {
             isHighlightedIcon = false;
