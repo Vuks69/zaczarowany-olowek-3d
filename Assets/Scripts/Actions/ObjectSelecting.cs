@@ -277,7 +277,7 @@ namespace Assets.Scripts.Actions
                 }
 				else if (obj.GetComponent<Renderer> () != null)
 				{
-					obj.GetComponent<Renderer>().material.color -= GameManager.Instance.CurrentColor;
+					obj.GetComponent<Renderer>().material.color = GameManager.Instance.CurrentColor;
 				}
                 else
                 {
