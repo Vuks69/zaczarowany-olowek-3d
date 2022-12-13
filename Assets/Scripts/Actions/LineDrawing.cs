@@ -72,17 +72,15 @@ namespace Assets.Scripts.Actions
                 {
                     GameObject newSegment;
                     float localScaleY;
-                    if (type == LineType.Cylinder)
-                    {
-                        newSegment = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
-                        newSegment.name = GlobalVars.Line3DCylinderSegmentName;
-                        localScaleY = Vector3.Distance(tool.transform.position, lastPosition) * 1.5f;
-                    }
+					if (type == LineType.Cylinder) {
+						newSegment = GameObject.CreatePrimitive (PrimitiveType.Cylinder);
+						newSegment.name = GlobalVars.Line3DCylinderSegmentName;
+					}   
                     else if (type == LineType.Cube)
                     {
                         newSegment = GameObject.CreatePrimitive(PrimitiveType.Cube);
                         newSegment.name = GlobalVars.Line3DCubeSegmentName;
-                        localScaleY = Vector3.Distance(tool.transform.position, lastPosition) * 2;
+                        
                     }
                     else
                     {
@@ -93,7 +91,8 @@ namespace Assets.Scripts.Actions
                     newSegment.transform.parent = line.transform;
                     newSegment.GetComponent<Renderer>().material.color = GameManager.Instance.CurrentColor;
                     newSegment.transform.position = Vector3.Lerp(lastPosition, tool.transform.position, 0.5f);
-                    newSegment.transform.localScale = (new Vector3(StrokeWidth, localScaleY, StrokeWidth)) / 2;
+					localScaleY = Vector3.Distance(tool.transform.position, lastPosition) / newSegment.GetComponent<Renderer>().bounds.size.y;
+                    newSegment.transform.localScale = (new Vector3(StrokeWidth/2, localScaleY, StrokeWidth/2));
                     Vector3 rotationVector = Vector3.Normalize(tool.transform.position - lastPosition);
                     rotationVector += new Vector3(0, 1, 0);
                     newSegment.transform.rotation = new Quaternion(rotationVector.x, rotationVector.y, rotationVector.z, 0);
