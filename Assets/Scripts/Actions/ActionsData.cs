@@ -6,5 +6,6 @@
         public LineDrawing LineDrawing { get; } = new LineDrawing();
         public Erasing Erasing { get; } = new Erasing();
         public ObjectSelecting ObjectSelecting { get; } = new ObjectSelecting();
+		public ObjectAdding ObjectAdding { get; } = new ObjectAdding();
     }
 }
