@@ -19,6 +19,7 @@ namespace Assets.Scripts.Actions
         {
             pointer = new GameObject("Selecting Pointer");
             pointerLineRenderer = pointer.AddComponent<LineRenderer>();
+			pointerLineRenderer.material = new Material(Shader.Find("Sprites/Diffuse"));
             pointerLineRenderer.startWidth = 0.03f;
             pointerLineRenderer.endWidth = 0.01f;
             pointerLineRenderer.enabled = true;
