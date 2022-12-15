@@ -8,5 +8,6 @@
         public const string Line3DName = "Line3D";
         public const string Line3DCubeSegmentName = "Line3DCubeSegment";
         public const string Line3DCylinderSegmentName = "Line3DCylinderSegment";
+        public const string PrimitiveObjectName = "PrimitiveObject";
     }
 }

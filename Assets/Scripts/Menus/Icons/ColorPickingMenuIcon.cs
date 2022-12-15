@@ -18,6 +18,7 @@ namespace Assets.Scripts.Menus.Icons
         {
             SetDefaultColor();
             GameManager.Instance.CurrentColor = predefinedColor;
+            GameManager.Instance.ActionsData.Selecting.UpdatePointerColor();
             getIconsMenu().SelectedIcon = this;
         }
     }

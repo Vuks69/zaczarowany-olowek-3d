@@ -11,9 +11,15 @@ namespace Assets.Scripts.Menus
         private readonly ObjectSelectingMenuIcon copySelectionIcon = new ObjectSelectingMenuIcon(GameObject.Find("Copy Selection"), GameManager.Instance.ActionsData.ObjectSelecting, GameManager.Instance.ActionsData.ObjectSelecting.SetStateCopying);
         private readonly ObjectSelectingMenuIcon moveSelectionIcon = new ObjectSelectingMenuIcon(GameObject.Find("Move Selection"), GameManager.Instance.ActionsData.ObjectSelecting, GameManager.Instance.ActionsData.ObjectSelecting.SetStateMoving);
         private readonly ObjectSelectingMenuIcon changeSelectionColorIcon = new ObjectSelectingMenuIcon(GameObject.Find("Change Selection Color"), GameManager.Instance.ActionsData.Selecting, GameManager.Instance.ActionsData.ObjectSelecting.ChangeSelectionColor);
+        private readonly SelectionScaleSlider selectionScaleSlider = new SelectionScaleSlider(GameObject.Find("Selection Scale Slider"), GameManager.Instance.ActionsData.Selecting);
         public ObjectSelectingParametersMenu(GameObject gameObject) : base(gameObject)
         {
-            icons = new List<MenuIcon> { removeSelectionIcon, copySelectionIcon, moveSelectionIcon, changeSelectionColorIcon };
+            icons = new List<MenuIcon> { removeSelectionIcon, copySelectionIcon, moveSelectionIcon, changeSelectionColorIcon, selectionScaleSlider };
+        }
+
+        public void SetSelectionSliderToDefaultPosition()
+        {
+            selectionScaleSlider.SetValueToInitial();
         }
     }
 }

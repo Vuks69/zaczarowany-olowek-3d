@@ -30,16 +30,23 @@ namespace Assets.Scripts.Menus.Icons
                     switch (item.name)
                     {
                         case GlobalVars.LineName:
-                            serializableArray.lines.Add(Serializator.SerializeLine(item));
+                            serializableArray.lines.Add(new SerializableLine(item));
                             break;
                         case GlobalVars.Line3DName:
-                            serializableArray.lines3d.Add(Serializator.SerializeLine3D(item));
+                            serializableArray.lines3d.Add(new SerializableLine3D(item));
                             break;
                         case GlobalVars.Line3DCubeSegmentName:
                         case GlobalVars.Line3DCylinderSegmentName:
                             break; // ignore these, they're handled by Line3DName
                         default:
-                            Debug.LogError("Attempted serialization of unsupported GameObject [" + item.name + "]");
+                            if (item.name.Contains(GlobalVars.PrimitiveObjectName))
+                            {
+                                serializableArray.primitives.Add(new SerializablePrimitive(item));
+                            }
+                            else
+                            {
+                                Debug.LogError("Attempted serialization of unsupported GameObject [" + item.name + "]");
+                            }
                             break;
                     }
                 }
@@ -48,6 +55,7 @@ namespace Assets.Scripts.Menus.Icons
                 Debug.Log("Saving world to file: " + GameManager.Instance.PathToSaveFile);
                 Debug.Log("    Lines: " + serializableArray.lines.Count);
                 Debug.Log("    Lines3D: " + serializableArray.lines3d.Count);
+                Debug.Log("    Primitives: " + serializableArray.primitives.Count);
                 using (StreamWriter sw = File.CreateText(GameManager.Instance.PathToSaveFile)) // overwrites old save
                 {
                     sw.Write(JsonUtility.ToJson(serializableArray));
