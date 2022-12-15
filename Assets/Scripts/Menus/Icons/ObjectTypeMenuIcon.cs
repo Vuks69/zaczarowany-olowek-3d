@@ -6,16 +6,16 @@ namespace Assets.Scripts.Menus.Icons
 {
     public class ObjectTypeMenuIcon : MenuIcon
     {
-		private PrimitiveType objectType;
+        private PrimitiveType objectType;
 
         public ObjectTypeMenuIcon(GameObject icon, Action action, PrimitiveType objectType) : base(icon, action)
         {
-			this.objectType = objectType;
+            this.objectType = objectType;
         }
 
         public override void Select()
         {
-			GameManager.Instance.ActionsData.ObjectAdding.SetObjectType (objectType);
+            GameManager.Instance.ActionsData.ObjectAdding.SetObjectType(objectType);
             SetSelectedColor();
             getIconsMenu().SelectedIcon = this;
         }

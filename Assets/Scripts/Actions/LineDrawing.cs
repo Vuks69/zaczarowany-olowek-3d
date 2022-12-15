@@ -64,23 +64,24 @@ namespace Assets.Scripts.Actions
                 {
                     //if (Vector3.Distance(lastPosition, tool.transform.position) > 0.005f)
                     //{
-                        lineRenderer.positionCount += 1;
-                        lineRenderer.SetPosition(lineRenderer.positionCount - 1, tool.transform.position - line.transform.position);
+                    lineRenderer.positionCount += 1;
+                    lineRenderer.SetPosition(lineRenderer.positionCount - 1, tool.transform.position - line.transform.position);
                     //}
                 }
                 else
                 {
                     GameObject newSegment;
                     float localScaleY;
-					if (type == LineType.Cylinder) {
-						newSegment = GameObject.CreatePrimitive (PrimitiveType.Cylinder);
-						newSegment.name = GlobalVars.Line3DCylinderSegmentName;
-					}   
+                    if (type == LineType.Cylinder)
+                    {
+                        newSegment = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+                        newSegment.name = GlobalVars.Line3DCylinderSegmentName;
+                    }
                     else if (type == LineType.Cube)
                     {
                         newSegment = GameObject.CreatePrimitive(PrimitiveType.Cube);
                         newSegment.name = GlobalVars.Line3DCubeSegmentName;
-                        
+
                     }
                     else
                     {
@@ -91,8 +92,8 @@ namespace Assets.Scripts.Actions
                     newSegment.transform.parent = line.transform;
                     newSegment.GetComponent<Renderer>().material.color = GameManager.Instance.CurrentColor;
                     newSegment.transform.position = Vector3.Lerp(lastPosition, tool.transform.position, 0.5f);
-					localScaleY = Vector3.Distance(tool.transform.position, lastPosition) / newSegment.GetComponent<Renderer>().bounds.size.y;
-                    newSegment.transform.localScale = (new Vector3(StrokeWidth/2, localScaleY, StrokeWidth/2));
+                    localScaleY = Vector3.Distance(tool.transform.position, lastPosition) / newSegment.GetComponent<Renderer>().bounds.size.y;
+                    newSegment.transform.localScale = (new Vector3(StrokeWidth / 2, localScaleY, StrokeWidth / 2));
                     Vector3 rotationVector = Vector3.Normalize(tool.transform.position - lastPosition);
                     rotationVector += new Vector3(0, 1, 0);
                     newSegment.transform.rotation = new Quaternion(rotationVector.x, rotationVector.y, rotationVector.z, 0);
