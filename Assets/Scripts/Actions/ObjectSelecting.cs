@@ -121,13 +121,13 @@ namespace Assets.Scripts.Actions
                                 intersectingObject.GetComponent<LineRenderer>().startColor += new Color(0f, 0f, 0f, 0.9f);
                                 intersectingObject.GetComponent<LineRenderer>().endColor += new Color(0f, 0f, 0f, 0.9f);
                             }
-							else if (intersectingObject.GetComponent<Renderer> () != null)
-							{
-								intersectingObject.GetComponent<Renderer>().material.color -= new Color(0f, 0f, 5f, 0f);
-							}
-							else
+                            else if (intersectingObject.GetComponent<Renderer>() != null)
                             {
-								
+                                intersectingObject.GetComponent<Renderer>().material.color -= new Color(0f, 0f, 5f, 0f);
+                            }
+                            else
+                            {
+
                                 foreach (Transform child in intersectingObject.transform)
                                 {
                                     child.gameObject.GetComponent<Renderer>().material.color -= new Color(0f, 0f, 5f, 0f);
@@ -144,10 +144,10 @@ namespace Assets.Scripts.Actions
                                 intersectingObject.GetComponent<LineRenderer>().startColor -= new Color(0f, 0f, 0f, 0.9f);
                                 intersectingObject.GetComponent<LineRenderer>().endColor -= new Color(0f, 0f, 0f, 0.9f);
                             }
-							else if (intersectingObject.GetComponent<Renderer> () != null)
-							{
-								intersectingObject.GetComponent<Renderer>().material.color += new Color(0f, 0f, 5f, 0f);
-							}
+                            else if (intersectingObject.GetComponent<Renderer>() != null)
+                            {
+                                intersectingObject.GetComponent<Renderer>().material.color += new Color(0f, 0f, 5f, 0f);
+                            }
                             else
                             {
                                 foreach (Transform child in intersectingObject.transform)
@@ -181,12 +181,14 @@ namespace Assets.Scripts.Actions
             var toBeCopied = new HashSet<GameObject>();
             foreach (var oldObj in SelectedObjects)
             {
-                GameObject newObj = new GameObject();
+                GameObject newObj;
                 if (oldObj.transform.GetComponent<LineRenderer>() != null)
                 {
-
-                    newObj.name = GlobalVars.LineName;
-                    newObj.tag = GlobalVars.UniversalTag;
+                    newObj = new GameObject
+                    {
+                        name = GlobalVars.LineName,
+                        tag = GlobalVars.UniversalTag
+                    };
 
                     newObj.transform.position = oldObj.transform.position;
                     newObj.transform.rotation = oldObj.transform.rotation;
@@ -216,7 +218,8 @@ namespace Assets.Scripts.Actions
                 }
                 else
                 {
-                    newObj = GameObject.Instantiate(oldObj);
+                    newObj = Object.Instantiate(oldObj);
+                    newObj.name = oldObj.name;
                 }
 
                 toBeCopied.Add(newObj);
@@ -251,10 +254,10 @@ namespace Assets.Scripts.Actions
                     obj.GetComponent<LineRenderer>().startColor += new Color(0f, 0f, 0f, 0.9f);
                     obj.GetComponent<LineRenderer>().endColor += new Color(0f, 0f, 0f, 0.9f);
                 }
-				else if (obj.GetComponent<Renderer> () != null)
-				{
-					obj.GetComponent<Renderer>().material.color -= new Color(0f, 0f, 5f, 0f);
-				}
+                else if (obj.GetComponent<Renderer>() != null)
+                {
+                    obj.GetComponent<Renderer>().material.color -= new Color(0f, 0f, 5f, 0f);
+                }
                 else
                 {
                     foreach (Transform child in obj.transform)
@@ -275,10 +278,10 @@ namespace Assets.Scripts.Actions
                     obj.GetComponent<LineRenderer>().startColor = GameManager.Instance.CurrentColor;
                     obj.GetComponent<LineRenderer>().endColor = GameManager.Instance.CurrentColor;
                 }
-				else if (obj.GetComponent<Renderer> () != null)
-				{
-					obj.GetComponent<Renderer>().material.color = GameManager.Instance.CurrentColor;
-				}
+                else if (obj.GetComponent<Renderer>() != null)
+                {
+                    obj.GetComponent<Renderer>().material.color = GameManager.Instance.CurrentColor;
+                }
                 else
                 {
                     foreach (Transform child in obj.transform)

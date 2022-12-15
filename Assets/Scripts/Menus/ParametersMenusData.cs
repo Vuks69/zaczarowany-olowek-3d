@@ -8,7 +8,7 @@ namespace Assets.Scripts.Menus
         public LineDrawingParametersMenu LineDrawingParametersMenu { get; set; } = new LineDrawingParametersMenu(GameObject.Find("Line Drawing Parameters Menu"));
         public ObjectSelectingParametersMenu ObjectSelectingParametersMenu { get; set; } = new ObjectSelectingParametersMenu(GameObject.Find("Object Selecting Parameters Menu"));
         public SavingLoadingParametersMenu SavingLoadingParametersMenu { get; set; } = new SavingLoadingParametersMenu(GameObject.Find("Saving Loading Parameters Menu"));
-		public ObjectAddingParametersMenu ObjectAddingParametersMenu { get; set;} = new ObjectAddingParametersMenu(GameObject.Find("Object Adding Parameters Menu"));
-		public SkyboxSelectingParametersMenu SkyboxSelectingParametersMenu { get; set; } = new SkyboxSelectingParametersMenu(GameObject.Find("Skybox Selecting Parameters Menu"));
+        public ObjectAddingParametersMenu ObjectAddingParametersMenu { get; set; } = new ObjectAddingParametersMenu(GameObject.Find("Object Adding Parameters Menu"));
+        public SkyboxSelectingParametersMenu SkyboxSelectingParametersMenu { get; set; } = new SkyboxSelectingParametersMenu(GameObject.Find("Skybox Selecting Parameters Menu"));
     }
 }

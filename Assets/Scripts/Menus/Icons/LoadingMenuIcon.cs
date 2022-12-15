@@ -38,12 +38,17 @@ namespace Assets.Scripts.Menus.Icons
             Debug.Log("    " + serializableArray.lines.Count + " [" + GlobalVars.LineName + "]");
             foreach (var serializableLine in serializableArray.lines)
             {
-                Serializator.DeserializeLine(serializableLine);
+                serializableLine.Deserialize();
             }
             Debug.Log("    " + serializableArray.lines3d.Count + " [" + GlobalVars.Line3DName + "]");
             foreach (var serializableLine3D in serializableArray.lines3d)
             {
-                Serializator.DeserializeLine3D(serializableLine3D);
+                serializableLine3D.Deserialize();
+            }
+            Debug.Log("    " + serializableArray.primitives.Count + " [" + GlobalVars.PrimitiveObjectName + "]");
+            foreach (var primitive in serializableArray.primitives)
+            {
+                primitive.Deserialize();
             }
         }
     }

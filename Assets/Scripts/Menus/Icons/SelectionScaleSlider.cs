@@ -1,6 +1,6 @@
-﻿using UnityEngine;
-using Assets.Scripts.Actions;
+﻿using Assets.Scripts.Actions;
 using Assets.Scripts.Managers;
+using UnityEngine;
 
 namespace Assets.Scripts.Menus.Icons
 {
@@ -8,7 +8,7 @@ namespace Assets.Scripts.Menus.Icons
     {
         private readonly float maxScale = 2.0f;
         private readonly float minScale = 0.1f;
-        
+
         public SelectionScaleSlider(GameObject icon, Action action) : base(icon, action)
         {
             initialValue = 0.5f;

@@ -1,6 +1,6 @@
-﻿using UnityEngine;
-using Assets.Scripts.Actions;
+﻿using Assets.Scripts.Actions;
 using Assets.Scripts.Managers;
+using UnityEngine;
 
 namespace Assets.Scripts.Menus.Icons
 {
@@ -16,7 +16,7 @@ namespace Assets.Scripts.Menus.Icons
         protected override void OnMove()
         {
             var objectSize = (value * (GameManager.Instance.MaxObjectSize - GameManager.Instance.MinObjectSize)) + GameManager.Instance.MinObjectSize;
-			GameManager.Instance.ActionsData.ObjectAdding.objectSize = objectSize;
+            GameManager.Instance.ActionsData.ObjectAdding.objectSize = objectSize;
         }
 
     }
