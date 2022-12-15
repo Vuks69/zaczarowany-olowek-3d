@@ -181,12 +181,14 @@ namespace Assets.Scripts.Actions
             var toBeCopied = new HashSet<GameObject>();
             foreach (var oldObj in SelectedObjects)
             {
-                GameObject newObj = new GameObject();
+                GameObject newObj;
                 if (oldObj.transform.GetComponent<LineRenderer>() != null)
                 {
-
-                    newObj.name = GlobalVars.LineName;
-                    newObj.tag = GlobalVars.UniversalTag;
+                    newObj = new GameObject
+                    {
+                        name = GlobalVars.LineName,
+                        tag = GlobalVars.UniversalTag
+                    };
 
                     newObj.transform.position = oldObj.transform.position;
                     newObj.transform.rotation = oldObj.transform.rotation;
@@ -216,7 +218,8 @@ namespace Assets.Scripts.Actions
                 }
                 else
                 {
-                    newObj = GameObject.Instantiate(oldObj);
+                    newObj = Object.Instantiate(oldObj);
+                    newObj.name = oldObj.name;
                 }
 
                 toBeCopied.Add(newObj);

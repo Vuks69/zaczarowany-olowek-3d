@@ -18,6 +18,17 @@ namespace Assets.Scripts.Serialization
             this.b = color.b;
             this.a = color.a;
         }
+
+        public Color Deserialize()
+        {
+            return new Color
+            {
+                r = this.r,
+                g = this.g,
+                b = this.b,
+                a = this.a
+            };
+        }
     }
 }
 

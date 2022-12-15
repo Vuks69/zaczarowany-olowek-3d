@@ -5,9 +5,6 @@ using UnityEngine;
 
 public class ObjectAdding : Action
 {
-
-
-
     private PrimitiveType type { get; set; }
     private readonly GameObject tool = FlystickManager.Instance.MultiTool;
     GameObject newObject;
@@ -36,9 +33,8 @@ public class ObjectAdding : Action
 
     public override void HandleTriggerDown()
     {
-
         newObject = GameObject.CreatePrimitive(type);
-
+        newObject.name = GlobalVars.PrimitiveObjectName + type.ToString();
         newObject.tag = GlobalVars.UniversalTag;
         newObject.GetComponent<Renderer>().material.color = GameManager.Instance.CurrentColor;
         newObject.transform.localScale = (new Vector3(objectSize, objectSize, objectSize));
