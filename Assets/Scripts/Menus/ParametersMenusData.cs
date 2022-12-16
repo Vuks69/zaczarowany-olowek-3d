@@ -10,5 +10,6 @@ namespace Assets.Scripts.Menus
         public SavingLoadingParametersMenu SavingLoadingParametersMenu { get; set; } = new SavingLoadingParametersMenu(GameObject.Find("Saving Loading Parameters Menu"));
         public ObjectAddingParametersMenu ObjectAddingParametersMenu { get; set; } = new ObjectAddingParametersMenu(GameObject.Find("Object Adding Parameters Menu"));
         public SkyboxSelectingParametersMenu SkyboxSelectingParametersMenu { get; set; } = new SkyboxSelectingParametersMenu(GameObject.Find("Skybox Selecting Parameters Menu"));
+        public ClearSceneParametersMenu ClearSceneParametersMenu { get; set; } = new ClearSceneParametersMenu(GameObject.Find("Clear Scene Parameters Menu"));
     }
 }

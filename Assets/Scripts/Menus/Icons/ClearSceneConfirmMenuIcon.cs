@@ -1,19 +1,21 @@
-﻿using Assets.Scripts.Actions;
+﻿using System.Collections;
 using UnityEngine;
+using Assets.Scripts.Actions;
 
 namespace Assets.Scripts.Menus.Icons
 {
-    public class ClearSceneIcon : MenuIcon
+    public class ClearSceneConfirmMenuIcon : MenuIcon
     {
-        public ClearSceneIcon(GameObject icon, Action action) : base(icon, action) { }
+        public ClearSceneConfirmMenuIcon(GameObject icon, Action action) : base(icon, action) { }
 
         public override void Select()
         {
             SetSelectedColor();
-            ClearScene();
+            clearScene();
+            getIconsMenu().SelectedIcon = this;
         }
 
-        private void ClearScene()
+        private void clearScene()
         {
             GameObject[] objectList = GameObject.FindGameObjectsWithTag(GlobalVars.UniversalTag);
             Debug.Log("Destroying " + objectList.Length + " objects.");
