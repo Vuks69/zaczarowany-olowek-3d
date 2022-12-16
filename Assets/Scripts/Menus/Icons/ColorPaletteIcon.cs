@@ -10,6 +10,7 @@ namespace Assets.Scripts.Menus.Icons
 
         public override void Select()
         {
+            SelectedColor = Color.clear;
             GameManager.Instance.CurrentColor = getColorFromPalette(GameManager.Instance.ActionsData.Selecting.PCoord);
             GameManager.Instance.ActionsData.Selecting.UpdatePointerColor();
             getIconsMenu().SelectedIcon = this;
@@ -23,6 +24,16 @@ namespace Assets.Scripts.Menus.Icons
         public override void Dehighlight()
         {
             // Nothing happens
+        }
+
+        public override void SetSelectedColor()
+        {
+            // Nothing happens
+        }
+
+        public override void Deselect()
+        {
+            getIconsMenu().PreviouslySelectedIcon = MenuManager.Instance.ToolsMenu.SelectedIcon;
         }
 
         private Color getColorFromPalette(Vector2 pCoord)
