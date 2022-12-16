@@ -8,7 +8,12 @@ namespace Assets.Scripts.Menus.Icons
 {
     public class SavingMenuIcon : MenuIcon
     {
-        public SavingMenuIcon(GameObject icon, Action action) : base(icon, action) { }
+        private readonly string pathToSaveFile;
+        public SavingMenuIcon(GameObject icon, Action action, int iconIndex) : base(icon, action)
+        {
+            var path = GameManager.Instance.PathToSaveFile.Split(new string[] { ".json" }, System.StringSplitOptions.None);
+            pathToSaveFile = path[0] + iconIndex.ToString() + path[1];
+        }
 
         public override void Select()
         {
@@ -52,11 +57,11 @@ namespace Assets.Scripts.Menus.Icons
                 }
 
                 // Write new save
-                Debug.Log("Saving world to file: " + GameManager.Instance.PathToSaveFile);
+                Debug.Log("Saving world to file: " + pathToSaveFile);
                 Debug.Log("    Lines: " + serializableArray.lines.Count);
                 Debug.Log("    Lines3D: " + serializableArray.lines3d.Count);
                 Debug.Log("    Primitives: " + serializableArray.primitives.Count);
-                using (StreamWriter sw = File.CreateText(GameManager.Instance.PathToSaveFile)) // overwrites old save
+                using (StreamWriter sw = File.CreateText(pathToSaveFile)) // overwrites old save
                 {
                     sw.Write(JsonUtility.ToJson(serializableArray));
                 }

@@ -8,7 +8,12 @@ namespace Assets.Scripts.Menus.Icons
 {
     public class LoadingMenuIcon : MenuIcon
     {
-        public LoadingMenuIcon(GameObject gameObject, Action action) : base(gameObject, action) { }
+        private readonly string pathToSaveFile;
+        public LoadingMenuIcon(GameObject icon, Action action, int iconIndex) : base(icon, action)
+        {
+            var path = GameManager.Instance.PathToSaveFile.Split(new string[] { ".json" }, System.StringSplitOptions.None);
+            pathToSaveFile = path[0] + iconIndex.ToString() + path[1];
+        }
 
         public override void Select()
         {
@@ -19,16 +24,15 @@ namespace Assets.Scripts.Menus.Icons
 
         private void load()
         {
-            var path = GameManager.Instance.PathToSaveFile;
-            if (!File.Exists(path))
+            if (!File.Exists(pathToSaveFile))
             {
-                Debug.LogError("Savefile not found at: " + path);
+                Debug.LogError("Savefile not found at: " + pathToSaveFile);
                 return;
             }
 
-            Debug.Log("Reading file: " + path);
+            Debug.Log("Reading file: " + pathToSaveFile);
             string toDeserialize;
-            using (StreamReader sw = File.OpenText(path))
+            using (StreamReader sw = File.OpenText(pathToSaveFile))
             {
                 toDeserialize = sw.ReadToEnd();
             }
