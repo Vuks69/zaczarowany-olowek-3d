@@ -6425,7 +6425,7 @@ GameObject:
   - component: {fileID: 1130009604}
   - component: {fileID: 1130009603}
   m_Layer: 5
-  m_Name: Clear Scene Menu
+  m_Name: Clear Scene Parameters Menu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
