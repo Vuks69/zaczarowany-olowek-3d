@@ -68,7 +68,7 @@ namespace Assets.Scripts.Menus.Icons
             SetColor(DefaultColor);
         }
 
-        public void SetSelectedColor()
+        public virtual void SetSelectedColor()
         {
             SetColor(SelectedColor);
         }
