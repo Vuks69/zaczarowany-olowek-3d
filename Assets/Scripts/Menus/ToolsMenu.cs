@@ -19,6 +19,7 @@ namespace Assets.Scripts.Menus
 
         public ToolsMenu()
         {
+            selectingIcon.gameObject.SetActive(false);
             icons = new List<MenuIcon> {
                 colorPickingIcon,
                 selectingIcon,
