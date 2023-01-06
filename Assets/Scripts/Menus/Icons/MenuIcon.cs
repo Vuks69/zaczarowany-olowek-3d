@@ -30,6 +30,7 @@ namespace Assets.Scripts.Menus.Icons
             if (MenuManager.Instance.ParametersMenu.SelectedIcon != null)
             {
                 MenuManager.Instance.ParametersMenu.SelectedIcon.Deselect();
+                MenuManager.Instance.ParametersMenu.SelectedIcon = null;
             }
             MenuManager.Instance.ParametersMenu.IsSelectedIcon = false;
             getIconsMenu().SelectedIcon = this;
