@@ -12,7 +12,7 @@ namespace Assets.Scripts.Managers
         public static FlystickManager Instance;
         public GameObject Flystick;
         public GameObject MultiTool;
-        int flystickIdx = 0;
+        int flystickIdx = 1;
 
         void Update()
         {
@@ -25,6 +25,7 @@ namespace Assets.Scripts.Managers
             Lzwp.input.flysticks[flystickIdx].GetButton(LzwpInput.Flystick.ButtonID.Fire).OnPress += HandleInputTriggerDown;
             Lzwp.input.flysticks[flystickIdx].GetButton(LzwpInput.Flystick.ButtonID.Fire).OnRelease += HandleInputTriggerUp;
             Lzwp.input.flysticks[flystickIdx].GetButton(LzwpInput.Flystick.ButtonID.Button1).OnPress += toggleAction;
+            Lzwp.input.flysticks[flystickIdx].GetButton(LzwpInput.Flystick.ButtonID.Button3).OnPress += Undo;
             Lzwp.input.flysticks[flystickIdx].GetButton(LzwpInput.Flystick.ButtonID.Button4).OnPress += resetMenuPosition;
         }
 
@@ -59,7 +60,7 @@ namespace Assets.Scripts.Managers
             tmp.Select();
         }
 
-        private void undo()
+        public static void Undo()
         {
             //GameManager.Instance.DeletedObject.tag = GlobalVars.UniversalTag;
             //GameManager.Instance.DeletedObject.SetActive(true);
@@ -80,7 +81,7 @@ namespace Assets.Scripts.Managers
             {
                 foreach(GameObject obj in GameManager.Instance.DeletedObjects[0])
                 {
-                    Object.Destroy(obj);
+                    Destroy(obj);
                 }
                 GameManager.Instance.DeletedObjects.RemoveAt(0);
             }

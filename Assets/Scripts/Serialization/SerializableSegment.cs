@@ -28,6 +28,10 @@ namespace Assets.Scripts.Serialization
             {
                 newSegment = GameObject.CreatePrimitive(PrimitiveType.Cube);
             }
+            else if (this.name == GlobalVars.Line3DSphereSegmentName)
+            {
+                newSegment = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            }
             else
             {
                 return null;
