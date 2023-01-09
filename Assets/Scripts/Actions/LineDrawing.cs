@@ -104,7 +104,7 @@ namespace Assets.Scripts.Actions
                         newSegment.transform.parent = line.transform;
                         newSegment.GetComponent<Renderer>().material.color = GameManager.Instance.CurrentColor;
                         newSegment.transform.position = tool.transform.position;
-                        newSegment.transform.localScale = (new Vector3(StrokeWidth / 2, StrokeWidth/2, StrokeWidth / 2));
+                        newSegment.transform.localScale = (new Vector3(StrokeWidth / 2, StrokeWidth / 2, StrokeWidth / 2));
                     }
 
                     lastPosition = tool.transform.position;

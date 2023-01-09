@@ -1,9 +1,6 @@
-﻿using Assets.Scripts.Actions;
-using Assets.Scripts.Menus;
-using System;
-using UnityEngine;
-using System.Collections.Generic;
+﻿using Assets.Scripts.Menus;
 using System.Linq;
+using UnityEngine;
 
 namespace Assets.Scripts.Managers
 {
@@ -79,7 +76,7 @@ namespace Assets.Scripts.Managers
             GameManager.Instance.DeletedObjects.RemoveAt(GameManager.Instance.DeletedObjects.Count - 1);
             if (GameManager.Instance.DeletedObjects.Count > 20)
             {
-                foreach(GameObject obj in GameManager.Instance.DeletedObjects[0])
+                foreach (GameObject obj in GameManager.Instance.DeletedObjects[0])
                 {
                     Destroy(obj);
                 }

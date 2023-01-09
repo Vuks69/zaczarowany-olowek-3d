@@ -1,7 +1,7 @@
-﻿using System.Linq;
-using UnityEngine;
-using Assets.Scripts.Actions;
+﻿using Assets.Scripts.Actions;
 using Assets.Scripts.Managers;
+using System.Linq;
+using UnityEngine;
 
 namespace Assets.Scripts.Menus.Icons
 {
