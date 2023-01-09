@@ -19,7 +19,7 @@ namespace Assets.Scripts.Managers
         {
             ParametersMenusData = new ParametersMenusData();
             ParametersMenu = ParametersMenusData.ColorPickingParametersMenu;
-            ToolsMenu = new ToolsMenu();
+            ToolsMenu = new ToolsMenu(GameObject.Find("Tools Menu"));
             ToolsMenu.SelectedIcon = ToolsMenu.selectingIcon;
             ToolsMenu.SelectedIcon.SetSelectedColor();
             ToolsMenu.PreviouslySelectedIcon = ToolsMenu.selectingIcon;

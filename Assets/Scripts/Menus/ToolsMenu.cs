@@ -18,8 +18,11 @@ namespace Assets.Scripts.Menus
         public MenuIcon skyboxSelectingIcon { get; set; } = new ToolsMenuIcon(GameObject.Find("Skybox Selecting"), GameManager.Instance.ActionsData.Selecting, MenuManager.Instance.ParametersMenusData.SkyboxSelectingParametersMenu);
         public MenuIcon menuMovingIcon { get; set; } = new IconWithoutParametersMenu(GameObject.Find("Menu Moving"), GameManager.Instance.ActionsData.MenuMoving);
 
-        public ToolsMenu()
+        public ToolsMenu(GameObject gameObject)
         {
+            MenuObject = gameObject;
+            MenuObject.SetActive(true);
+
             selectingIcon.gameObject.SetActive(false);
             icons = new List<MenuIcon> {
                 colorPickingIcon,

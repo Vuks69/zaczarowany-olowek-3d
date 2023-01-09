@@ -8,24 +8,28 @@ namespace Assets.Scripts.Actions
     {
         public override void Finish()
         {
-            MenuManager.Instance.ToolsMenu.MenuObject.transform.SetParent(null);
-            MenuManager.Instance.ParametersMenu.MenuObject.transform.SetParent(null);
+            //MenuManager.Instance.ToolsMenu.MenuObject.transform.SetParent(null);
+            //MenuManager.Instance.ParametersMenu.MenuObject.transform.SetParent(null);
         }
 
         public override void HandleTriggerDown()
         {
-            // Nothing Happens
+            Debug.Log(MenuManager.Instance.ToolsMenu);
+            MenuManager.Instance.ToolsMenu.MenuObject.transform.SetParent(FlystickManager.Instance.MultiTool.transform);
+            MenuManager.Instance.ParametersMenu.MenuObject.transform.SetParent(FlystickManager.Instance.MultiTool.transform);
         }
 
         public override void HandleTriggerUp()
         {
-            // Nothing Happens
+            MenuManager.Instance.ToolsMenu.MenuObject.transform.SetParent(null);
+            MenuManager.Instance.ParametersMenu.MenuObject.transform.SetParent(null);
         }
 
         public override void Init()
         {
-            MenuManager.Instance.ToolsMenu.MenuObject.transform.SetParent(FlystickManager.Instance.MultiTool.transform);
-            MenuManager.Instance.ParametersMenu.MenuObject.transform.SetParent(FlystickManager.Instance.MultiTool.transform);
+            //Debug.Log(MenuManager.Instance.ToolsMenu);
+            //MenuManager.Instance.ToolsMenu.MenuObject.transform.SetParent(FlystickManager.Instance.MultiTool.transform);
+            //MenuManager.Instance.ParametersMenu.MenuObject.transform.SetParent(FlystickManager.Instance.MultiTool.transform);
         }
 
         public override void Update()
