@@ -77,14 +77,6 @@ namespace Assets.Scripts.Actions
                     {
                         newSegment = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
                         newSegment.name = GlobalVars.Line3DCylinderSegmentName;
-
-                        newSegment = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                        newSegment.name = GlobalVars.Line3DSphereSegmentName;
-                        newSegment.tag = GlobalVars.UniversalTag;
-                        newSegment.transform.parent = line.transform;
-                        newSegment.GetComponent<Renderer>().material.color = GameManager.Instance.CurrentColor;
-                        newSegment.transform.position = tool.transform.position;
-                        newSegment.transform.localScale = (new Vector3(StrokeWidth / 2, StrokeWidth / 2, StrokeWidth / 2));
                     }
                     else if (type == LineType.Cube)
                     {
@@ -103,6 +95,17 @@ namespace Assets.Scripts.Actions
                     localScaleY = Vector3.Distance(tool.transform.position, lastPosition) / newSegment.GetComponent<Renderer>().bounds.size.y;
                     newSegment.transform.localScale = (new Vector3(StrokeWidth / 2, localScaleY, StrokeWidth / 2));
                     newSegment.transform.rotation = Quaternion.FromToRotation(Vector3.up, tool.transform.position - lastPosition);
+
+                    if (type == LineType.Cylinder)
+                    {
+                        newSegment = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                        newSegment.name = GlobalVars.Line3DSphereSegmentName;
+                        newSegment.tag = GlobalVars.UniversalTag;
+                        newSegment.transform.parent = line.transform;
+                        newSegment.GetComponent<Renderer>().material.color = GameManager.Instance.CurrentColor;
+                        newSegment.transform.position = tool.transform.position;
+                        newSegment.transform.localScale = (new Vector3(StrokeWidth / 2, StrokeWidth/2, StrokeWidth / 2));
+                    }
 
                     lastPosition = tool.transform.position;
                 }
