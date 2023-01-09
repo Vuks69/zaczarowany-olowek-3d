@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Actions;
 using Assets.Scripts.Menus;
+using System;
 using UnityEngine;
 
 namespace Assets.Scripts.Managers
@@ -22,6 +23,15 @@ namespace Assets.Scripts.Managers
             Lzwp.input.flysticks[flystickIdx].GetButton(LzwpInput.Flystick.ButtonID.Fire).OnPress += HandleInputTriggerDown;
             Lzwp.input.flysticks[flystickIdx].GetButton(LzwpInput.Flystick.ButtonID.Fire).OnRelease += HandleInputTriggerUp;
             Lzwp.input.flysticks[flystickIdx].GetButton(LzwpInput.Flystick.ButtonID.Button1).OnPress += toggleAction;
+            Lzwp.input.flysticks[flystickIdx].GetButton(LzwpInput.Flystick.ButtonID.Button4).OnPress += resetMenuPosition;
+        }
+
+        private void resetMenuPosition()
+        {
+            MenuManager.Instance.ParametersMenu.MenuObject.transform.parent = MenuManager.Instance.ToolsMenu.MenuObject.transform;
+            MenuManager.Instance.ToolsMenu.MenuObject.transform.position = Vector3.zero;
+            MenuManager.Instance.ToolsMenu.MenuObject.transform.rotation = Quaternion.identity;
+            MenuManager.Instance.ParametersMenu.MenuObject.transform.SetParent(null);
         }
 
         private void HandleInputTriggerDown()
