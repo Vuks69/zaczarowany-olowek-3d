@@ -263,13 +263,13 @@ namespace Assets.Scripts.Actions
             }
             else if (obj.GetComponent<Renderer>() != null)
             {
-                obj.GetComponent<Renderer>().material.color = obj.GetComponent<Renderer>().material.color * 2;
+                obj.GetComponent<Renderer>().material.color = obj.GetComponent<Renderer>().material.color * 2.0f;
             }
             else
             {
                 foreach (Transform child in obj.transform)
                 {
-                    child.gameObject.GetComponent<Renderer>().material.color = child.gameObject.GetComponent<Renderer>().material.color * 2;
+                    child.gameObject.GetComponent<Renderer>().material.color = child.gameObject.GetComponent<Renderer>().material.color * 2.0f;
                 }
             }
         }
@@ -283,13 +283,13 @@ namespace Assets.Scripts.Actions
             }
             else if (obj.GetComponent<Renderer>() != null)
             {
-                obj.GetComponent<Renderer>().material.color = obj.GetComponent<Renderer>().material.color / 2;
+                obj.GetComponent<Renderer>().material.color = obj.GetComponent<Renderer>().material.color / 2.0f;
             }
             else
             {
                 foreach (Transform child in obj.transform)
                 {
-                    child.gameObject.GetComponent<Renderer>().material.color = child.gameObject.GetComponent<Renderer>().material.color / 2;
+                    child.gameObject.GetComponent<Renderer>().material.color = child.gameObject.GetComponent<Renderer>().material.color / 2.0f;
                 }
             }
         }
