@@ -44,7 +44,7 @@ namespace Assets.Scripts.Serialization
             lr.numCapVertices = this.numCapVertices;
             lr.numCornerVertices = this.numCornerVertices;
             lr.positionCount = this.positionCount;
-            lr.useWorldSpace = this.useWorldSpace; // ???
+            lr.useWorldSpace = this.useWorldSpace;
             lr.material = new Material(Shader.Find(this.shader));
             lr.startColor = this.startColor.Deserialize();
             lr.endColor = this.endColor.Deserialize();
