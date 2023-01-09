@@ -9,5 +9,6 @@
         public const string Line3DCubeSegmentName = "Line3DCubeSegment";
         public const string Line3DCylinderSegmentName = "Line3DCylinderSegment";
         public const string PrimitiveObjectName = "PrimitiveObject";
+        public const string DeletedObjectsTag = "DeletedObjects";
     }
 }

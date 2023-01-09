@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Managers;
 using System.Linq;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts.Actions
@@ -30,17 +31,33 @@ namespace Assets.Scripts.Actions
                                           where item != null
                                           where ((item.GetComponent<Collider>() != null) && (multiToolBounds.Intersects(item.GetComponent<Collider>().bounds)))
                                           select item;
-                foreach (GameObject objToDelete in intersectingObjects)
+                if (intersectingObjects == null)
                 {
-                    if (objToDelete.transform.parent != null)
+                    return;
+                }
+
+                var objectsToBeDeleted = new HashSet<GameObject>();
+
+                foreach (GameObject obj in intersectingObjects)
+                {
+                    if (obj.transform.parent != null)
                     {
-                        Object.Destroy(objToDelete.transform.parent.gameObject);
+                        objectsToBeDeleted.Add(obj.transform.parent.gameObject);
                     }
                     else
                     {
-                        Object.Destroy(objToDelete);
+                        objectsToBeDeleted.Add(obj);
                     }
                 }
+
+                foreach (GameObject obj in objectsToBeDeleted)
+                {
+                    obj.gameObject.tag = GlobalVars.DeletedObjectsTag;
+                    obj.gameObject.SetActive(false);
+                    GameManager.Instance.DeletedObjects.Add(new List<GameObject> { obj });
+                    //Object.Destroy(objToDelete.transform.parent.gameObject);
+                }
+                gameObjects = GameObject.FindGameObjectsWithTag(GlobalVars.UniversalTag);
             }
         }
 

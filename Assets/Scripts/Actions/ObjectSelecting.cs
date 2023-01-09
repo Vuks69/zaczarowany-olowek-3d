@@ -136,9 +136,12 @@ namespace Assets.Scripts.Actions
 
         public void DeleteSelection()
         {
+            GameManager.Instance.DeletedObjects.Add(SelectedObjects.ToList());
             foreach (var selectedObject in SelectedObjects)
             {
-                Object.Destroy(selectedObject);
+                // Object.Destroy(selectedObject);
+                selectedObject.tag = GlobalVars.DeletedObjectsTag;
+                selectedObject.SetActive(false);
             }
             SelectedObjects.Clear();
         }

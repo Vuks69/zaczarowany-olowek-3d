@@ -1,5 +1,7 @@
 ﻿using Assets.Scripts.Actions;
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Assets.Scripts.Managers
 {
@@ -15,6 +17,7 @@ namespace Assets.Scripts.Managers
         public float MinObjectSize { get; set; } = 0.2f;
         public float MaxObjectSize { get; set; } = 2f;
         public string PathToSaveFile { get; set; }
+        public List<List<GameObject>> DeletedObjects { get; set; } = new List<List<GameObject>>();
 
         void Awake()
         {

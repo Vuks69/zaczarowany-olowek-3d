@@ -1,5 +1,7 @@
 ﻿using Assets.Scripts.Menus;
 using UnityEngine;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Assets.Scripts.Managers
 {
@@ -23,6 +25,9 @@ namespace Assets.Scripts.Managers
                 case "button3":
                     toggleAction();
                     break;
+                case "button2":
+                    undo();
+                    break;
                 default:
                     break;
             }
@@ -40,11 +45,6 @@ namespace Assets.Scripts.Managers
             if (Input.GetButtonUp("Trigger"))
             {
                 input = "trigger_up";
-            }
-
-            if (Input.GetButtonDown("Redo Button"))
-            {
-                input = "button1";
             }
 
             if (Input.GetButtonDown("Undo Button"))
@@ -77,6 +77,33 @@ namespace Assets.Scripts.Managers
             var tmp = toolsMenu.PreviouslySelectedIcon;
             toolsMenu.SelectedIcon.Deselect();
             tmp.Select();
+        }
+
+        private void undo()
+        {
+            //GameManager.Instance.DeletedObject.tag = GlobalVars.UniversalTag;
+            //GameManager.Instance.DeletedObject.SetActive(true);
+
+            if (GameManager.Instance.DeletedObjects.Count == 0)
+            {
+                return;
+            }
+
+            foreach (GameObject obj in GameManager.Instance.DeletedObjects.Last())
+            {
+                obj.tag = GlobalVars.UniversalTag;
+                obj.SetActive(true);
+                Debug.Log("instantiate deleted object: " + obj.name);
+            }
+            GameManager.Instance.DeletedObjects.RemoveAt(GameManager.Instance.DeletedObjects.Count - 1);
+            if (GameManager.Instance.DeletedObjects.Count > 20)
+            {
+                foreach(GameObject obj in GameManager.Instance.DeletedObjects[0])
+                {
+                    Object.Destroy(obj);
+                }
+                GameManager.Instance.DeletedObjects.RemoveAt(0);
+            }
         }
     }
 }

@@ -1,6 +1,7 @@
-﻿using System.Collections;
+﻿using System.Linq;
 using UnityEngine;
 using Assets.Scripts.Actions;
+using Assets.Scripts.Managers;
 
 namespace Assets.Scripts.Menus.Icons
 {
@@ -19,9 +20,12 @@ namespace Assets.Scripts.Menus.Icons
         {
             GameObject[] objectList = GameObject.FindGameObjectsWithTag(GlobalVars.UniversalTag);
             Debug.Log("Destroying " + objectList.Length + " objects.");
+            GameManager.Instance.DeletedObjects.Add(objectList.ToList());
             foreach (var item in objectList)
             {
-                Object.Destroy(item);
+                item.tag = GlobalVars.DeletedObjectsTag;
+                item.SetActive(false);
+                // Object.Destroy(item);
             }
         }
     }
