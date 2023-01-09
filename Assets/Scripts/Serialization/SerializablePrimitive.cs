@@ -7,7 +7,6 @@ namespace Assets.Scripts.Serialization
     public class SerializablePrimitive : SerializableObject
     {
         public SerializableColor color;
-        public SerializableVector3 rotation;
         public SerializableVector3 localScale;
 
         public SerializablePrimitive(GameObject gameObject)

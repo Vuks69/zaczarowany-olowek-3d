@@ -7,5 +7,6 @@
         public Erasing Erasing { get; } = new Erasing();
         public ObjectSelecting ObjectSelecting { get; } = new ObjectSelecting();
         public ObjectAdding ObjectAdding { get; } = new ObjectAdding();
+        public MenuMoving MenuMoving { get; } = new MenuMoving();
     }
 }

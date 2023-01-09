@@ -258,8 +258,8 @@ namespace Assets.Scripts.Actions
         {
             if (obj.GetComponent<LineRenderer>() != null)
             {
-                obj.GetComponent<LineRenderer>().startColor += new Color(0f, 0f, 0f, 0.7f);
-                obj.GetComponent<LineRenderer>().endColor += new Color(0f, 0f, 0f, 0.7f);
+                obj.GetComponent<LineRenderer>().startColor += new Color(0f, 0f, 0f, 0.6f);
+                obj.GetComponent<LineRenderer>().endColor += new Color(0f, 0f, 0f, 0.6f);
             }
             else if (obj.GetComponent<Renderer>() != null)
             {
@@ -278,8 +278,8 @@ namespace Assets.Scripts.Actions
         {
             if (obj.GetComponent<LineRenderer>() != null)
             {
-                obj.GetComponent<LineRenderer>().startColor -= new Color(0f, 0f, 0f, 0.7f);
-                obj.GetComponent<LineRenderer>().endColor -= new Color(0f, 0f, 0f, 0.7f);
+                obj.GetComponent<LineRenderer>().startColor -= new Color(0f, 0f, 0f, 0.6f);
+                obj.GetComponent<LineRenderer>().endColor -= new Color(0f, 0f, 0f, 0.6f);
             }
             else if (obj.GetComponent<Renderer>() != null)
             {

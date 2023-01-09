@@ -24,6 +24,7 @@ namespace Assets.Scripts.Actions
             pointerLineRenderer.startWidth = 0.03f;
             pointerLineRenderer.endWidth = 0.01f;
             pointerLineRenderer.enabled = true;
+            UpdatePointerColor();
         }
 
         public override void HandleTriggerUp()
@@ -32,6 +33,7 @@ namespace Assets.Scripts.Actions
             {
                 moveSlider = false;
                 pointer.SetActive(true);
+                UpdatePointerColor();
             }
         }
 

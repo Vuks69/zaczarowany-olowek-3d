@@ -13,16 +13,15 @@ namespace Assets.Scripts.Managers
         public ActionsData ActionsData { get; set; }
         public float CurrentLineThickness { get; set; } = 0.0f;
         public float MinStrokeWidth { get; set; } = 0.01f;
-        public float MaxStrokeWidth { get; set; } = 0.5f;
-        public float MinObjectSize { get; set; } = 0.2f;
-        public float MaxObjectSize { get; set; } = 2f;
-        public string PathToSaveFile { get; set; }
+        public float MaxStrokeWidth { get; set; } = 0.1f;
+        public float MinObjectSize { get; set; } = 0.1f;
+        public float MaxObjectSize { get; set; } = 0.2f;
+        public string PathToSaveFile { get; set; } = "save.json";
         public List<List<GameObject>> DeletedObjects { get; set; } = new List<List<GameObject>>();
 
         void Awake()
         {
             Instance = this;
-            PathToSaveFile = Application.persistentDataPath + "/save.json";
         }
 
         void Start()
