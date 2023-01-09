@@ -9,6 +9,7 @@ namespace Assets.Scripts.Serialization
         public string name;
         public string tag;
         public SerializableVector3 position;
+        public SerializableVector3 rotation;
 
         public abstract GameObject Deserialize();
     }

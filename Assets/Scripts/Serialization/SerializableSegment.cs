@@ -7,7 +7,6 @@ namespace Assets.Scripts.Serialization
     public class SerializableSegment : SerializableObject
     {
         public float objectScaleY;
-        public SerializableVector3 rotation; //newSegment.transform.rotation = new Quaternion(rotationVector.x, rotationVector.y, rotationVector.z, 0);
 
         public SerializableSegment(GameObject segment)
         {

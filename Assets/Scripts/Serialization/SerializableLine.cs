@@ -14,6 +14,7 @@ namespace Assets.Scripts.Serialization
             this.name = line.name;
             this.tag = line.tag;
             this.position = new SerializableVector3(line.transform.position);
+            this.rotation = new SerializableVector3(line.transform.rotation);
             this.lineRendererData = new LineRendererData(line.GetComponent<LineRenderer>());
         }
 
@@ -25,6 +26,7 @@ namespace Assets.Scripts.Serialization
                 tag = this.tag
             };
             line.transform.position = this.position.Deserialize();
+            line.transform.rotation = this.rotation.DeserializeAsQuaternion();
             lineRendererData.DeserializeOnto(line);
             LineDrawing.CreateCollider(line);
 

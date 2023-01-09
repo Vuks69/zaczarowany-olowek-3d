@@ -77,7 +77,7 @@ namespace Assets.Scripts.Actions
                 case SelectionState.MOVING:
                     ToolState = SelectionState.SELECTING;
                     CurrentState = SelectionState.STANDBY;
-                    StopMovingObjects(deselect: true);
+                    StopMovingObjects(deselect: false);
                     break;
 
                 default:
@@ -116,12 +116,45 @@ namespace Assets.Scripts.Actions
                     {
                         if (SelectedObjects.Contains(intersectingObject))
                         {
-                            changeColorToDefault(intersectingObject);
+                            if (intersectingObject.GetComponent<LineRenderer>() != null)
+                            {
+                                intersectingObject.GetComponent<LineRenderer>().startColor += new Color(0f, 0f, 0f, 0.9f);
+                                intersectingObject.GetComponent<LineRenderer>().endColor += new Color(0f, 0f, 0f, 0.9f);
+                            }
+                            else if (intersectingObject.GetComponent<Renderer>() != null)
+                            {
+                                intersectingObject.GetComponent<Renderer>().material.color -= new Color(0f, 0f, 5f, 0f);
+                            }
+                            else
+                            {
+
+                                foreach (Transform child in intersectingObject.transform)
+                                {
+                                    child.gameObject.GetComponent<Renderer>().material.color -= new Color(0f, 0f, 5f, 0f);
+                                }
+                            }
+
+
                             toBeRemoved.Add(intersectingObject);
                         }
                         else
                         {
-                            changeColorToSelected(intersectingObject);
+                            if (intersectingObject.GetComponent<LineRenderer>() != null)
+                            {
+                                intersectingObject.GetComponent<LineRenderer>().startColor -= new Color(0f, 0f, 0f, 0.9f);
+                                intersectingObject.GetComponent<LineRenderer>().endColor -= new Color(0f, 0f, 0f, 0.9f);
+                            }
+                            else if (intersectingObject.GetComponent<Renderer>() != null)
+                            {
+                                intersectingObject.GetComponent<Renderer>().material.color += new Color(0f, 0f, 5f, 0f);
+                            }
+                            else
+                            {
+                                foreach (Transform child in intersectingObject.transform)
+                                {
+                                    child.gameObject.GetComponent<Renderer>().material.color += new Color(0f, 0f, 5f, 0f);
+                                }
+                            }
                             toBeSelected.Add(intersectingObject);
                         }
                     }
@@ -181,15 +214,17 @@ namespace Assets.Scripts.Actions
 
                     newObj.AddComponent<MeshCollider>();
                     newObj.GetComponent<MeshCollider>().sharedMesh = oldLineRenderer.GetComponent<MeshCollider>().sharedMesh;
+
                 }
                 else
                 {
                     newObj = Object.Instantiate(oldObj);
                     newObj.name = oldObj.name;
                 }
+
                 toBeCopied.Add(newObj);
             }
-            DeselectAll();
+            SelectedObjects.Clear();
             SelectedObjects.UnionWith(toBeCopied);
         }
 
@@ -214,7 +249,22 @@ namespace Assets.Scripts.Actions
         {
             foreach (var obj in SelectedObjects)
             {
-                changeColorToDefault(obj);
+                if (obj.GetComponent<LineRenderer>() != null)
+                {
+                    obj.GetComponent<LineRenderer>().startColor += new Color(0f, 0f, 0f, 0.9f);
+                    obj.GetComponent<LineRenderer>().endColor += new Color(0f, 0f, 0f, 0.9f);
+                }
+                else if (obj.GetComponent<Renderer>() != null)
+                {
+                    obj.GetComponent<Renderer>().material.color -= new Color(0f, 0f, 5f, 0f);
+                }
+                else
+                {
+                    foreach (Transform child in obj.transform)
+                    {
+                        child.gameObject.GetComponent<Renderer>().material.color -= new Color(0f, 0f, 5f, 0f);
+                    }
+                }
             }
             SelectedObjects.Clear();
         }
@@ -240,7 +290,6 @@ namespace Assets.Scripts.Actions
                     }
                 }
             }
-            SelectedObjects.Clear();
         }
 
         public void ChangeSelectionScale(Vector3 scale)
@@ -248,46 +297,6 @@ namespace Assets.Scripts.Actions
             foreach (var obj in SelectedObjects)
             {
                 obj.transform.localScale = scale;
-            }
-        }
-
-        private static void changeColorToDefault(GameObject obj)
-        {
-            if (obj.GetComponent<LineRenderer>() != null)
-            {
-                obj.GetComponent<LineRenderer>().startColor += new Color(0f, 0f, 0f, 0.7f);
-                obj.GetComponent<LineRenderer>().endColor += new Color(0f, 0f, 0f, 0.7f);
-            }
-            else if (obj.GetComponent<Renderer>() != null)
-            {
-                obj.GetComponent<Renderer>().material.color -= new Color(0f, 0f, 5f, 0f);
-            }
-            else
-            {
-                foreach (Transform child in obj.transform)
-                {
-                    child.gameObject.GetComponent<Renderer>().material.color -= new Color(0f, 0f, 5f, 0f);
-                }
-            }
-        }
-
-        private void changeColorToSelected(GameObject obj)
-        {
-            if (obj.GetComponent<LineRenderer>() != null)
-            {
-                obj.GetComponent<LineRenderer>().startColor -= new Color(0f, 0f, 0f, 0.7f);
-                obj.GetComponent<LineRenderer>().endColor -= new Color(0f, 0f, 0f, 0.7f);
-            }
-            else if (obj.GetComponent<Renderer>() != null)
-            {
-                obj.GetComponent<Renderer>().material.color += new Color(0f, 0f, 5f, 0f);
-            }
-            else
-            {
-                foreach (Transform child in obj.transform)
-                {
-                    child.gameObject.GetComponent<Renderer>().material.color += new Color(0f, 0f, 5f, 0f);
-                }
             }
         }
     }

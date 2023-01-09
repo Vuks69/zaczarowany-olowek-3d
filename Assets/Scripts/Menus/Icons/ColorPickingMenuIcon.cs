@@ -11,7 +11,7 @@ namespace Assets.Scripts.Menus.Icons
         public ColorPickingMenuIcon(GameObject icon, Action action, Color predefinedColor) : base(icon, action)
         {
             this.predefinedColor = predefinedColor;
-            SelectedColor = predefinedColor;
+            this.SelectedColor = predefinedColor;
         }
 
         public override void Select()

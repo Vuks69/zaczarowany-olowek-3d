@@ -20,10 +20,10 @@ namespace Assets.Scripts.Actions
             pointer = new GameObject("Selecting Pointer");
             pointerLineRenderer = pointer.AddComponent<LineRenderer>();
             pointerLineRenderer.material = new Material(Shader.Find("Sprites/Diffuse"));
-            UpdatePointerColor();
             pointerLineRenderer.startWidth = 0.03f;
             pointerLineRenderer.endWidth = 0.01f;
             pointerLineRenderer.enabled = true;
+            UpdatePointerColor();
         }
 
         public override void HandleTriggerUp()
@@ -32,6 +32,7 @@ namespace Assets.Scripts.Actions
             {
                 moveSlider = false;
                 pointer.SetActive(true);
+                UpdatePointerColor();
             }
         }
 

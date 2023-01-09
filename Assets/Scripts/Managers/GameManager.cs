@@ -11,10 +11,10 @@ namespace Assets.Scripts.Managers
         public ActionsData ActionsData { get; set; }
         public float CurrentLineThickness { get; set; } = 0.0f;
         public float MinStrokeWidth { get; set; } = 0.01f;
-        public float MaxStrokeWidth { get; set; } = 0.5f;
+        public float MaxStrokeWidth { get; set; } = 0.1f;
         public float MinObjectSize { get; set; } = 0.2f;
-        public float MaxObjectSize { get; set; } = 2f;
-        public string PathToSaveFile { get; set; }
+        public float MaxObjectSize { get; set; } = 1f;
+        public string PathToSaveFile { get; set; } = "save.json";
 
         void Awake()
         {

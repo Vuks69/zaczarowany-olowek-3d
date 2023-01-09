@@ -10,7 +10,7 @@ namespace Assets.Scripts.Menus.Icons
         private GameObject capsule;
         public Vector3 PreviousFlystickForward { get; set; } = new Vector3(0, 0, 0);
         private Vector3 initialSphereCoord;
-        private readonly float sensitivity = 1f;
+        private readonly float sensitivity = 3f;
         protected float value;
         protected float initialValue;
 
