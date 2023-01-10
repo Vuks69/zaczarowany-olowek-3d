@@ -9,7 +9,7 @@ namespace Assets.Scripts.Managers
         public static FlystickManager Instance;
         public GameObject Flystick;
         public GameObject MultiTool;
-        int flystickIdx = 1;
+        int flystickIdx = 0;
 
         void Update()
         {
@@ -29,8 +29,8 @@ namespace Assets.Scripts.Managers
         private void resetMenuPosition()
         {
             MenuManager.Instance.ParametersMenu.MenuObject.transform.parent = MenuManager.Instance.ToolsMenu.MenuObject.transform;
-            MenuManager.Instance.ToolsMenu.MenuObject.transform.position = Vector3.zero;
-            MenuManager.Instance.ToolsMenu.MenuObject.transform.rotation = Quaternion.identity;
+            MenuManager.Instance.ToolsMenu.MenuObject.transform.position = MenuManager.Instance.StartToolsMenuTransformPosition;
+            MenuManager.Instance.ToolsMenu.MenuObject.transform.rotation = MenuManager.Instance.StartToolsMenuTransformRotation;
             MenuManager.Instance.ParametersMenu.MenuObject.transform.SetParent(null);
         }
 

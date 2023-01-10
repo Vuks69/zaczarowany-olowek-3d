@@ -194,6 +194,15 @@ namespace Assets.Scripts.Actions
             }
             DeselectAll();
             SelectedObjects.UnionWith(toBeCopied);
+
+            foreach (GameObject obj in SelectedObjects)
+            {
+                if (obj.GetComponent<LineRenderer>() == null)
+                {
+                    changeColorToSelected(obj);
+                }
+            }
+
         }
 
         internal void MoveObjects()
