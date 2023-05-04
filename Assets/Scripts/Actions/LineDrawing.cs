@@ -11,6 +11,7 @@ namespace Assets.Scripts.Actions
             Triangle,
             Circle,
             Star,
+            Plus,
             Custom
         }
 
@@ -186,6 +187,11 @@ namespace Assets.Scripts.Actions
                 case LineType.Star:
                     {
                         setDrawingToolShape(DrawingToolShape.star());
+                        break;
+                    }
+                case LineType.Plus:
+                    {
+                        setDrawingToolShape(DrawingToolShape.plus());
                         break;
                     }
                 case LineType.Custom:

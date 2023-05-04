@@ -60,6 +60,27 @@ namespace Assets.Scripts.Actions
             return verticiesList;
         }
 
+        public static Vector3[] plus()
+        {
+            var arr = new Vector3[]
+            {
+                new Vector3(-1f, 0.2f, 0f),
+                new Vector3(-1f, -0.2f, 0f),
+                new Vector3(-0.2f, -0.2f, 0f),
+                new Vector3(-0.2f, -1f, 0f),
+                new Vector3(0.2f, -1f, 0f),
+                new Vector3(0.2f, -0.2f, 0f),
+                new Vector3(1f, -0.2f, 0f),
+                new Vector3(1f, 0.2f, 0f),
+                new Vector3(0.2f, 0.2f, 0f),
+                new Vector3(0.2f, 1f, 0f),
+                new Vector3(-0.2f, 1f, 0f),
+                new Vector3(-0.2f, 0.2f, 0f)
+            };
+
+            return arr;
+        }
+
         public static Vector3[] custom(float size)
         {
             // TODO
