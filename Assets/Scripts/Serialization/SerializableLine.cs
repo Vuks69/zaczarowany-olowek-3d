@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.Actions;
-using System;
+﻿using System;
 using UnityEngine;
 
 namespace Assets.Scripts.Serialization
@@ -7,14 +6,16 @@ namespace Assets.Scripts.Serialization
     [Serializable]
     public class SerializableLine : SerializableObject
     {
-        public LineRendererData lineRendererData;
+        public SerializableMesh mesh;
+        public MeshRendererData meshRendererData;
 
         public SerializableLine(GameObject line)
         {
             this.name = line.name;
             this.tag = line.tag;
             this.position = new SerializableVector3(line.transform.position);
-            this.lineRendererData = new LineRendererData(line.GetComponent<LineRenderer>());
+            this.mesh = new SerializableMesh(line.GetComponent<MeshFilter>().mesh);
+            this.meshRendererData = new MeshRendererData(line.GetComponent<MeshRenderer>());
         }
 
         public override GameObject Deserialize()
@@ -25,8 +26,9 @@ namespace Assets.Scripts.Serialization
                 tag = this.tag
             };
             line.transform.position = this.position.Deserialize();
-            lineRendererData.DeserializeOnto(line);
-            LineDrawing.CreateCollider(line);
+            meshRendererData.DeserializeOnto(line);
+            line.AddComponent<MeshCollider>().sharedMesh = this.mesh.Deserialize();
+            line.AddComponent<MeshFilter>().sharedMesh = this.mesh.Deserialize();
 
             return line;
         }
