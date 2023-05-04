@@ -44,6 +44,11 @@ namespace Assets.Scripts.Menus.Icons
             {
                 serializableLine.Deserialize();
             }
+            Debug.Log("    " + serializableArray.lines3d.Count + " [" + GlobalVars.Line3DName + "]");
+            foreach (var serializableLine3D in serializableArray.lines3d)
+            {
+                serializableLine3D.Deserialize();
+            }
             Debug.Log("    " + serializableArray.primitives.Count + " [" + GlobalVars.PrimitiveObjectName + "]");
             foreach (var primitive in serializableArray.primitives)
             {
