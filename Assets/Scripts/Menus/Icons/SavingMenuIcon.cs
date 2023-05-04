@@ -37,6 +37,12 @@ namespace Assets.Scripts.Menus.Icons
                         case GlobalVars.LineName:
                             serializableArray.lines.Add(new SerializableLine(item));
                             break;
+                        case GlobalVars.Line3DName:
+                            serializableArray.lines3d.Add(new SerializableLine3D(item));
+                            break;
+                        case GlobalVars.Line3DCubeSegmentName:
+                        case GlobalVars.Line3DCylinderSegmentName:
+                            break; // ignore these, they're handled by Line3DName
                         default:
                             if (item.name.Contains(GlobalVars.PrimitiveObjectName))
                             {
@@ -53,6 +59,7 @@ namespace Assets.Scripts.Menus.Icons
                 // Write new save
                 Debug.Log("Saving world to file: " + pathToSaveFile);
                 Debug.Log("    Lines: " + serializableArray.lines.Count);
+                Debug.Log("    Lines3D: " + serializableArray.lines3d.Count);
                 Debug.Log("    Primitives: " + serializableArray.primitives.Count);
                 using (StreamWriter sw = File.CreateText(pathToSaveFile)) // overwrites old save
                 {

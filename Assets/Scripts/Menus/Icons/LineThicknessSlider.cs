@@ -17,8 +17,7 @@ namespace Assets.Scripts.Menus.Icons
         {
             var strokeWidth = (value * (GameManager.Instance.MaxStrokeWidth - GameManager.Instance.MinStrokeWidth)) + GameManager.Instance.MinStrokeWidth;
             GameManager.Instance.CurrentLineThickness = strokeWidth;
-            GameManager.Instance.LineSize = strokeWidth;
-            GameManager.Instance.ActionsData.LineDrawing.UpdateDrawingToolSize();
+            GameManager.Instance.ActionsData.LineDrawing.StrokeWidth = strokeWidth;
         }
 
     }
