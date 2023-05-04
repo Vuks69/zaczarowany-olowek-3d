@@ -97,7 +97,7 @@ namespace Assets.Scripts.Actions
                 Bounds multiToolBounds = FlystickManager.Instance.MultiTool.GetComponent<Collider>().bounds;
                 var intersectingObjects = from item
                                           in gameObjects
-                                          where ((item.GetComponent<Collider>() != null) && (multiToolBounds.Intersects(item.GetComponent<Collider>().bounds))) //temporary solution, TODO: handle 3D lines (have no collider, but childer have colliders
+                                          where ((item.GetComponent<Collider>() != null) && (multiToolBounds.Intersects(item.GetComponent<Collider>().bounds)))
                                           select item;
                 foreach (GameObject item in intersectingObjects)
                 {
@@ -149,44 +149,8 @@ namespace Assets.Scripts.Actions
             foreach (var oldObj in SelectedObjects)
             {
                 GameObject newObj;
-                if (oldObj.transform.GetComponent<LineRenderer>() != null)
-                {
-                    newObj = new GameObject
-                    {
-                        name = GlobalVars.LineName,
-                        tag = GlobalVars.UniversalTag
-                    };
-
-                    newObj.transform.position = oldObj.transform.position;
-                    newObj.transform.rotation = oldObj.transform.rotation;
-
-                    var oldLineRenderer = oldObj.GetComponent<LineRenderer>();
-                    var newLineRenderer = newObj.AddComponent<LineRenderer>();
-
-                    newLineRenderer.numCapVertices = oldLineRenderer.numCapVertices;
-                    newLineRenderer.numCornerVertices = oldLineRenderer.numCornerVertices;
-                    newLineRenderer.positionCount = oldLineRenderer.positionCount;
-
-                    Vector3[] newPos = new Vector3[oldLineRenderer.positionCount];
-                    oldLineRenderer.GetPositions(newPos);
-                    newLineRenderer.SetPositions(newPos);
-
-                    newLineRenderer.useWorldSpace = false;
-                    newLineRenderer.material = oldLineRenderer.material;
-                    oldLineRenderer.material = new Material(Shader.Find("Particles/Additive"));
-                    newLineRenderer.startColor = oldLineRenderer.startColor;
-                    newLineRenderer.endColor = oldLineRenderer.endColor;
-                    newLineRenderer.startWidth = oldLineRenderer.startWidth;
-                    newLineRenderer.endWidth = oldLineRenderer.endWidth;
-
-                    newObj.AddComponent<MeshCollider>();
-                    newObj.GetComponent<MeshCollider>().sharedMesh = oldLineRenderer.GetComponent<MeshCollider>().sharedMesh;
-                }
-                else
-                {
-                    newObj = Object.Instantiate(oldObj);
-                    newObj.name = oldObj.name;
-                }
+                newObj = Object.Instantiate(oldObj);
+                newObj.name = oldObj.name;
                 toBeCopied.Add(newObj);
             }
             DeselectAll();
@@ -223,22 +187,7 @@ namespace Assets.Scripts.Actions
         {
             foreach (var obj in SelectedObjects)
             {
-                if (obj.GetComponent<LineRenderer>() != null)
-                {
-                    obj.GetComponent<LineRenderer>().startColor = GameManager.Instance.CurrentColor;
-                    obj.GetComponent<LineRenderer>().endColor = GameManager.Instance.CurrentColor;
-                }
-                else if (obj.GetComponent<Renderer>() != null)
-                {
-                    obj.GetComponent<Renderer>().material.color = GameManager.Instance.CurrentColor;
-                }
-                else
-                {
-                    foreach (Transform child in obj.transform)
-                    {
-                        child.gameObject.GetComponent<Renderer>().material.color = GameManager.Instance.CurrentColor;
-                    }
-                }
+                obj.GetComponent<Renderer>().material.color = GameManager.Instance.CurrentColor;
             }
             SelectedObjects.Clear();
         }
@@ -253,42 +202,12 @@ namespace Assets.Scripts.Actions
 
         private static void changeColorToDefault(GameObject obj)
         {
-            if (obj.GetComponent<LineRenderer>() != null)
-            {
-                obj.GetComponent<LineRenderer>().startColor += new Color(0f, 0f, 0f, 0.7f);
-                obj.GetComponent<LineRenderer>().endColor += new Color(0f, 0f, 0f, 0.7f);
-            }
-            else if (obj.GetComponent<Renderer>() != null)
-            {
-                obj.GetComponent<Renderer>().material.color -= new Color(0f, 0f, 5f, 0f);
-            }
-            else
-            {
-                foreach (Transform child in obj.transform)
-                {
-                    child.gameObject.GetComponent<Renderer>().material.color -= new Color(0f, 0f, 5f, 0f);
-                }
-            }
+            obj.GetComponent<Renderer>().material.color -= new Color(0f, 0f, 0f, 0.75f);
         }
 
         private void changeColorToSelected(GameObject obj)
         {
-            if (obj.GetComponent<LineRenderer>() != null)
-            {
-                obj.GetComponent<LineRenderer>().startColor -= new Color(0f, 0f, 0f, 0.7f);
-                obj.GetComponent<LineRenderer>().endColor -= new Color(0f, 0f, 0f, 0.7f);
-            }
-            else if (obj.GetComponent<Renderer>() != null)
-            {
-                obj.GetComponent<Renderer>().material.color += new Color(0f, 0f, 5f, 0f);
-            }
-            else
-            {
-                foreach (Transform child in obj.transform)
-                {
-                    child.gameObject.GetComponent<Renderer>().material.color += new Color(0f, 0f, 5f, 0f);
-                }
-            }
+            obj.GetComponent<Renderer>().material.color += new Color(0f, 0f, 0f, 0.5f);
         }
     }
 }

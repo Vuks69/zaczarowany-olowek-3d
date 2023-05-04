@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Menus;
+using Assets.Scripts.Actions;
 using UnityEngine;
 
 namespace Assets.Scripts.Managers
@@ -8,6 +9,7 @@ namespace Assets.Scripts.Managers
         public static FlystickManager Instance;
         public GameObject Flystick;
         public GameObject MultiTool;
+        public GameObject DrawingTool;
 
         // przykladowe
         void HandleInput(string input)
@@ -78,5 +80,5 @@ namespace Assets.Scripts.Managers
             toolsMenu.SelectedIcon.Deselect();
             tmp.Select();
         }
-    }
+	}
 }
